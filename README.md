@@ -1,2 +1,2 @@
-# IPZ Digital Documentation
-Đây là nền tảng tài liệu kỹ thuật chính thức của IPZ Digital Solutions. Dự án được xây dựng nhằm cung cấp hướng dẫn chuyên sâu, cập nhật kiến thức và giải pháp kỹ thuật cho hệ sinh thái sản phẩm của IPZ.
+# IPZ Documentation
+Đây là nền tảng tài liệu kỹ thuật chính thức của IPZ. Dự án được xây dựng nhằm cung cấp hướng dẫn chuyên sâu, cập nhật kiến thức và giải pháp kỹ thuật cho hệ sinh thái sản phẩm của IPZ.

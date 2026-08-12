@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'IPZ Digital Solutions',
+  title: 'IPZ Docs',
   tagline: 'Chuyển hóa dữ liệu thành giá trị',
   favicon: 'img/ipz.ico',
 
@@ -14,7 +14,7 @@ const config: Config = {
   url: 'https://docs.ipz.vn',
   baseUrl: '/',
 
-  organizationName: 'dzokha',
+  organizationName: 'IPZ',
   projectName: 'docs-ipz',
 
   onBrokenLinks: 'warn', // Thay vì 'throw'
@@ -82,7 +82,7 @@ const config: Config = {
     navbar: {
       title: 'IPZ Docs',
       logo: {
-        alt: 'IPZ Digital Logo',
+        alt: 'IPZ Logo',
         src: 'img/ipz.png',
       },
       items: [
@@ -160,13 +160,13 @@ const config: Config = {
         {
           title: 'Văn phòng Hỗ trợ',
           items: [
-            { label: 'IPZ Digital Solutions', href: 'https://ipz.vn' },
-            { label: 'Cái Nước, Cà Mau, Việt Nam', href: 'https://maps.app.goo.gl/kKMTGoRxBH1CLGbz9' },
+            { label: 'IPZ', href: 'https://ipz.vn' },
+            { label: 'Khánh Tư, Cái Nước, Cà Mau, Việt Nam', href: 'https://maps.app.goo.gl/kKMTGoRxBH1CLGbz9' },
             { label: 'Email: info@ipz.vn', href: 'mailto:info@ipz.vn' },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} IPZ Digital Solutions.`,
+      copyright: `Copyright © ${new Date().getFullYear()} IPZ.`,
     },
     prism: {
       theme: prismThemes.github,
