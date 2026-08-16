@@ -70,7 +70,7 @@
 }
 
 .featureImage {
-  height: 120px;
+  height: 170px;
   width: auto;
   object-fit: contain;
   margin-bottom: 1.25rem;
@@ -112,6 +112,9 @@
 
 .featureCard:hover .cardArrowBtn {
   transform: scale(1.1);
+}
+.featureCard:hover .featureImage {
+  transform: scale(1.06);
 }
 
 /* ==================================================================
