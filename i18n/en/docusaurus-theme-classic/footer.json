@@ -64,11 +64,11 @@
     "description": "The label of footer link linking to Security"
   },
   "link.item.label.Terms": {
-    "message": "Terms of Use",
+    "message": "Terms",
     "description": "The label of footer link linking to Terms"
   },
   "link.item.label.Privacy": {
-    "message": "Privacy Policy",
+    "message": "Privacy",
     "description": "The label of footer link linking to Privacy"
   },
   "copyright": {
