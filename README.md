@@ -12,3 +12,7 @@
             // { type: 'docSidebar', sidebarId: 'bioSidebar', label: 'Developer Guides' },
             // { type: 'docSidebar', sidebarId: 'bioSidebar', label: 'Security Guides' },
             // { type: 'docSidebar', sidebarId: 'bioSidebar', label: 'Best Practices' },
+
+
+
+            npx docusaurus write-translations --locale en

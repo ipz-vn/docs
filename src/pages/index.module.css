@@ -1,23 +1,140 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
+/* Hero Banner Styles */
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
+  padding: 3rem 0;
+  background-color: var(--ifm-background-color);
   position: relative;
-  overflow: hidden;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.heroRow {
+  align-items: center;
 }
 
-.buttons {
+.heroContent {
+  padding-right: 1.5rem;
+}
+
+.heroTitle {
+  font-size: 3.2rem !important;
+  font-weight: 800 !important;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+}
+
+.heroBrand {
+  color: var(--ifm-color-primary);
+}
+
+.heroSubtitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 1rem;
+}
+
+.heroDescription {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #64748B;
+  margin-bottom: 2rem;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.heroImage {
+  max-height: 340px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* About Section Styles */
+.aboutContainer {
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.aboutCard {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+[data-theme='dark'] .aboutCard {
+  background: #1E293B;
+  border-color: #334155;
+}
+
+.aboutMainBlock {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.aboutIconWrapper {
+  width: 54px;
+  height: 54px;
+  background: #E0F2FE;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.aboutIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.aboutTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.aboutDesc {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0;
+}
+
+[data-theme='dark'] .aboutDesc {
+  color: #94A3B8;
+}
+
+/* Values Grid */
+.valuesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.valueItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.valueIcon {
+  font-size: 1.4rem;
+}
+
+.valueItem strong {
+  display: block;
+  font-size: 0.95rem;
+  color: #0F172A;
+}
+
+[data-theme='dark'] .valueItem strong {
+  color: #F8FAFC;
+}
+
+.valueItem p {
+  font-size: 0.8rem;
+  color: #64748B;
+  margin: 0;
 }

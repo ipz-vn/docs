@@ -3,6 +3,10 @@
     "message": "IPZ Docs",
     "description": "The title in the navbar"
   },
+  "logo.alt": {
+    "message": "IPZ Logo",
+    "description": "The alt text of navbar logo"
+  },
   "item.label.Sản phẩm & Công cụ": {
     "message": "Products & Tools",
     "description": "Navbar item with label Sản phẩm & Công cụ"
@@ -15,32 +19,24 @@
     "message": "Guides",
     "description": "Navbar item with label Hướng dẫn"
   },
-  "item.label.Kiến thức & Blog": {
-    "message": "Knowledge & Blog",
-    "description": "Navbar item with label Kiến thức & Blog"
+  "item.label.Tri thức": {
+    "message": "Knowledge",
+    "description": "Navbar item with label Tri thức"
   },
-  "item.label.Tất cả tài liệu chia sẻ": {
-    "message": "All Shared Docs",
-    "description": "Navbar item with label Tất cả tài liệu chia sẻ"
+  "item.label.Kho tri thức": {
+    "message": "Knowledge Base",
+    "description": "Navbar item with label Kho tri thức"
   },
-  "item.label.An ninh mạng": {
-    "message": "Cybersecurity",
-    "description": "Navbar item with label An ninh mạng"
+  "item.label.Bài viết chuyên môn": {
+    "message": "Articles",
+    "description": "Navbar item with label Bài viết chuyên môn"
   },
-  "item.label.Sở hữu trí tuệ": {
-    "message": "Intellectual Property",
-    "description": "Navbar item with label Sở hữu trí tuệ"
+  "item.label.Nghiên cứu & R&D": {
+    "message": "Research & R&D",
+    "description": "Navbar item with label Nghiên cứu & R&D"
   },
-  "item.label.Thương hiệu": {
-    "message": "Brand",
-    "description": "Navbar item with label Thương hiệu"
-  },
-  "item.label.Tin sinh học": {
-    "message": "Bioinformatics",
-    "description": "Navbar item with label Tin sinh học"
-  },
-  "logo.alt": {
-    "message": "IPZ Logo",
-    "description": "The alt text of navbar logo"
+  "item.label.Kinh nghiệm & Thực tiễn": {
+    "message": "Experience & Practice",
+    "description": "Navbar item with label Kinh nghiệm & Thực tiễn"
   }
 }

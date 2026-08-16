@@ -39,13 +39,10 @@ const config: Config = {
   markdown: {
     format: 'mdx',
     mermaid: true,
-    // Di chuyển thuộc tính này vào đây để sẵn sàng cho Docusaurus v4:
     hooks: {
       onBrokenMarkdownLinks: 'warn',
     },
   },
-  
-  onBrokenLinks: 'warn',
 
   presets: [
     [
@@ -54,7 +51,7 @@ const config: Config = {
         docs: {
           path: 'docs', 
           routeBasePath: '/', 
-          sidebarPath: './sidebarsDocs.ts',
+          sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/ipz-vn/docs-ipz/tree/main/',
         },
         blog: {
@@ -80,17 +77,7 @@ const config: Config = {
   ],
 
   plugins: [
-    // Instance Docs thứ 2 dành cho Products
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'products', 
-        path: 'products', 
-        routeBasePath: 'products', 
-        sidebarPath: './sidebarsProducts.ts', 
-      },
-    ],
-    // Plugin tìm kiếm Local chính thức đặt tại đây
+    // Plugin tìm kiếm Local
     [
       require.resolve('@easyops-cn/docusaurus-search-local'),
       {
@@ -119,8 +106,9 @@ const config: Config = {
       },
       items: [
         {
+          type: 'docSidebar',
+          sidebarId: 'productsSidebar',
           label: 'Sản phẩm & Công cụ', 
-          to: '/products/',
           position: 'left',
         },
         {
@@ -136,20 +124,23 @@ const config: Config = {
           position: 'left',
         },
         {
-          type: 'dropdown', 
-          label: 'Kiến thức & Blog', 
+          type: 'dropdown',
+          label: 'Tri thức',
           position: 'left',
           items: [
-            { label: 'Tất cả tài liệu chia sẻ', to: '/blog' },
-            { label: 'An ninh mạng', to: '/blog/tags/cybersecurity' },
-            { label: 'Sở hữu trí tuệ', to: '/blog/tags/brand' },
-            { label: 'Thương hiệu', to: '/blog/tags/patent' },
-            { label: 'Tin sinh học', to: '/blog/tags/bioinformatics' },
+            { label: 'Kho tri thức', to: '/blog' },
+            { label: 'Bài viết chuyên môn', to: '/blog/tags/expertise' },
+            { label: 'Nghiên cứu & R&D', to: '/blog/tags/research' },
+            { label: 'Kinh nghiệm & Thực tiễn', to: '/blog/tags/practice' },
           ],
         },
         {
           type: 'localeDropdown',
           position: 'right', 
+        },
+        {
+          type: 'search',
+          position: 'right',
         },
       ],
     },
@@ -157,27 +148,25 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Sản phẩm & Công cụ',
+          title: 'Khám phá',
           items: [
-            { label: 'IPZ Verify', to: '/products/ipz-verify' },
-            { label: 'BiomeIPZ', to: '/products/biomeipz' },
-            { label: 'Thư viện & Công cụ', to: '/products/tools' },
-            { label: 'Tất cả sản phẩm', to: '/products/' },
+            { label: 'Sản phẩm & Công cụ', to: '/products' },
+            { label: 'Tiêu chuẩn công khai', to: '/standards' },
+            { label: 'Hướng dẫn & Thực hành', to: '/guides' },
+            { label: 'Kiến thức & Nghiên cứu', to: '/blog' },
           ],
         },
         {
-          title: 'Tài liệu & Tri thức',
+          title: 'Về IPZ',
           items: [
-            { label: 'Tiêu chuẩn', to: '/standards/' },
-            { label: 'Hướng dẫn', to: '/guides/' },
-            { label: 'Kiến thức & Blog', to: '/blog' },
-            { label: 'Nghiên cứu & R&D', to: '/blog/tags/cybersecurity' },
+            { label: 'ipz.vn', href: 'https://ipz.vn' },
+            { label: 'Sứ mệnh & Tầm nhìn', href: 'https://ipz.vn/mission' },
+            { label: 'Hệ sinh thái IPZ', href: 'https://ipz.vn/ecosystem' },
           ],
         },
         {
-          title: 'IPZ & Cộng đồng',
+          title: 'Kết nối',
           items: [
-            { label: 'Về IPZ', href: 'https://ipz.vn' },
             { label: 'GitHub', href: 'https://github.com/ipz-vn' },
             { label: 'Facebook', href: 'https://facebook.com/ipz.vn' },
             { label: 'YouTube', href: 'https://youtube.com/@ipz-vn' },
@@ -186,14 +175,14 @@ const config: Config = {
         {
           title: 'Pháp lý & Liên hệ',
           items: [
-            { label: 'Liên hệ: info@ipz.vn', href: 'mailto:info@ipz.vn' },
-            { label: 'Privacy Policy', to: '/privacy' },
-            { label: 'Terms of Use', to: '/terms' },
-            { label: 'Security', to: '/security' },
+            { label: 'info@ipz.vn', href: 'mailto:info@ipz.vn' },
+            { label: 'Security', href: 'https://ipz.vn/legal/security' },
+            { label: 'Terms', href: 'https://ipz.vn/legal/terms' },
+            { label: 'Privacy', href: 'https://ipz.vn/legal/privacy' },
           ],
         },
       ],
-      copyright: `📍 Cái Nước, Cà Mau, Việt Nam<br/>Copyright © ${new Date().getFullYear()} IPZ. All rights reserved.`,
+      copyright: `IPZ · Digital Trust Ecosystem · © ${new Date().getFullYear()} IPZ. All rights reserved.`,
     },
     prism: {
       theme: prismThemes.github,

@@ -1,63 +1,238 @@
-.features {
-  display: flex;
-  align-items: center;
-  padding: 3rem 0;
-  width: 100%;
+/* Thêm mới: Kiểu dáng cho phần Subtitle */
+.sectionSubtitle {
+  font-size: 0.95rem;
+  color: #64748B;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
 }
 
-.featureSvg {
-  height: 140px;
-  width: 140px;
-  margin-bottom: 1.25rem;
-  transition: transform 0.3s ease;
+[data-theme='dark'] .sectionSubtitle {
+  color: #94A3B8;
 }
 
-/* Biến toàn bộ khung thành Card hiện đại */
+/* Các thành phần cũ */
+.featuresSection {
+  padding: 2rem 0 4rem 0;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #0F172A;
+  margin: 0;
+}
+
+[data-theme='dark'] .sectionTitle {
+  color: #F8FAFC;
+}
+
+.titleUnderline {
+  width: 32px;
+  height: 3px;
+  background-color: var(--ifm-color-primary);
+  margin: 1rem auto 0 auto;
+  border-radius: 2px;
+}
+
+/* Feature Cards */
 .featureCard {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 2rem 1.5rem;
+  padding: 1.75rem 1.25rem 1.25rem 1.25rem;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background-color: var(--ifm-card-background-color, #ffffff);
+  position: relative;
   text-decoration: none !important;
-  color: inherit !important;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hiệu ứng rê chuột (Hover) chuẩn Expert */
+[data-theme='dark'] .featureCard {
+  background: #1E293B;
+  border-color: #334155;
+}
+
 .featureCard:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   border-color: var(--ifm-color-primary);
-  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 12px 24px -8px rgba(5, 150, 105, 0.15);
 }
 
-.featureCard:hover .featureSvg {
-  transform: scale(1.08);
+.featureImage {
+  height: 120px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 1.25rem;
 }
 
 .featureTitle {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: var(--ifm-heading-color);
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+}
+
+[data-theme='dark'] .featureTitle {
+  color: #F8FAFC;
 }
 
 .featureDescription {
-  font-size: 0.95rem;
-  color: var(--ifm-color-content-secondary);
-  line-height: 1.6;
-  margin-bottom: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #64748B;
+  margin-bottom: 2.5rem;
 }
 
-/* Tương thích Dark Mode */
-:global([data-theme='dark']) .featureCard {
-  border-color: rgba(255, 255, 255, 0.1);
-  background-color: #1b1b1d;
+.cardArrowBtn {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  width: 32px;
+  height: 32px;
+  background-color: var(--ifm-color-primary);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
 }
 
-:global([data-theme='dark']) .featureCard:hover {
-  border-color: var(--ifm-color-primary);
-  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+.featureCard:hover .cardArrowBtn {
+  transform: scale(1.1);
+}
+
+/* ==================================================================
+   KHỐI LĨNH VỰC - Chia 4 cột để tối ưu hóa không gian (Grid 4)
+   ================================================================== */
+.topicSection {
+  margin-top: 3.5rem;
+}
+
+.topicBarContainer {
+  display: grid;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 1.25rem 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+}
+
+.gridColumns4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+[data-theme='dark'] .topicBarContainer {
+  background: #1E293B;
+  border-color: #334155;
+}
+
+.topicItemCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.85rem;
+  text-decoration: none !important;
+  color: inherit !important;
+  border-right: 1px solid #F1F5F9;
+  transition: all 0.25s ease;
+}
+
+.topicItemCard:last-child {
+  border-right: none;
+}
+
+[data-theme='dark'] .topicItemCard {
+  border-right-color: #334155;
+}
+
+.topicItemCard:hover {
+  background-color: #F8FAFC;
+  border-radius: 10px;
+  transform: translateY(-2px);
+}
+
+[data-theme='dark'] .topicItemCard:hover {
+  background-color: #334155;
+}
+
+/* Icon tròn */
+.topicIconCircle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ECFDF5;
+  border: 1px solid #D1FAE5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+[data-theme='dark'] .topicIconCircle {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.topicTextContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.topicItemTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.25;
+}
+
+[data-theme='dark'] .topicItemTitle {
+  color: #F8FAFC;
+}
+
+.topicItemDesc {
+  font-size: 0.725rem;
+  color: #64748B;
+  line-height: 1.3;
+  margin-top: 0.2rem;
+}
+
+[data-theme='dark'] .topicItemDesc {
+  color: #94A3B8;
+}
+
+/* Tối ưu responsive */
+@media (max-width: 1200px) {
+  .topicBarContainer.gridColumns4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+  .topicItemCard {
+    border-right: none;
+    border-bottom: 1px solid #F1F5F9;
+    padding-bottom: 0.75rem;
+  }
+  [data-theme='dark'] .topicItemCard {
+    border-bottom-color: #334155;
+  }
+}
+
+@media (max-width: 768px) {
+  .topicBarContainer.gridColumns4 {
+    grid-template-columns: 1fr;
+  }
 }

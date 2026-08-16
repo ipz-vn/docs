@@ -1,19 +1,34 @@
 cyber:
-  label: Cybersecurity
+  label: Công nghệ & An ninh số
   permalink: /cybersecurity
-  description: Facebook tag description
+  description: An ninh mạng, bảo mật hệ thống, dữ liệu và các giải pháp bảo vệ không gian số.
 
 brand:
-  label: Brand
+  label: Thương hiệu & Truyền thông
   permalink: /brand
-  description: Hello tag description
+  description: Xây dựng, quản trị, phát triển và bảo vệ thương hiệu trong môi trường số.
 
-patent:
-  label: Patent
-  permalink: /patent
-  description: Docusaurus tag description
+ip:
+  label: Sở hữu trí tuệ
+  permalink: /intellectual-property
+  description: Sở hữu trí tuệ, tài sản trí tuệ, xác lập quyền và khai thác giá trị tài sản trí tuệ.
 
 bio:
-  label: Bioinformatics
+  label: Tin sinh học
   permalink: /bioinformatics
-  description: Hola tag description
+  description: Tin sinh học, phân tích dữ liệu sinh học và các phương pháp tính toán trong khoa học sự sống.
+
+expertise:
+  label: Bài viết huyên môn
+  permalink: /expertise
+  description: Kiến thức chuyên môn, phân tích chuyên sâu và các nội dung nền tảng trong từng lĩnh vực tri thức.
+
+research:
+  label: Nghiên cứu & R&D
+  permalink: /research
+  description: Kết quả nghiên cứu, phân tích, đánh giá và những phát hiện được chọn lọc từ quá trình tìm hiểu và phát triển.
+
+practice:
+  label: Kinh nghiệm & Thực tiễn
+  permalink: /practice
+  description: Kinh nghiệm triển khai, bài học thực tiễn, tình huống và những kinh nghiệm được đúc kết từ thực tế.

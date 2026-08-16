@@ -2,5 +2,21 @@
   "version.label": {
     "message": "Next",
     "description": "The label for version current"
+  },
+  "sidebar.productsSidebar.category.Thư viện & Công cụ": {
+    "message": "Libraries & Tools",
+    "description": "The label for category 'Thư viện & Công cụ' in sidebar 'productsSidebar'"
+  },
+  "sidebar.productsSidebar.category.tcpfeature": {
+    "message": "tcpfeature",
+    "description": "The label for category 'tcpfeature' in sidebar 'productsSidebar'"
+  },
+  "sidebar.productsSidebar.category.tcpfeature.link.generated-index.description": {
+    "message": "Learn the core concepts and quick setup guide for tcpfeature.",
+    "description": "The generated-index page description for category 'tcpfeature' in sidebar 'productsSidebar'"
+  },
+  "sidebar.productsSidebar.category.ids-ac": {
+    "message": "ids-ac",
+    "description": "The label for category 'ids-ac' in sidebar 'productsSidebar'"
   }
 }

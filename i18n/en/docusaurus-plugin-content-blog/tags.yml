@@ -1,0 +1,34 @@
+cyber:
+  label: Technology & Digital Security
+  permalink: /cybersecurity
+  description: Cybersecurity, system security, data protection, and digital defense solutions.
+
+brand:
+  label: Branding & Communications
+  permalink: /brand
+  description: Building, managing, developing, and protecting brands in the digital environment.
+
+ip:
+  label: Intellectual Property
+  permalink: /intellectual-property
+  description: Intellectual property, IP assets, rights establishment, and exploitation of IP asset value.
+
+bio:
+  label: Bioinformatics
+  permalink: /bioinformatics
+  description: Bioinformatics, biological data analysis, and computational methods in life sciences.
+
+expertise:
+  label: Professional Insights
+  permalink: /expertise
+  description: Professional knowledge, in-depth analysis, and foundational content across various knowledge domains.
+
+research:
+  label: Research & R&D
+  permalink: /research
+  description: Research results, analysis, evaluations, and findings curated from the research and development process.
+
+practice:
+  label: Practices & Experience
+  permalink: /practice
+  description: Implementation experience, practical lessons, case studies, and real-world insights.
