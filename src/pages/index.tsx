@@ -34,11 +34,11 @@ function HomepageHeader() {
               </p>
               
               <div className={styles.heroButtons}>
-                <Link
+                <a
                   className="button button--primary button--lg"
-                  to="/#explore">
+                  href="#explore">
                   📖 <Translate id="homepage.hero.cta_primary">Tra cứu tài liệu</Translate>
-                </Link>
+                </a>
                 <Link
                   className="button button--outline button--primary button--lg"
                   to="/standards/">

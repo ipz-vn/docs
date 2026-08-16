@@ -92,6 +92,7 @@
   line-height: 1.5;
   color: #64748B;
   margin-bottom: 2.5rem;
+  text-align: justify;
 }
 
 .cardArrowBtn {
@@ -211,6 +212,7 @@
   color: #64748B;
   line-height: 1.3;
   margin-top: 0.2rem;
+  text-align: justify;
 }
 
 [data-theme='dark'] .topicItemDesc {

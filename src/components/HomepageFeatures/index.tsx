@@ -55,7 +55,7 @@ const FeatureList: FeatureItem[] = [
     image: require('@site/static/img/open_knowledge_ipz.png').default,
     description: (
       <Translate id="homepage.card.knowledge.desc">
-        Các bài viết chuyên môn, nghiên cứu, phân tích, bài học kinh nghiệm và tài nguyên tri thức được IPZ chia sẻ rộng rãi.
+        Các bài viết chuyên môn, nghiên cứu, phân tích, bài học kinh nghiệm và tài nguyên tri thức được IPZ chia sẻ.
       </Translate>
     ),
     link: '/blog',
@@ -110,10 +110,10 @@ function FeatureCardItem({title, image, description, link}: FeatureItem) {
 
 export default function HomepageFeatures(): ReactNode {
   return (
-    <section className={styles.featuresSection}>
+    <section id="explore" className={styles.featuresSection}>
       <div className="container">
         {/* 1. KHÁM PHÁ TÀI LIỆU */}
-        <div id="explore" className={styles.sectionHeader}>
+        <div className={styles.sectionHeader}>
           <Heading as="h2" className={styles.sectionTitle}>
             <Translate id="homepage.section.explore">KHÁM PHÁ TÀI LIỆU</Translate>
           </Heading>

@@ -29,6 +29,7 @@
   font-weight: 700;
   color: #334155;
   margin-bottom: 1rem;
+  text-align: justify;
 }
 
 .heroDescription {
@@ -36,11 +37,15 @@
   line-height: 1.6;
   color: #64748B;
   margin-bottom: 2rem;
+  text-align: justify;
 }
 
 .heroButtons {
   display: flex;
   gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
 
 .heroImage {
@@ -137,4 +142,18 @@
   font-size: 0.8rem;
   color: #64748B;
   margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .heroButtons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .heroButtons a {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin-right: 0 !important;
+  }
 }
