@@ -1,6 +1,5 @@
 /**
- * IPZ Digital Solutions - Global CSS
- * Tối ưu Typography, Màu sắc & Khôi phục chuẩn Mobile Drawer
+ * IPZ Digital Solutions - Global CSS (Optimized)
  */
 
 /* ==================================================================
@@ -94,64 +93,8 @@ h1, h2, h3, h4 {
 }
 
 /* ==================================================================
-   3. KHÔI PHỦC MENU MOBILE DRAWER (TỰ ĐỘNG THEO NGUYÊN BẢN DOCUSAURUS)
+   3. MOBILE DRAWER MENU (TỐI ƯU HỢP NHẤT)
    ================================================================== */
-.navbar-sidebar {
-  background-color: var(--ifm-navbar-background-color, #ffffff);
-}
-
-.navbar-sidebar__brand {
-  border-bottom: 1px solid var(--ifm-toc-border-color, #e2e8f0);
-}
-
-/* Định dạng màu sắc chữ & nút bấm bên trong menu mobile */
-.navbar-sidebar .menu__link {
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 6px;
-  padding: 0.65rem 0.85rem;
-  color: var(--ifm-font-color-base, #0f172a);
-}
-
-.navbar-sidebar .menu__link--active,
-.navbar-sidebar .menu__link:hover {
-  color: var(--ifm-color-primary);
-  background-color: rgba(5, 150, 105, 0.08);
-}
-
-[data-theme='dark'] .navbar-sidebar {
-  background-color: #18181b;
-}
-
-[data-theme='dark'] .navbar-sidebar .menu__link {
-  color: #f1f5f9;
-}
-
-[data-theme='dark'] .navbar-sidebar .menu__link--active,
-[data-theme='dark'] .navbar-sidebar .menu__link:hover {
-  color: var(--ifm-color-primary-light);
-  background-color: rgba(16, 185, 129, 0.15);
-}
-
-/* ==================================================================
-   4. FOOTER
-   ================================================================== */
-.footer__bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding-top: 2rem;
-  margin-top: 1.5rem;
-}
-
-.footer__copyright {
-  opacity: 0.75;
-  font-size: 0.9rem;
-  line-height: 1.8;
-}
-/* ==================================================================
-   ÉP HIỂN THỊ PANEL MENU MOBILE (KHẮC PHỤC TRIỆT ĐỂ LỖI TRẮNG MÀN HÌNH)
-   ================================================================== */
-
-/* 1. Khung chứa toàn bộ Sidebar Drawer */
 .navbar-sidebar {
   display: flex !important;
   flex-direction: column !important;
@@ -161,13 +104,11 @@ h1, h2, h3, h4 {
   background-color: var(--ifm-navbar-background-color, #ffffff) !important;
 }
 
-/* 2. Giữ phần Logo & Nút đóng cố định ở đầu */
 .navbar-sidebar__brand {
   flex: 0 0 auto !important;
   border-bottom: 1px solid var(--ifm-toc-border-color, #e2e8f0) !important;
 }
 
-/* 3. Khung chứa danh mục tự mở rộng chiều cao và cho phép cuộn */
 .navbar-sidebar__items {
   flex: 1 1 auto !important;
   height: calc(100vh - 60px) !important;
@@ -178,7 +119,7 @@ h1, h2, h3, h4 {
   transform: none !important;
 }
 
-/* 4. Ép Panel chính (không chứa attribute [inert]) HIỂN THỊ RÕ RÀNG */
+/* Xử lý hiển thị phân lớp Panel [inert] */
 .navbar-sidebar__item:not([inert]),
 .theme-layout-navbar-sidebar-panel:not([inert]) {
   display: block !important;
@@ -190,13 +131,12 @@ h1, h2, h3, h4 {
   position: relative !important;
 }
 
-/* 5. Ẩn Panel phụ khi đang ở trạng thái chờ [inert] */
 .navbar-sidebar__item[inert],
 .theme-layout-navbar-sidebar-panel[inert] {
   display: none !important;
 }
 
-/* 6. Định dạng danh sách liên kết menu */
+/* Định dạng các nút liên kết menu mobile */
 .navbar-sidebar .menu__list {
   display: block !important;
   padding: 0.5rem 1rem !important;
@@ -218,18 +158,14 @@ h1, h2, h3, h4 {
   font-weight: 600 !important;
   padding: 0.75rem 1rem !important;
   border-radius: 8px !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }
 
-/* Hiệu ứng Hover & Active */
 .navbar-sidebar .menu__link:hover,
 .navbar-sidebar .menu__link--active {
   color: var(--ifm-color-primary, #059669) !important;
   background-color: rgba(5, 150, 105, 0.08) !important;
 }
 
-/* 7. Hỗ trợ Giao diện Tối (Dark Mode) */
 [data-theme='dark'] .navbar-sidebar {
   background-color: #18181b !important;
 }
@@ -242,4 +178,19 @@ h1, h2, h3, h4 {
 [data-theme='dark'] .navbar-sidebar .menu__link--active {
   color: var(--ifm-color-primary-light, #10b981) !important;
   background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+/* ==================================================================
+   4. FOOTER
+   ================================================================== */
+.footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 2rem;
+  margin-top: 1.5rem;
+}
+
+.footer__copyright {
+  opacity: 0.75;
+  font-size: 0.9rem;
+  line-height: 1.8;
 }
