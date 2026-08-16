@@ -1,4 +1,4 @@
-# 📚 IPZ Docs — Cổng Tri thức, Tiêu chuẩn & Tài liệu Công khai
+# IPZ Docs — Cổng Tri thức, Tiêu chuẩn & Tài liệu Công khai
 
 [![Docusaurus](https://img.shields.io/badge/Built%20with-Docusaurus%20v3-059669.svg)](https://docusaurus.io/)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-059669.svg)](https://nodejs.org/)
