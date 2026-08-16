@@ -1,4 +1,4 @@
-# IPZ Docs — Cổng Tri thức, Tiêu chuẩn & Tài liệu Công khai
+# PZ Docs — Cổng Tri thức, Tiêu chuẩn & Tài liệu Công khai
 
 [![Docusaurus](https://img.shields.io/badge/Built%20with-Docusaurus%20v3-059669.svg)](https://docusaurus.io/)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-059669.svg)](https://nodejs.org/)
@@ -27,3 +27,12 @@
 | **Tri thức & Nghiên cứu** | `/blog` | Bài viết chuyên môn (`expertise`), R&D (`research`) và bài học kinh nghiệm (`practice`). |
 
 ---
+## 📄 Bản quyền & Liên hệ
+
+Phát triển bởi: IPZ Digital Team
+
+Website: ipz.vn
+
+Email: info@ipz.vn
+
+© 2026 IPZ Digital Trust Ecosystem. All rights reserved.
