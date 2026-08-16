@@ -1,19 +1,7 @@
 {
   "link.title.Sản phẩm & Công cụ": {
-    "message": "Sản phẩm & Công cụ",
+    "message": "Products & Tools",
     "description": "The title of the footer links column with title=Sản phẩm & Công cụ in the footer"
-  },
-  "link.title.Tài liệu & Tri thức": {
-    "message": "Tài liệu & Tri thức",
-    "description": "The title of the footer links column with title=Tài liệu & Tri thức in the footer"
-  },
-  "link.title.IPZ & Cộng đồng": {
-    "message": "IPZ & Cộng đồng",
-    "description": "The title of the footer links column with title=IPZ & Cộng đồng in the footer"
-  },
-  "link.title.Pháp lý & Liên hệ": {
-    "message": "Pháp lý & Liên hệ",
-    "description": "The title of the footer links column with title=Pháp lý & Liên hệ in the footer"
   },
   "link.item.label.IPZ Verify": {
     "message": "IPZ Verify",
@@ -24,32 +12,52 @@
     "description": "The label of footer link with label=BiomeIPZ linking to /products/biomeipz"
   },
   "link.item.label.Thư viện & Công cụ": {
-    "message": "Thư viện & Công cụ",
+    "message": "Libraries & Tools",
     "description": "The label of footer link with label=Thư viện & Công cụ linking to /products/tools"
   },
   "link.item.label.Tất cả sản phẩm": {
-    "message": "Tất cả sản phẩm",
+    "message": "All Products",
     "description": "The label of footer link with label=Tất cả sản phẩm linking to /products/"
   },
+  "link.title.Tài liệu & Tri thức": {
+    "message": "Docs & Knowledge",
+    "description": "The title of the footer links column with title=Tài liệu & Tri thức in the footer"
+  },
   "link.item.label.Tiêu chuẩn": {
-    "message": "Tiêu chuẩn",
-    "description": "The label of footer link with label=Tiêu chuẩn linking to /tieu-chuan/"
+    "message": "Standards",
+    "description": "The label of footer link with label=Tiêu chuẩn linking to /standards/"
   },
   "link.item.label.Hướng dẫn": {
-    "message": "Hướng dẫn",
-    "description": "The label of footer link with label=Hướng dẫn linking to /huong-dan/"
+    "message": "Guides",
+    "description": "The label of footer link with label=Hướng dẫn linking to /guides/"
   },
   "link.item.label.Kiến thức & Blog": {
-    "message": "Kiến thức & Blog",
+    "message": "Knowledge & Blog",
     "description": "The label of footer link with label=Kiến thức & Blog linking to /blog"
   },
   "link.item.label.Nghiên cứu & R&D": {
-    "message": "Nghiên cứu & R&D",
+    "message": "Research & R&D",
     "description": "The label of footer link with label=Nghiên cứu & R&D linking to /blog/tags/cybersecurity"
   },
+  "link.title.IPZ & Cộng đồng": {
+    "message": "IPZ & Community",
+    "description": "The title of the footer links column with title=IPZ & Cộng đồng in the footer"
+  },
   "link.item.label.Về IPZ": {
-    "message": "Về IPZ",
+    "message": "About IPZ",
     "description": "The label of footer link with label=Về IPZ linking to https://ipz.vn"
+  },
+  "link.title.Pháp lý & Liên hệ": {
+    "message": "Legal & Contact",
+    "description": "The title of the footer links column with title=Pháp lý & Liên hệ in the footer"
+  },
+  "link.item.label.Liên hệ: info@ipz.vn": {
+    "message": "Contact: info@ipz.vn",
+    "description": "The label of footer link with label=Liên hệ: info@ipz.vn linking to mailto:info@ipz.vn"
+  },
+  "copyright": {
+    "message": "📍 Cai Nuoc, Ca Mau, Vietnam<br/>Copyright © 2026 IPZ. All rights reserved.",
+    "description": "The footer copyright"
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
@@ -63,10 +71,6 @@
     "message": "YouTube",
     "description": "The label of footer link with label=YouTube linking to https://youtube.com/@ipz-vn"
   },
-  "link.item.label.Liên hệ: info@ipz.vn": {
-    "message": "Liên hệ: info@ipz.vn",
-    "description": "The label of footer link with label=Liên hệ: info@ipz.vn linking to mailto:info@ipz.vn"
-  },
   "link.item.label.Privacy Policy": {
     "message": "Privacy Policy",
     "description": "The label of footer link with label=Privacy Policy linking to /privacy"
@@ -78,9 +82,5 @@
   "link.item.label.Security": {
     "message": "Security",
     "description": "The label of footer link with label=Security linking to /security"
-  },
-  "copyright": {
-    "message": "📍 Cái Nước, Cà Mau, Việt Nam<br/>Copyright © 2026 IPZ. All rights reserved.",
-    "description": "The footer copyright"
   }
 }
