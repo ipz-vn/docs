@@ -113,7 +113,7 @@ export default function HomepageFeatures(): ReactNode {
     <section className={styles.featuresSection}>
       <div className="container">
         {/* 1. KHÁM PHÁ TÀI LIỆU */}
-        <div className={styles.sectionHeader}>
+        <div id="explore" className={styles.sectionHeader}>
           <Heading as="h2" className={styles.sectionTitle}>
             <Translate id="homepage.section.explore">KHÁM PHÁ TÀI LIỆU</Translate>
           </Heading>

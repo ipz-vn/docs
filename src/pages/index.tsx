@@ -36,7 +36,7 @@ function HomepageHeader() {
               <div className={styles.heroButtons}>
                 <Link
                   className="button button--primary button--lg"
-                  to="/products/">
+                  to="/#explore">
                   📖 <Translate id="homepage.hero.cta_primary">Tra cứu tài liệu</Translate>
                 </Link>
                 <Link
