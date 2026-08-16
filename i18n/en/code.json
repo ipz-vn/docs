@@ -1,0 +1,82 @@
+{
+  "title": {
+    "message": "IPZ Docs",
+    "description": "The title of the site"
+  },
+  "tagline": {
+    "message": "IPZ Knowledge Portal, Standards & Documentation",
+    "description": "The tagline of the site"
+  },
+  "theme.navbar.item.label.Sản phẩm & Công cụ": {
+    "message": "Products & Tools"
+  },
+  "theme.navbar.item.label.Tiêu chuẩn": {
+    "message": "Standards"
+  },
+  "theme.navbar.item.label.Hướng dẫn": {
+    "message": "Guides"
+  },
+  "theme.navbar.item.label.Kiến thức & Blog": {
+    "message": "Knowledge & Blog"
+  },
+  "theme.navbar.item.label.Tất cả tài liệu chia sẻ": {
+    "message": "All Shared Docs"
+  },
+  "theme.navbar.item.label.An ninh mạng": {
+    "message": "Cybersecurity"
+  },
+  "theme.navbar.item.label.Sở hữu trí tuệ": {
+    "message": "Intellectual Property"
+  },
+  "theme.navbar.item.label.Thương hiệu": {
+    "message": "Brand"
+  },
+  "theme.navbar.item.label.Tin sinh học": {
+    "message": "Bioinformatics"
+  },
+  "theme.footer.link.title.Sản phẩm & Công cụ": {
+    "message": "Products & Tools"
+  },
+  "theme.footer.link.item.label.IPZ Verify": {
+    "message": "IPZ Verify"
+  },
+  "theme.footer.link.item.label.BiomeIPZ": {
+    "message": "BiomeIPZ"
+  },
+  "theme.footer.link.item.label.Thư viện & Công cụ": {
+    "message": "Libraries & Tools"
+  },
+  "theme.footer.link.item.label.Tất cả sản phẩm": {
+    "message": "All Products"
+  },
+  "theme.footer.link.title.Tài liệu & Tri thức": {
+    "message": "Docs & Knowledge"
+  },
+  "theme.footer.link.item.label.Tiêu chuẩn": {
+    "message": "Standards"
+  },
+  "theme.footer.link.item.label.Hướng dẫn": {
+    "message": "Guides"
+  },
+  "theme.footer.link.item.label.Kiến thức & Blog": {
+    "message": "Knowledge & Blog"
+  },
+  "theme.footer.link.item.label.Nghiên cứu & R&D": {
+    "message": "Research & R&D"
+  },
+  "theme.footer.link.title.IPZ & Cộng đồng": {
+    "message": "IPZ & Community"
+  },
+  "theme.footer.link.item.label.Về IPZ": {
+    "message": "About IPZ"
+  },
+  "theme.footer.link.title.Pháp lý & Liên hệ": {
+    "message": "Legal & Contact"
+  },
+  "theme.footer.link.item.label.Liên hệ: info@ipz.vn": {
+    "message": "Contact: info@ipz.vn"
+  },
+  "theme.footer.copyright": {
+    "message": "📍 Cai Nuoc, Ca Mau, Vietnam<br/>Copyright © 2026 IPZ. All rights reserved."
+  }
+}

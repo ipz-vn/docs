@@ -1,11 +1,63 @@
 .features {
   display: flex;
   align-items: center;
-  padding: 2rem 0;
+  padding: 3rem 0;
   width: 100%;
 }
 
 .featureSvg {
-  height: 200px;
-  width: 200px;
+  height: 140px;
+  width: 140px;
+  margin-bottom: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+/* Biến toàn bộ khung thành Card hiện đại */
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: var(--ifm-card-background-color, #ffffff);
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Hiệu ứng rê chuột (Hover) chuẩn Expert */
+.featureCard:hover {
+  transform: translateY(-8px);
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.featureCard:hover .featureSvg {
+  transform: scale(1.08);
+}
+
+.featureTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--ifm-heading-color);
+}
+
+.featureDescription {
+  font-size: 0.95rem;
+  color: var(--ifm-color-content-secondary);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Tương thích Dark Mode */
+:global([data-theme='dark']) .featureCard {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: #1b1b1d;
+}
+
+:global([data-theme='dark']) .featureCard:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
 }

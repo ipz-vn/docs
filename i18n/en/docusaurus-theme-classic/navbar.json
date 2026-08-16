@@ -1,0 +1,46 @@
+{
+  "title": {
+    "message": "IPZ Docs",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "IPZ Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Sản phẩm & Công cụ": {
+    "message": "Sản phẩm & Công cụ",
+    "description": "Navbar item with label Sản phẩm & Công cụ"
+  },
+  "item.label.Tiêu chuẩn": {
+    "message": "Tiêu chuẩn",
+    "description": "Navbar item with label Tiêu chuẩn"
+  },
+  "item.label.Hướng dẫn": {
+    "message": "Hướng dẫn",
+    "description": "Navbar item with label Hướng dẫn"
+  },
+  "item.label.Kiến thức & Blog": {
+    "message": "Kiến thức & Blog",
+    "description": "Navbar item with label Kiến thức & Blog"
+  },
+  "item.label.Tất cả tài liệu chia sẻ": {
+    "message": "Tất cả tài liệu chia sẻ",
+    "description": "Navbar item with label Tất cả tài liệu chia sẻ"
+  },
+  "item.label.An ninh mạng": {
+    "message": "An ninh mạng",
+    "description": "Navbar item with label An ninh mạng"
+  },
+  "item.label.Sở hữu trí tuệ": {
+    "message": "Sở hữu trí tuệ",
+    "description": "Navbar item with label Sở hữu trí tuệ"
+  },
+  "item.label.Thương hiệu": {
+    "message": "Thương hiệu",
+    "description": "Navbar item with label Thương hiệu"
+  },
+  "item.label.Tin sinh học": {
+    "message": "Tin sinh học",
+    "description": "Navbar item with label Tin sinh học"
+  }
+}

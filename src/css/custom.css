@@ -2,6 +2,7 @@
  * IPZ Digital Solutions - Global CSS
  * Tối ưu hóa cho giao diện Expert & Tinh gọn (Đã chỉnh sửa sang Emerald Green)
  */
+
 /**
  * BỔ SUNG VÀO ĐỂ ĐỒNG BỘ TYPOGRAPHY VỚI TRANG CHÍNH IPZ.VN
  */
@@ -105,4 +106,231 @@ h1, h2, h3, h4 {
 /* Căn chỉnh Logo gọn gàng */
 .navbar__logo img {
   border-radius: 4px;
+}
+
+/* ==================================================================
+   3. TÙY CHỈNH NAVBAR (THANH ĐIỀU HƯỚNG) - PHONG CÁCH EXPERT
+   ================================================================== */
+
+/* 3.1 Hiệu ứng kính mờ (Glassmorphism) và loại bỏ viền cứng */
+.navbar {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Bóng đổ siêu nhẹ tạo chiều sâu */
+  border-bottom: none !important;
+  background-color: rgba(255, 255, 255, 0.85) !important; /* Làm trong suốt 85% */
+  backdrop-filter: blur(12px); /* Hiệu ứng mờ nền */
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.6rem 1.5rem; /* Căn lề trên/dưới rộng rãi hơn một chút */
+  transition: all 0.3s ease;
+}
+
+/* Kính mờ cho Dark Mode */
+[data-theme='dark'] .navbar {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background-color: rgba(24, 24, 27, 0.85) !important; /* Dựa trên màu #18181B */
+}
+
+/* 3.2 Tinh chỉnh các mục Menu (Item) để tinh gọn, sắc nét hơn */
+.navbar__item {
+  font-weight: 500; /* Font chữ vừa phải, không quá mỏng */
+  font-size: 0.95rem;
+  padding: 0.5rem 0.8rem;
+  margin: 0 0.15rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+/* Đổi màu highlight nhẹ nhàng khi di chuột vào Menu Item */
+.navbar__item:hover {
+  color: var(--ifm-color-primary);
+  background-color: rgba(5, 150, 105, 0.05); /* Tông xanh nhạt */
+}
+[data-theme='dark'] .navbar__item:hover {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+/* 3.3 Nút CTA "Liên hệ IPZ" nổi bật & vừa vặn (Đã xóa ở HTML nhưng giữ CSS dự phòng) */
+.navbar .nav-button {
+  background-color: var(--ifm-color-primary) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 0.5rem 1.25rem !important; /* Kích thước chuẩn, không làm phình Navbar */
+  margin-left: 15px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none !important;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2);
+}
+
+/* Hiệu ứng nổi lên khi di chuột vào nút */
+.navbar .nav-button:hover {
+  background-color: var(--ifm-color-primary-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+  text-decoration: none;
+}
+
+/* Nút bấm ở chế độ Dark Mode */
+[data-theme='dark'] .navbar .nav-button {
+  background-color: var(--ifm-color-primary) !important;
+  color: #121212 !important; /* Chữ tối trên nền Emerald sáng */
+}
+[data-theme='dark'] .navbar .nav-button:hover {
+  background-color: var(--ifm-color-primary-lighter) !important;
+}
+
+/* 3.4 Đồng bộ ô Tìm kiếm (Search Bar plugin @easyops-cn) - Bản mở rộng */
+.navbar__search-input {
+  border-radius: 8px !important; /* Đồng bộ bo góc 8px với Nút Liên Hệ và Logo */
+  background-color: #f1f5f9 !important; /* Xám nhạt, tinh tế, chìm vào nền */
+  border: 1px solid transparent !important;
+  font-family: var(--ifm-font-family-base);
+  transition: all 0.3s ease;
+  padding-left: 2.2rem !important; /* Căn chỉnh icon kính lúp */
+}
+
+/* Khi click vào ô tìm kiếm */
+.navbar__search-input:focus {
+  background-color: #ffffff !important;
+  border: 1px solid var(--ifm-color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1) !important; /* Viền sáng bao quanh (focus ring) */
+}
+
+/* Ô tìm kiếm ở chế độ Dark Mode */
+[data-theme='dark'] .navbar__search-input {
+  background-color: #27272a !important; /* Nổi hơn màu nền Navbar 1 chút để dễ nhận diện */
+  color: #e4e4e7 !important;
+}
+[data-theme='dark'] .navbar__search-input:focus {
+  background-color: #18181B !important;
+  border-color: var(--ifm-color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* ==================================================================
+   4. TÙY BIẾN THANH TÌM KIẾM THÀNH DẠNG ICON KÍNH LÚP TỐI GIẢN
+   ================================================================== */
+.navbar__search {
+  margin-left: 0.5rem;
+}
+
+.DocSearch-Button {
+  background: transparent !important;
+  border-radius: 50% !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  justify-content: center !important;
+  border: 1px solid transparent !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Hiệu ứng hover cho kính lúp */
+.DocSearch-Button:hover {
+  background: var(--ifm-color-emphasis-100) !important;
+}
+
+/* Ẩn chữ "Search" và phím tắt (Ctrl+K) */
+.DocSearch-Button-Placeholder,
+.DocSearch-Button-Keys {
+  display: none !important;
+}
+
+/* Chỉnh kích thước và màu kính lúp cho tiệp màu với menu */
+.DocSearch-Search-Icon {
+  width: 18px !important;
+  height: 18px !important;
+  color: var(--ifm-navbar-text-color) !important;
+}
+
+/* ==================================================================
+   5. ẨN ICON NGÔN NGỮ (文A) TRÊN NAVBAR
+   ================================================================== */
+.navbar__item.dropdown > .navbar__link > svg {
+  display: none !important;
+}
+
+/* Căn chỉnh lại khoảng cách cho chữ Vi/En sau khi bỏ icon để cân đối hơn */
+.navbar__item.dropdown > .navbar__link {
+  padding-left: 0.8rem !important;
+  padding-right: 0.8rem !important;
+}
+
+/* Tạo đường phân cách tinh tế giữa menu và phần đáy Footer */
+.footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15); /* Đường kẻ màu trắng mờ */
+  padding-top: 2rem; /* Tạo khoảng thở phía trên cụm chữ địa chỉ */
+  margin-top: 1.5rem; /* Đẩy đường kẻ ra xa khỏi phần menu bên trên */
+}
+
+/* Tùy chỉnh cụm chữ bản quyền và địa chỉ cho Expert hơn */
+.footer__copyright {
+  opacity: 0.75; /* Làm mờ nhẹ chữ để nhường sự chú ý cho Menu */
+  font-size: 0.9rem; /* Thu nhỏ size chữ đáy trang một chút */
+  line-height: 1.8; /* Tạo khoảng cách giãn dòng giữa Địa chỉ và Copyright */
+}
+
+/* Custom Feature Cards - IPZ Style */
+.feature-card {
+  height: 100%;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: var(--ifm-card-background-color, #ffffff);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+/* Hiệu ứng nổi lên và phát sáng viền khi rê chuột */
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Hiệu ứng mượt cho hình ảnh bên trong thẻ */
+.feature-card__image {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-card__image {
+  transform: scale(1.05);
+}
+
+.feature-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--ifm-heading-color);
+}
+
+.feature-card__description {
+  font-size: 0.95rem;
+  color: var(--ifm-color-content-secondary);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Hỗ trợ giao diện tối (Dark Mode) */
+[data-theme='dark'] .feature-card {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: #1b1b1d;
+}
+
+[data-theme='dark'] .feature-card:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
 }

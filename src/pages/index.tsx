@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
+import Translate from '@docusaurus/Translate';
 
 import styles from './index.module.css';
 
@@ -13,15 +14,29 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
+        {/* Tiêu đề chính */}
         <Heading as="h1" className="hero__title">
-          {siteConfig.title}
+          <Translate id="homepage.hero.title">IPZ Docs</Translate>
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        
+        {/* Tagline / Subtitle */}
+        <p className="hero__subtitle">
+          <Translate id="homepage.hero.subtitle">
+            Cổng Tri thức, Tiêu chuẩn & Tài liệu IPZ
+          </Translate>
+        </p>
+        
+        {/* Cụm nút bấm hành động */}
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Khám phá Tài liệu
+            className="button button--secondary button--lg margin-right--md"
+            to="/products/">
+            <Translate id="homepage.hero.cta_primary">Khám phá Sản phẩm & Công cụ</Translate>
+          </Link>
+          <Link
+            className="button button--outline button--secondary button--lg"
+            to="/standards/">
+            <Translate id="homepage.hero.cta_secondary">Tra cứu tiêu chuẩn</Translate>
           </Link>
         </div>
       </div>
@@ -34,7 +49,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="Single Source of Truth cho toàn bộ Hiến chương, Tiêu chuẩn, Hạ tầng Dữ liệu & Tri thức IPZ.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
