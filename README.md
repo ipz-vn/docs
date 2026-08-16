@@ -29,7 +29,7 @@
 ---
 ## 📄 Bản quyền & Liên hệ
 
-Phát triển bởi: IPZ Digital Team
+Phát triển bởi: IPZ
 
 Website: ipz.vn
 
