@@ -1,0 +1,16 @@
+.languageSwitcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.languageSwitcher:hover {
+  text-decoration: none;
+}
+
+.globe {
+  font-size: 1rem;
+  line-height: 1;
+}
