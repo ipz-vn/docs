@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.ipz.vn/schemas/document-frontmatter.schema.json",
+
+  "title": "IPZ Documentation Frontmatter",
+  "description": "Metadata schema for documents published on docs.ipz.vn",
+
+  "type": "object",
+
+  "required": [
+    "id",
+    "title",
+    "description",
+    "slug",
+    "type",
+    "category",
+    "status",
+    "version",
+    "author",
+    "createdAt",
+    "updatedAt"
+  ],
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^DOC-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{3,}$",
+      "description": "Unique IPZ document identifier."
+    },
+
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160
+    },
+
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500
+    },
+
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[/-][a-z0-9]+)*$"
+    },
+
+    "type": {
+      "type": "string",
+      "enum": [
+        "concept",
+        "guide",
+        "reference",
+        "product",
+        "standard",
+        "tutorial",
+        "policy"
+      ]
+    },
+
+    "category": {
+      "type": "string",
+      "enum": [
+        "introduction",
+        "concepts",
+        "products",
+        "guides",
+        "standards",
+        "developers"
+      ]
+    },
+
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "in_review",
+        "changes_requested",
+        "approved",
+        "published",
+        "archived"
+      ]
+    },
+
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+
+    "author": {
+      "type": "string",
+      "minLength": 2
+    },
+
+    "reviewer": {
+      "type": ["string", "null"]
+    },
+
+    "createdAt": {
+      "type": "string",
+      "format": "date"
+    },
+
+    "updatedAt": {
+      "type": "string",
+      "format": "date"
+    },
+
+    "publishedAt": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+
+    "sidebar_position": {
+      "type": ["number", "string"]
+    },
+
+    "sidebar_label": {
+      "type": "string"
+    },
+
+    "hide_title": {
+      "type": "boolean"
+    },
+
+    "hide_table_of_contents": {
+      "type": "boolean"
+    },
+
+    "toc_min_heading_level": {
+      "type": "number"
+    },
+
+    "toc_max_heading_level": {
+      "type": "number"
+    }
+  },
+
+  "additionalProperties": true
+}

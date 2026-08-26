@@ -1,0 +1,19 @@
+# ============================================================
+# IPZ Docs - CODEOWNERS
+# ============================================================
+
+# Documentation content
+/docs/ @dzokha
+
+# Documentation schema
+/schemas/ @dzokha
+
+# Validation scripts
+/scripts/ @dzokha
+
+# Editorial workflow
+/.github/pull_request_template.md @dzokha
+/.github/workflows/ @dzokha
+
+# CODEOWNERS itself
+/.github/CODEOWNERS @dzokha
