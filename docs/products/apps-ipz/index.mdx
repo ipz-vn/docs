@@ -1,0 +1,43 @@
+---
+sidebar_position: 1
+
+id: DOC-PRODUCTS-001
+title: IPZ Apps - Tiện ích An toàn
+description: Bộ công cụ an ninh mạng, kiểm thử mã QR, rút gọn URL và phân tích hạ tầng DNS/IP cho lập trình viên.
+type: product
+category: products
+status: published
+version: 1.0.0
+author: IPZ
+reviewer: IPZ Security Team
+createdAt: 2026-08-26
+updatedAt: 2026-08-26
+publishedAt: 2026-08-26
+tags:
+  - products
+  - apps
+  - security
+---
+
+import DocCardList from '@theme/DocCardList';
+
+# 🛠️ IPZ Apps
+
+Chào mừng bạn đến với bộ tài liệu kỹ thuật dành cho bộ tiện ích **IPZ Apps** (ứng dụng tại `apps.ipz.vn`). Chúng tôi cung cấp các giải pháp phân tích an ninh mạng, bảo mật quyền riêng tư và tối ưu hóa hạ tầng kết nối với tiêu chuẩn bảo mật đa lớp.
+
+Toàn bộ công cụ đều ưu tiên **xử lý dữ liệu cục bộ (100% Client-side)** hoặc chạy trên hạ tầng **Vercel Edge Network & Upstash Global Redis** để đảm bảo tốc độ phản hồi dưới 50ms.
+
+---
+
+## 🚀 Danh mục Tiện ích Cốt lõi
+
+<DocCardList />
+
+---
+
+## 🛡️ Điểm nổi bật về Kiến trúc Bảo mật IPZ Apps
+
+* **Giải mã Cục bộ (Client-Side Privacy):** Các công cụ tạo và rà quét mã QR chạy hoàn toàn bằng JavaScript trên trình duyệt của người dùng, không tải dữ liệu riêng tư về máy chủ.
+* **Phòng thủ Anti-Bot & IPv6 Masking:** API Serverless tích hợp thuật toán cửa sổ trượt (*Sliding Window Rate Limit*) và cơ chế gộp cụm subnet IPv6 `/64` ngăn chặn các đợt tấn công DDoS/Spam tự động.
+* **Khử trùng Dữ liệu (SHA-256 Deduplication):** Bộ nhớ Redis tự động băm URL đầu vào để tối ưu hóa lưu trữ, tránh trùng lặp dữ liệu dư thừa.
+* **Tra cứu Mã hóa DNS-over-HTTPS (DoH):** Truy vấn DNS qua giao thức HTTPS bảo mật với cơ chế tự động luân phiên (*Failover*) giữa Google DoH và Cloudflare DoH.

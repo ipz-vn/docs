@@ -1,0 +1,43 @@
+---
+sidebar_position: 1
+
+id: DOC-PRODUCTS-001
+title: IPZ Apps - Secure Utilities
+description: A suite of cybersecurity tools, QR code testing, URL shortening, and DNS/IP infrastructure analysis for developers.
+type: product
+category: products
+status: published
+version: 1.0.0
+author: IPZ
+reviewer: IPZ Security Team
+createdAt: 2026-08-26
+updatedAt: 2026-08-26
+publishedAt: 2026-08-26
+tags:
+  - products
+  - apps
+  - security
+---
+
+import DocCardList from '@theme/DocCardList';
+
+# 🛠️ IPZ Apps
+
+Welcome to the technical documentation for the **IPZ Apps** suite (available at `apps.ipz.vn`). We provide cybersecurity analysis, privacy protection, and connection infrastructure optimization solutions built with multi-layer security standards.
+
+All tools prioritize **local data processing (100% Client-side)** or operate on **Vercel Edge Network & Upstash Global Redis** infrastructure to ensure sub-50ms response times.
+
+---
+
+## 🚀 Core Utilities Directory
+
+<DocCardList />
+
+---
+
+## 🛡️ IPZ Apps Security Architecture Highlights
+
+* **Client-Side Privacy (Local Decoding):** QR code generation and scanning tools run entirely via JavaScript within the user's browser, without uploading private data to external servers.
+* **Anti-Bot Defense & IPv6 Masking:** Serverless APIs integrate a *Sliding Window Rate Limit* algorithm and an IPv6 `/64` subnet aggregation mechanism to block automated DDoS and spam attacks.
+* **SHA-256 Data Deduplication:** Redis memory automatically hashes input URLs to optimize storage and eliminate redundant data.
+* **Encrypted DNS-over-HTTPS (DoH) Lookup:** DNS queries are secured via HTTPS with an automatic failover mechanism between Google DoH and Cloudflare DoH.
