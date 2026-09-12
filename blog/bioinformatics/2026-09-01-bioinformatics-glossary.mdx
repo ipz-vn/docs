@@ -1,0 +1,1298 @@
+---
+id: bioinformatics-glossary
+slug: /bioinformatics-glossary
+title: Thuật ngữ Tin sinh học cơ bản
+sidebar_label: Thuật ngữ Tin sinh học
+description: Giải thích các thuật ngữ nền tảng trong tin sinh học, di truyền học và phân tích dữ liệu NGS.
+tags: [bio]
+authors: [dzokha]
+toc_min_heading_level: 2
+toc_max_heading_level: 3
+---
+
+
+# Thuật ngữ Tin sinh học cơ bản
+
+Tài liệu này giải thích các thuật ngữ nền tảng thường gặp trong **tin sinh học (Bioinformatics)**, đặc biệt trong các lĩnh vực **DNA sequencing, NGS, genomics, variant analysis, pathogen detection và aquaculture genomics**.
+
+Mục tiêu là giúp người mới có thể hiểu được mối quan hệ:
+
+```text
+DNA
+ │
+ ├── Genome
+ │    └── Gene
+ │          │
+ │          ▼
+ │         RNA
+ │          │
+ │          ▼
+ │       Protein
+ │
+ └── Variant
+      ├── SNP
+      └── Indel
+```
+
+Bảng thuật ngữ nhanh
+
+| Thuật ngữ        | Tiếng Việt                     | Ý nghĩa ngắn                                               |
+| ---------------- | ------------------------------ | ---------------------------------------------------------- |
+| DNA              | Axit deoxyribonucleic          | Vật chất di truyền                                         |
+| Genome           | Bộ gen                         | Toàn bộ thông tin di truyền                                |
+| Gene             | Gen                            | Đơn vị/đoạn DNA có chức năng                               |
+| RNA              | Axit ribonucleic               | Phân tử tham gia biểu hiện và điều hòa thông tin di truyền |
+| Protein          | Protein                        | Phân tử thực hiện nhiều chức năng sinh học                 |
+| Variant          | Biến thể                       | Khác biệt trong trình tự DNA                               |
+| SNP              | Đa hình nucleotide đơn         | Thay đổi một nucleotide                                    |
+| Indel            | Chèn/mất                       | Insertion hoặc deletion                                    |
+| Reference Genome | Bộ gen tham chiếu              | Genome dùng làm chuẩn so sánh                              |
+| Sequencing       | Giải trình tự                  | Xác định trình tự nucleotide                               |
+| NGS              | Giải trình tự thế hệ mới       | Công nghệ sequencing quy mô lớn                            |
+| Read             | Đoạn đọc                       | Một đoạn trình tự được máy đọc                             |
+| FASTQ            | Định dạng FASTQ                | Sequence + quality                                         |
+| FASTA            | Định dạng FASTA                | Sequence                                                   |
+| QC               | Kiểm soát chất lượng           | Kiểm tra dữ liệu sequencing                                |
+| Trimming         | Cắt lọc                        | Loại bỏ phần trình tự không tốt                            |
+| Alignment        | Căn chỉnh                      | Đặt read lên reference                                     |
+| Mapping          | Ánh xạ                         | Xác định vị trí read trên reference                        |
+| SAM              | Sequence Alignment/Map         | File alignment dạng text                                   |
+| BAM              | Binary Alignment Map           | File alignment dạng binary                                 |
+| VCF              | Variant Call Format            | File chứa variant                                          |
+| Genotype         | Kiểu gen                       | Trạng thái allele của cá thể                               |
+| Allele           | Alen                           | Một phiên bản của locus                                    |
+| Locus            | Vị trí                         | Vị trí cụ thể trên genome                                  |
+| Gene Expression  | Biểu hiện gene                 | Mức độ gene được biểu hiện                                 |
+| RNA-seq          | Giải trình tự RNA              | Phân tích transcriptome/expression                         |
+| Transcriptome    | Hệ phiên mã                    | Tập hợp RNA được biểu hiện                                 |
+| Pathogen         | Tác nhân gây bệnh              | Sinh vật/tác nhân gây bệnh                                 |
+| Microbiome       | Hệ vi sinh                     | Cộng đồng vi sinh vật/hệ gene liên quan                    |
+| Metagenomics     | Tin sinh học hệ gene cộng đồng | Phân tích DNA từ cộng đồng sinh vật                        |
+| AMR              | Kháng thuốc kháng vi sinh vật  | Khả năng chống thuốc                                       |
+| AMR Gene         | Gene kháng thuốc               | Gene liên quan cơ chế kháng thuốc                          |
+
+
+## DNA - Deoxyribonucleic Acid
+
+DNA là phân tử lưu trữ thông tin di truyền của sinh vật. DNA được tạo thành từ bốn loại nucleotide chính:
+
+| Ký hiệu | Tên      |
+| ------- | -------- |
+| A       | Adenine  |
+| T       | Thymine  |
+| G       | Guanine  |
+| C       | Cytosine |
+
+Có thể hình dung DNA giống như một chuỗi ký tự sinh học: `A T G C G T A C C T G A A C T G`
+
+## Genome
+
+Genome là toàn bộ vật chất di truyền của một sinh vật.
+
+Nếu:
+
+```
+DNA = các trang sách
+Gene = một đoạn nội dung có chức năng
+Genome = toàn bộ cuốn sách
+```
+
+thì có thể hình dung:
+
+```
+                 GENOME
+        ┌─────────────────────┐
+        │ DNA                 │
+        │                     │
+        │ Gene A              │
+        │                     │
+        │ Gene B              │
+        │                     │
+        │ vùng điều hòa       │
+        │                     │
+        │ vùng không mã hóa   │
+        │                     │
+        │ Gene C              │
+        └─────────────────────┘
+
+```
+
+Genome và Gene khác nhau thế nào?
+
+Genome
+  │
+  ├── Gene 1
+  ├── Gene 2
+  ├── Gene 3
+  ├── Gene 4
+  └── nhiều vùng DNA khác
+
+
+  Genome lớn hơn Gene rất nhiều.
+
+## Gene
+
+Gene là một đoạn DNA có chức năng sinh học cụ thể.
+
+Một gene có thể chứa thông tin để tạo ra:
+
+protein;
+hoặc một loại RNA có chức năng.
+
+Ví dụ đơn giản:
+```
+DNA
+────────────────────────────────────
+       ┌──────────────┐
+       │     GENE     │
+       └──────────────┘
+────────────────────────────────────
+```
+
+Ví dụ
+
+Giả sử có:
+
+```
+ATCGATCGATCGATCG...
+        ↑
+       GENE
+```
+
+
+Gene có thể liên quan đến một chức năng nào đó của tế bào.
+
+Trong nghiên cứu tôm, người ta có thể quan tâm đến các gene liên quan đến:
+
+miễn dịch;
+tăng trưởng;
+stress;
+chuyển hóa;
+kháng bệnh.
+
+
+## RNA - Ribonucleic Acid
+
+RNA là một nhóm phân tử đóng vai trò quan trọng trong việc sử dụng và điều hòa thông tin di truyền.
+
+Một mô hình đơn giản:
+
+```
+DNA
+ │
+ │ transcription
+ ▼
+RNA
+ │
+ │ translation
+ ▼
+Protein
+
+```
+
+Trong đó:
+
+DNA chứa thông tin;
+RNA có thể mang/truyền hoặc điều hòa thông tin;
+Protein thực hiện nhiều chức năng sinh học.
+Một số loại RNA
+mRNA — messenger RNA
+tRNA — transfer RNA
+rRNA — ribosomal RNA
+miRNA — microRNA
+nhiều loại RNA điều hòa khác.
+
+## Protein
+
+Protein là các phân tử thực hiện rất nhiều chức năng trong tế bào.
+
+Ví dụ:
+
+enzyme;
+protein cấu trúc;
+protein vận chuyển;
+protein miễn dịch;
+receptor;
+protein tín hiệu.
+
+Mô hình đơn giản:
+```
+DNA
+ │
+ ▼
+RNA
+ │
+ ▼
+Protein
+ │
+ ▼
+Chức năng sinh học
+```
+
+Ví dụ:
+
+```
+Gene liên quan miễn dịch
+        ↓
+       RNA
+        ↓
+     Protein
+        ↓
+Phản ứng miễn dịch
+
+
+```
+
+Mô hình DNA → RNA → Protein là cách đơn giản để hiểu dòng thông tin di truyền. Không phải mọi gene đều tạo protein; một số gene tạo ra RNA có chức năng.
+
+6. Variant
+
+Tên tiếng Anh: Variant
+Cách đọc: ve-ri-ờnt
+Tiếng Việt: Biến thể di truyền
+
+Variant là một sự khác biệt trong trình tự DNA so với một trình tự tham chiếu hoặc so với một cá thể/quần thể khác.
+
+Ví dụ:
+```
+Reference:
+ATGCGTACCTGA
+
+Sample:
+ATGCGTACCTTA
+             ↑
+          khác biệt
+```
+
+Ở đây:
+
+```
+Reference: G
+Sample:    T
+```
+
+là một biến thể.
+
+Các dạng variant thường gặp:
+```
+Variant
+ ├── SNP / SNV
+ ├── Indel
+ ├── Insertion
+ ├── Deletion
+ ├── CNV
+ └── Structural Variant
+```
+
+## SNP - Single Nucleotide Polymorphism
+
+SNP là sự thay đổi tại một nucleotide.
+
+Ví dụ:
+```
+Reference:
+ATGCGTACCTGA
+
+Sample:
+ATGCGTACCTTA
+             ↑
+             G → T
+```
+
+Chỉ một nucleotide thay đổi: `G → T`
+
+Đây là ví dụ về SNP.
+
+Ví dụ nghiên cứu tôm
+
+Giả sử có hai nhóm:
+
+```
+Tôm kháng bệnh:
+...A...C...G...
+
+Tôm nhạy bệnh:
+...A...T...G...
+         ↑
+        SNP
+```
+
+Nếu SNP này xuất hiện với tần suất khác biệt rõ ràng giữa hai nhóm, nhà nghiên cứu có thể kiểm tra xem nó có liên quan đến khả năng kháng bệnh hay không.
+
+Trong phân tích biến thể, thuật ngữ SNV (Single Nucleotide Variant) có thể chính xác hơn khi chỉ nói về một biến thể nucleotide đơn trong một mẫu. "SNP" thường được dùng trong bối cảnh biến thể có tính đa hình trong quần thể.
+
+## Indel
+
+Indel là thuật ngữ chỉ Insertion + Deletion, tức biến thể do chèn hoặc mất nucleotide.
+
+Insertion
+
+Insertion = chèn thêm nucleotide.
+
+```
+Reference:
+ATGCGTACCTGA
+
+Sample:
+ATGCGTTACCTGA
+       ↑
+       T được chèn
+```
+
+Deletion
+
+Deletion = mất nucleotide.
+
+```
+Reference:
+ATGCGTACCTGA
+
+Sample:
+ATGCGTCC TGA
+      ↑
+    nucleotide bị mất
+```
+
+Có thể hình dung:
+
+```
+Reference
+ATGCGTACCTGA
+
+Insertion
+ATGCGTTACCTGA
+      +
+
+Deletion
+ATGCGACCTGA
+     -
+```
+
+9. Reference Genome
+
+Bộ gen tham chiếu (Reference genome) là một trình tự genome được sử dụng làm chuẩn để so sánh.
+
+Ví dụ:
+```
+Reference genome
+────────────────────────────
+ATGCGTACCTGAACTG...
+```
+
+Khi có dữ liệu DNA của một con tôm:
+
+```
+Sample DNA
+────────────────────────────
+ATGCGTACCTTAACTG...
+```
+
+ta có thể so sánh:
+```
+Reference:
+ATGCGTACCTGAACTG
+           ↑
+
+Sample:
+ATGCGTACCTTAACTG
+           ↑
+```
+
+Từ đó phát hiện variant.
+
+10. Sequencing
+
+Giải trình tự (Sequencing) là quá trình xác định trình tự nucleotide trong DNA hoặc RNA.
+
+Ví dụ:
+
+```
+DNA chưa biết:
+
+?????????????????
+
+        ↓
+   Sequencing
+
+        ↓
+
+ATGCGTACCTGAACCT
+```
+
+NGS là một nhóm công nghệ cho phép giải trình tự rất nhiều đoạn DNA/RNA cùng lúc.
+
+
+## NGS - Next-Generation Sequencing
+
+Giải trình tự thế hệ mới (NGS) cho phép tạo ra một lượng lớn dữ liệu trình tự trong một lần chạy.
+
+Pipeline đơn giản:
+
+```
+Sample
+  │
+  ▼
+DNA extraction
+  │
+  ▼
+Library preparation
+  │
+  ▼
+Sequencing
+  │
+  ▼
+FASTQ
+```
+
+NGS có thể được sử dụng cho:
+
+Whole Genome Sequencing — WGS
+Whole Exome Sequencing — WES
+RNA-seq
+Metagenomics
+Pathogen detection
+Variant discovery.
+
+12. Read
+
+Tên: Read
+Cách đọc: riid
+Tiếng Việt: Đoạn trình tự đọc được
+
+Sequencing không nhất thiết đọc toàn bộ genome trong một lần.
+
+Thay vào đó, máy tạo ra rất nhiều đoạn trình tự ngắn gọi là reads.
+
+Ví dụ:
+
+```
+Genome thật:
+
+ATGCGTACCTGAACCTGGTACCGTAA...
+```
+
+Máy sequencing có thể tạo ra:
+
+```
+Read 1: ATGCGTACCTGA
+Read 2: CCTGAACCTGGT
+Read 3: AACCTGGTACCG
+Read 4: TGG TACCGTAA
+...
+```
+
+Nhiệm vụ của bioinformatics là xử lý hàng triệu hoặc hàng tỷ reads này.
+
+
+13. FASTQ
+
+Tên: FASTQ format
+Cách đọc: fast-Q
+
+FASTQ là định dạng dữ liệu phổ biến để lưu:
+
+trình tự nucleotide;
+chất lượng của từng nucleotide.
+
+Ví dụ:
+```
+@read001
+ATGCGTACCTGA
++
+IIIIHHHHGGGG
+```
+
+Một read FASTQ thường có 4 dòng:
+
+```
+@Read ID
+Sequence
++
+Quality
+```
+
+Ý nghĩa
+
+```
+@read001
+   │
+   └── tên read
+
+ATGCGTACCTGA
+   │
+   └── trình tự DNA
+
++
+   │
+   └── dấu phân cách
+
+IIIIHHHHGGGG
+   │
+   └── chất lượng từng base
+```
+
+
+FASTQ là một trong những định dạng đầu vào quan trọng nhất của pipeline NGS.
+
+
+14. FASTA
+
+Tên: FASTA format
+
+FASTA là định dạng đơn giản để lưu trình tự DNA, RNA hoặc protein.
+
+Ví dụ:
+
+```
+>reference_gene
+ATGCGTACCTGAACCTGGTAC
+
+```
+So với FASTQ:
+
+```
+FASTA → sequence
+
+FASTQ → sequence + quality
+```
+
+15. Quality Score
+
+Tên: Quality Score
+Cách đọc: kwa-li-ti score
+Tiếng Việt: Điểm chất lượng
+
+Quality Score biểu thị mức độ tin cậy của nucleotide được sequencing.
+
+Một chỉ số phổ biến là Phred Quality Score (Q score).
+
+Ví dụ đơn giản:
+
+```
+Q10  → chất lượng thấp hơn
+Q20  → tốt hơn
+Q30  → tốt
+Q40  → rất tốt
+```
+
+Trong nhiều pipeline NGS, Q30 là một ngưỡng chất lượng thường được quan tâm.
+
+
+16. Quality Control — QC
+
+Tên đầy đủ: Quality Control
+Cách đọc: kwa-li-ti con-trôl
+
+QC là quá trình kiểm tra chất lượng dữ liệu sequencing trước khi phân tích.
+
+Pipeline:
+```
+Raw FASTQ
+    │
+    ▼
+   QC
+    │
+    ├── quality
+    ├── adapter
+    ├── GC content
+    ├── duplicated reads
+    └── sequence length
+    │
+    ▼
+Clean FASTQ
+```
+
+Mục tiêu là phát hiện dữ liệu có vấn đề trước khi thực hiện các bước tiếp theo.
+
+17. Trimming
+
+Tên: Trimming
+Cách đọc: trim-ming
+Tiếng Việt: Cắt lọc trình tự
+
+Trimming là quá trình loại bỏ:
+
+nucleotide chất lượng thấp;
+adapter;
+phần đầu/cuối của read không đáng tin cậy.
+
+Ví dụ:
+```
+Raw read:
+
+ADAPTERATGCGTACCTGAQQQQ
+
+       ↓ trimming
+
+ATGCGTACCTGA
+```
+
+
+Sau trimming:
+
+```
+Raw FASTQ
+    ↓
+Trimming
+    ↓
+Clean FASTQ
+```
+
+18. Alignment
+
+Tên: Alignment
+Cách đọc: ờ-lai-n-mần
+Tiếng Việt: Căn chỉnh trình tự
+
+Alignment là quá trình tìm vị trí mà một read phù hợp trên reference genome.
+
+Ví dụ:
+
+```
+Reference:
+ATGCGTACCTGAACCTGGTAC
+
+Read:
+       TACCTGAACC
+       └─────────┘
+```
+
+Bioinformatics tool sẽ xác định:
+
+```
+Read
+   ↓
+Reference genome
+   ↓
+vị trí phù hợp
+```
+
+
+19. Mapping
+
+Mapping thường được dùng gần với alignment trong pipeline NGS.
+
+Ý tưởng:
+```
+Read
+  │
+  ▼
+Tìm vị trí trên Reference Genome
+  │
+  ▼
+Mapping
+```
+
+Ví dụ:
+
+```
+Reference:
+ATGCGTACCTGAACCTGGTACCGTAA
+     ──────────
+         ↑
+       Read
+```
+
+Sau mapping, chúng ta biết read xuất phát từ vị trí nào trên genome tham chiếu.
+
+20. SAM
+
+Tên đầy đủ: Sequence Alignment/Map format
+
+SAM là định dạng văn bản lưu kết quả alignment.
+
+Ví dụ khái niệm:
+
+```
+Read 001
+   ↓
+Reference chromosome 1
+   ↓
+Position 10523
+   ↓
+CIGAR
+   ↓
+Sequence
+   ↓
+Quality
+```
+
+SAM có thể chứa rất nhiều thông tin về việc một read được căn chỉnh như thế nào.
+
+
+
+21. BAM
+
+Tên đầy đủ: Binary Alignment Map
+
+BAM là phiên bản binary/compressed của SAM.
+
+Có thể hiểu:
+```
+SAM
+ │
+ │ convert/compress
+ ▼
+BAM
+```
+
+BAM thường được sử dụng trong pipeline vì:
+
+nhỏ hơn SAM;
+xử lý nhanh hơn;
+hỗ trợ indexing;
+thuận tiện cho downstream analysis.
+
+22. BAM Index — BAI
+
+BAI là file index của BAM.
+
+Ví dụ:
+
+
+```
+sample.bam
+sample.bam.bai
+```
+
+Trong đó:
+```
+sample.bam
+   └── dữ liệu alignment
+
+sample.bam.bai
+   └── index giúp truy cập nhanh
+```
+
+23. Variant Calling
+
+Tên: Variant Calling
+Cách đọc: ve-ri-ờnt co-ling
+Tiếng Việt: Phát hiện biến thể
+
+Variant calling là quá trình xác định những vị trí trong sample có khả năng khác reference genome.
+
+Pipeline:
+
+```
+FASTQ
+  │
+  ▼
+QC
+  │
+  ▼
+Clean FASTQ
+  │
+  ▼
+Alignment
+  │
+  ▼
+BAM
+  │
+  ▼
+Variant Calling
+  │
+  ▼
+VCF
+```
+
+## VCF - Variant Call Format
+
+VCF là định dạng phổ biến để lưu thông tin về genetic variants.
+
+Ví dụ đơn giản:
+
+```
+CHROM   POS     REF   ALT
+chr1    10523   G     T
+```
+
+Có thể hiểu:
+
+```
+Chromosome: chr1
+Position:   10523
+Reference:  G
+Alternative: T
+```
+
+Tức là:
+```
+Reference:
+G
+
+Sample:
+T
+```
+
+Đây có thể là một SNP.
+
+## Genotype
+
+Kiểu gen (Genotype) mô tả trạng thái allele của một cá thể tại một vị trí nhất định.
+
+Ví dụ với một SNP:
+
+```
+Reference allele = A
+Alternative allele = G
+```
+
+Một cá thể lưỡng bội có thể có:
+
+```
+A/A
+A/G
+G/G
+```
+
+Đây là các genotype khác nhau.
+
+26. Allele
+
+Allele là một phiên bản cụ thể của một locus/đoạn gene.
+
+Ví dụ:
+
+```
+Locus
+  │
+  ├── A allele
+  └── G allele
+```
+
+Nếu một SNP có:
+
+```
+A → G
+```
+
+thì:
+
+```
+A = một allele
+G = một allele khác
+```
+
+## Locus
+
+Locus là vị trí cụ thể trên genome.
+
+Ví dụ:
+
+```
+Chromosome 1
+
+1 ────────────────────────────────>
+        ↑
+      locus
+     position 10523
+```
+
+Trong variant calling, một SNP thường được mô tả bằng: `Chromosome + Position + REF + ALT`
+
+
+## Gene Expression
+
+Biểu hiện gene (Gene expression) mô tả mức độ một gene được "sử dụng" trong tế bào.
+
+Ví dụ:
+
+```
+Gene A
+  │
+  ├── tôm khỏe:      thấp
+  │
+  └── tôm kháng bệnh: cao
+```
+
+Điều này có thể gợi ý Gene A liên quan đến phản ứng sinh học.
+
+Một phương pháp phổ biến để nghiên cứu gene expression là:
+
+```
+RNA extraction
+      ↓
+RNA sequencing
+      ↓
+RNA-seq
+      ↓
+Expression analysis
+```
+
+29. RNA-seq
+
+Tên đầy đủ: RNA Sequencing
+Cách đọc: R-N-A sequencing
+
+RNA-seq là phương pháp sequencing RNA để nghiên cứu transcriptome và gene expression.
+
+Pipeline đơn giản:
+
+```
+Sample
+  │
+  ▼
+RNA extraction
+  │
+  ▼
+Library preparation
+  │
+  ▼
+RNA sequencing
+  │
+  ▼
+FASTQ
+  │
+  ▼
+Alignment / Quantification
+  │
+  ▼
+Gene expression
+```
+
+
+RNA-seq trả lời những câu hỏi như:
+
+Gene nào đang được biểu hiện?
+
+Gene nào biểu hiện cao hơn hoặc thấp hơn giữa hai nhóm?
+
+## Transcriptome
+
+Hệ phiên mã (Transcriptome) là tập hợp các RNA được biểu hiện trong một tế bào, mô hoặc điều kiện sinh học cụ thể tại một thời điểm.
+
+Có thể hình dung:
+
+```
+Genome
+= tất cả thông tin DNA
+
+Transcriptome
+= những RNA đang được tạo/biểu hiện
+```
+
+Vì transcriptome thay đổi theo:
+
+mô;
+thời điểm;
+môi trường;
+bệnh;
+stress;
+
+nên nó rất hữu ích trong nghiên cứu sinh học.
+
+
+31. Pathogen
+
+Tác nhân gây bệnh (Pathogen) là tác nhân có khả năng gây bệnh.
+
+Có thể là:
+```
+Pathogen
+ ├── Virus
+ ├── Bacteria
+ ├── Fungus
+ └── Parasite
+```
+
+
+Ví dụ trong nuôi tôm:
+
+```
+Tôm bệnh
+   │
+   └── có thể chứa pathogen
+             │
+             ├── virus
+             ├── bacteria
+             └── fungus
+```
+
+
+Pathogen không đồng nghĩa với "microbe". Một số microorganism không gây bệnh; pathogen là tác nhân có khả năng gây bệnh.
+
+## Microbiome
+
+Microbiome thường được dùng để chỉ cộng đồng vi sinh vật và/hoặc hệ gene của chúng trong một môi trường cụ thể.
+
+Ví dụ:
+
+```
+Ao nuôi tôm
+    │
+    ├── Bacteria A
+    ├── Bacteria B
+    ├── Bacteria C
+    ├── Archaea
+    └── Fungi
+
+```
+Nghiên cứu microbiome giúp trả lời: Trong môi trường hoặc cơ thể tôm đang có những nhóm vi sinh vật nào?
+
+## Metagenomics
+
+Metagenomics là phương pháp nghiên cứu DNA được thu trực tiếp từ một mẫu môi trường hoặc cộng đồng sinh vật mà không nhất thiết phải nuôi cấy riêng từng loài.
+
+Ví dụ:
+
+```
+Mẫu nước ao
+     │
+     ▼
+DNA extraction
+     │
+     ▼
+NGS
+     │
+     ▼
+FASTQ
+     │
+     ▼
+Metagenomic analysis
+     │
+     ├── Bacteria
+     ├── Virus
+     ├── Fungi
+     └── Parasites
+
+```
+
+Đây là hướng rất quan trọng đối với nghiên cứu microbiome và pathogen.
+
+
+## AMR - Antimicrobial Resistance
+
+Kháng thuốc kháng vi sinh vật (AMR) là khả năng của vi sinh vật chống lại tác động của thuốc kháng vi sinh vật.
+
+Trong nuôi trồng thủy sản, AMR có thể liên quan đến:
+
+vi khuẩn gây bệnh;
+gene kháng kháng sinh;
+sử dụng kháng sinh;
+môi trường ao nuôi;
+nước và bùn.
+
+Một pipeline nghiên cứu có thể là:
+
+```
+Sample
+  │
+  ▼
+DNA
+  │
+  ▼
+NGS
+  │
+  ▼
+Metagenomics
+  │
+  ├── Pathogen detection
+  │
+  └── AMR gene detection
+```
+
+35. AMR Gene
+
+Tên: Antimicrobial Resistance Gene
+
+Đây là gene có thể liên quan đến khả năng kháng một hoặc nhiều loại thuốc kháng vi sinh vật.
+
+Có thể hình dung:
+
+```
+Bacterium
+    │
+    ├── Gene A
+    ├── Gene B
+    └── AMR gene
+             │
+             ▼
+      Resistance mechanism
+```
+
+Trong metagenomics, có thể tìm kiếm các gene liên quan đến AMR trong toàn bộ cộng đồng vi sinh vật.
+
+Mối quan hệ tổng thể
+
+Có thể ghi nhớ bằng sơ đồ:
+
+```
+                         BIOLOGY
+                            │
+              ┌─────────────┴─────────────┐
+              │                           │
+             DNA                         RNA
+              │                           │
+        ┌─────┴─────┐                     │
+        │           │                     │
+      Genome       Gene                RNA-seq
+        │           │                     │
+        │           └──────────┐          │
+        │                      ▼          │
+        │                   Protein       │
+        │                                 │
+        ▼                                 ▼
+     Variant                         Expression
+        │
+   ┌────┴────┐
+   │         │
+  SNP       Indel
+```
+
+
+Trong NGS:
+
+```
+Sample
+  │
+  ▼
+DNA / RNA
+  │
+  ▼
+Sequencing
+  │
+  ▼
+FASTQ
+  │
+  ├───────────────┐
+  │               │
+  ▼               ▼
+Alignment       Metagenomics
+  │               │
+  ▼               ├── Microbiome
+BAM               ├── Pathogen
+  │               └── AMR
+  ▼
+Variant Calling
+  │
+  ▼
+VCF
+  │
+  ├── SNP
+  └── Indel
+```
+
+
+
+Cách ghi nhớ nhanh
+
+Nếu mới học tin sinh học, trước tiên chỉ cần nhớ chuỗi sau:
+
+```
+DNA
+ ↓
+Genome
+ ↓
+Gene
+ ↓
+RNA
+ ↓
+Protein
+```
+
+Và nhánh biến thể:
+
+```
+DNA
+ ↓
+Variant
+ ├── SNP
+ └── Indel
+```
+
+
+Đối với NGS:
+
+```
+Sample
+ ↓
+DNA/RNA
+ ↓
+Sequencing
+ ↓
+FASTQ
+ ↓
+QC
+ ↓
+Clean FASTQ
+ ↓
+Alignment
+ ↓
+BAM
+ ↓
+Variant Calling
+ ↓
+VCF
+```
+Đối với pathogen/microbiome:
+
+```
+Sample
+ ↓
+DNA
+ ↓
+NGS
+ ↓
+FASTQ
+ ↓
+Metagenomics
+ ↓
+Microbiome
+ ├── Bacteria
+ ├── Virus
+ ├── Fungi
+ └── Parasites
+```
+
+Đối với AMR:
+
+```
+Microbiome
+     ↓
+Metagenomics
+     ↓
+AMR gene detection
+     ↓
+AMR profile
+```
+
+
+
+Từ khóa quan trọng cần học tiếp
+
+Sau khi nắm được các thuật ngữ trên, có thể tiếp tục học theo thứ tự:
+
+```
+
+01. DNA / RNA
+        ↓
+02. Genome / Gene
+        ↓
+03. Sequencing / NGS
+        ↓
+04. FASTA / FASTQ
+        ↓
+05. Quality Control
+        ↓
+06. Alignment / Mapping
+        ↓
+07. SAM / BAM / BAI
+        ↓
+08. Variant Calling
+        ↓
+09. VCF
+        ↓
+10. SNP / Indel
+        ↓
+11. RNA-seq / Gene Expression
+        ↓
+12. Metagenomics
+        ↓
+13. Microbiome
+        ↓
+14. Pathogen Detection
+        ↓
+15. AMR / AMR Genes
+
+```

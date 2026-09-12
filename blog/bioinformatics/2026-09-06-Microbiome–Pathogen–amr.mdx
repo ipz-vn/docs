@@ -1,0 +1,872 @@
+Có. Nếu xây dựng thành **một mô hình khoa học–công nghệ có khả năng triển khai thực tế**, tôi không đề xuất làm đơn thuần một “hệ thống xét nghiệm NGS”. Nên thiết kế thành **hệ thống giám sát sinh học đa tầng**, trong đó NGS là lớp dữ liệu trung tâm, kết hợp với dữ liệu môi trường, bệnh học, nuôi trồng và AI.
+
+Điểm này có cơ sở thực tiễn khá rõ: nghiên cứu tại ĐBSCL đã cho thấy nước liên quan đến nuôi thủy sản có thể chứa đồng thời dư lượng kháng sinh, gene kháng thuốc và những thay đổi đáng kể về hệ vi sinh; một nghiên cứu công bố năm 2026 còn giải trình tự genome một chủng *Enterobacter cloacae* từ nước ao tôm ĐBSCL và phát hiện *blaCTX-M-15* cùng các yếu tố kháng thuốc khác. ([PubMed][1])
+
+# Mô hình đề xuất
+
+# Hệ thống giám sát Microbiome–Pathogen–AMR cho nuôi trồng thủy sản ĐBSCL
+
+## 1. Mục tiêu tổng quát
+
+Xây dựng hệ thống có khả năng:
+
+> **thu thập – phân tích – tích hợp – giám sát – cảnh báo dữ liệu sinh học của hệ thống nuôi trồng thủy sản, nhằm phát hiện sớm nguy cơ bệnh, biến động hệ vi sinh và kháng kháng sinh (AMR), hỗ trợ người nuôi, cơ quan quản lý và đơn vị nghiên cứu ra quyết định.**
+
+Không nên đặt mục tiêu là:
+
+> “dự đoán chính xác tôm sẽ bệnh”.
+
+Mục tiêu khoa học phù hợp hơn là:
+
+> **phát hiện các dấu hiệu sinh học liên quan đến nguy cơ bệnh và biến động bất thường của hệ sinh thái ao nuôi.**
+
+Sau khi có đủ dữ liệu theo thời gian, mới phát triển mô hình dự báo.
+
+---
+
+# 2. Kiến trúc tổng thể
+
+Tôi đề xuất kiến trúc 6 lớp:
+
+```text
+┌───────────────────────────────────────────────┐
+│              1. FIELD / FARM                 │
+│                                               │
+│ Water | Sediment | Shrimp/Fish | Feed       │
+└──────────────────────┬────────────────────────┘
+                       │
+                       ▼
+┌───────────────────────────────────────────────┐
+│              2. BIOLOGICAL DATA              │
+│                                               │
+│ 16S | ITS | Shotgun | WGS | RNA-seq | qPCR  │
+└──────────────────────┬────────────────────────┘
+                       │
+                       ▼
+┌───────────────────────────────────────────────┐
+│              3. BIOINFORMATICS                │
+│                                               │
+│ Taxonomy | Pathogen | AMR | Virulence |      │
+│ Functional genes | Diversity | Strain typing │
+└──────────────────────┬────────────────────────┘
+                       │
+                       ▼
+┌───────────────────────────────────────────────┐
+│              4. KNOWLEDGE LAYER              │
+│                                               │
+│ Microbiome DB | Pathogen DB | AMR DB |       │
+│ Farm history | Environmental DB              │
+└──────────────────────┬────────────────────────┘
+                       │
+                       ▼
+┌───────────────────────────────────────────────┐
+│              5. ANALYTICS / AI               │
+│                                               │
+│ Risk score | Anomaly detection | Prediction  │
+└──────────────────────┬────────────────────────┘
+                       │
+                       ▼
+┌───────────────────────────────────────────────┐
+│              6. APPLICATION                  │
+│                                               │
+│ Dashboard | Alert | Report | Decision Support│
+└───────────────────────────────────────────────┘
+```
+
+Đây là điểm tôi muốn nhấn mạnh: **NGS chỉ là lớp tạo dữ liệu**. Giá trị của hệ thống nằm ở 4 lớp phía trên: **bioinformatics → knowledge → analytics → decision support**.
+
+---
+
+# 3. Ba trụ cột cốt lõi
+
+Hệ thống nên có đúng ba trụ cột:
+
+## A. MICROBIOME
+
+Trả lời:
+
+> **“Hệ vi sinh trong ao đang như thế nào?”**
+
+Theo dõi:
+
+* bacterial diversity;
+* fungal community;
+* microbial abundance;
+* dominant taxa;
+* beneficial microorganisms;
+* opportunistic microorganisms;
+* microbial community shifts.
+
+---
+
+## B. PATHOGEN
+
+Trả lời:
+
+> **“Có tác nhân gây bệnh hoặc yếu tố liên quan đến độc lực hay không?”**
+
+Theo dõi:
+
+* *Vibrio*;
+* virus thủy sản;
+* vi khuẩn gây bệnh;
+* pathogen-associated genes;
+* virulence factors;
+* toxin-associated genes.
+
+Đối với AHPND, ví dụ có thể theo dõi *V. parahaemolyticus* và các gene độc lực liên quan. Các nghiên cứu tại ĐBSCL đã ghi nhận sự hiện diện của *V. parahaemolyticus* gây AHPND trong mẫu tôm và nước ao, cùng hiện tượng kháng nhiều kháng sinh. ([PubMed Central (PMC)][2])
+
+---
+
+## C. AMR
+
+Trả lời:
+
+> **“Hệ thống đang chứa những gene/vi khuẩn kháng kháng sinh nào?”**
+
+Theo dõi:
+
+* ARG;
+* ARB;
+* plasmid;
+* integron;
+* transposon;
+* mobile genetic elements.
+
+Ví dụ:
+
+```text
+bla
+mcr
+tet
+sul
+erm
+qnr
+```
+
+Quan trọng hơn, hệ thống phải phân biệt:
+
+> **gene kháng thuốc được phát hiện**
+
+với:
+
+> **vi khuẩn có kiểu hình kháng thuốc**
+
+và:
+
+> **khả năng gene đó nằm trên yếu tố di truyền di động.**
+
+Không nên đánh đồng ba khái niệm này.
+
+---
+
+# 4. Mô hình lấy mẫu
+
+Đây là phần rất quan trọng nếu biến thành đề tài thực tế.
+
+Không nên chỉ lấy **mẫu nước**.
+
+Tôi đề xuất tối thiểu 4 loại:
+
+| Mẫu     | Ý nghĩa                          |
+| ------- | -------------------------------- |
+| Nước    | Hệ vi sinh trong cột nước        |
+| Bùn     | Reservoir của vi sinh vật và ARG |
+| Tôm/cá  | Microbiome vật chủ + pathogen    |
+| Nước xả | Đánh giá phát tán ra môi trường  |
+
+Có thể bổ sung:
+
+* mang;
+* gan tụy;
+* ruột;
+* thức ăn;
+* biofloc;
+* nước cấp.
+
+---
+
+# 5. Thiết kế lấy mẫu theo không gian
+
+Không nên chỉ khảo sát một ao.
+
+Nên thiết kế theo gradient:
+
+```text
+Nguồn nước
+    │
+    ▼
+Nước cấp
+    │
+    ▼
+     AO
+ ┌───┼────┐
+ │   │    │
+Nước Bùn Tôm
+ │
+ ▼
+Nước xả
+ │
+ ▼
+Kênh
+ │
+ ▼
+Sông
+```
+
+Khi đó hệ thống có thể nghiên cứu câu hỏi rất quan trọng:
+
+> **Vi sinh vật và gene kháng thuốc di chuyển như thế nào giữa ao nuôi và môi trường xung quanh?**
+
+Đây chính là điểm mà nghiên cứu ở Cần Thơ trước đây đã đặt ra: tại điểm hợp lưu nước thải từ các hệ thống nuôi thủy sản, nghiên cứu ghi nhận sự thay đổi mạnh về đa dạng vi khuẩn và đồng thời phát hiện các gene kháng thuốc. ([PubMed][1])
+
+---
+
+# 6. Thiết kế lấy mẫu theo thời gian
+
+Đây còn quan trọng hơn số lượng mẫu.
+
+Không nên:
+
+> lấy 1 mẫu → sequencing → kết luận ao khỏe/bệnh.
+
+Mà phải:
+
+```text
+Week 1 ──┐
+Week 2 ──┤
+Week 3 ──┤
+Week 4 ──┤
+Week 5 ──┤
+Week 6 ──┤
+          ▼
+     TIME SERIES
+          │
+          ▼
+   MICROBIOME BASELINE
+          │
+          ▼
+      DEVIATION
+```
+
+Khi có time-series, hệ thống mới có thể biết:
+
+> **“Ao này đang thay đổi bất thường so với chính nó.”**
+
+Đây là cơ sở tốt hơn nhiều so với so sánh đơn thuần giữa các ao.
+
+---
+
+# 7. Tầng xét nghiệm: không phải mẫu nào cũng cần shotgun NGS
+
+Đây là điểm giúp mô hình **khả thi về chi phí**.
+
+Tôi đề xuất 3 tầng.
+
+### Tầng 1 — Routine
+
+Dùng:
+
+* qPCR;
+* chỉ tiêu môi trường;
+* sensor;
+* test nhanh.
+
+Mục đích:
+
+> giám sát thường xuyên.
+
+### Tầng 2 — Microbiome
+
+Dùng:
+
+* full-length 16S;
+* ITS;
+* targeted sequencing.
+
+Mục đích:
+
+> theo dõi biến động cộng đồng vi sinh.
+
+### Tầng 3 — Deep investigation
+
+Dùng:
+
+* shotgun metagenomics;
+* WGS;
+* metatranscriptomics;
+* long-read sequencing.
+
+Mục đích:
+
+> điều tra sâu pathogen, AMR, virulence, plasmid và genome.
+
+Như vậy:
+
+> **Không phải mỗi tuần đều đem tất cả mẫu đi shotgun sequencing.**
+
+Đây là cách thiết kế thực tế hơn.
+
+---
+
+# 8. Ví dụ quy trình một ao
+
+Giả sử một ao tôm 5 ha.
+
+### Ngày 1
+
+Đo:
+
+* nhiệt độ;
+* pH;
+* DO;
+* độ mặn;
+* NH₃;
+* NO₂.
+
+Lấy:
+
+* nước;
+* bùn;
+* tôm.
+
+### Phân tích
+
+16S/targeted sequencing + qPCR.
+
+Kết quả:
+
+```text
+Microbiome: NORMAL
+Pathogen: LOW
+AMR: BASELINE
+Environment: NORMAL
+```
+
+→ Risk = LOW.
+
+---
+
+### Tuần 3
+
+Hệ thống phát hiện:
+
+```text
+Microbial diversity ↓
+Vibrio-associated taxa ↑
+AMR genes ↑
+DO fluctuation ↑
+```
+
+→ Risk = MEDIUM.
+
+Hệ thống khuyến nghị:
+
+> **lấy mẫu xác nhận + qPCR pathogen + kiểm tra môi trường.**
+
+---
+
+### Tuần 4
+
+qPCR xác nhận pathogen tăng.
+
+→ Risk = HIGH.
+
+Hệ thống không tự động đưa ra quyết định điều trị mà:
+
+> **cảnh báo người nuôi/kỹ thuật viên và đề xuất quy trình kiểm tra chuyên môn.**
+
+Đây là cách an toàn và khoa học hơn.
+
+---
+
+# 9. Risk Score
+
+Tôi đề xuất xây dựng **Aquaculture Biological Risk Score – ABRS**.
+
+Ví dụ:
+
+```text
+ABRS =
+    Microbiome Score
+  + Pathogen Score
+  + AMR Score
+  + Environmental Score
+  + Historical Disease Score
+```
+
+Có thể chuẩn hóa:
+
+```text
+ABRS = w₁M + w₂P + w₃A + w₄E + w₅H
+```
+
+Trong đó:
+
+* M = Microbiome;
+* P = Pathogen;
+* A = AMR;
+* E = Environment;
+* H = Historical data.
+
+Các trọng số **không nên tự đặt ngay từ đầu**. Phải học từ dữ liệu thực nghiệm.
+
+---
+
+# 10. AI nằm ở đâu?
+
+Không nên dùng AI ngay từ ngày đầu.
+
+Giai đoạn đầu:
+
+> **NGS → statistics → biological interpretation**
+
+Sau khi có đủ dữ liệu:
+
+> **NGS + environment + farm history → Machine Learning**
+
+Có thể sử dụng:
+
+* Random Forest;
+* XGBoost;
+* logistic regression;
+* time-series models;
+* anomaly detection.
+
+Mục tiêu ban đầu nên là:
+
+### Anomaly Detection
+
+> “Ao này đang khác với trạng thái bình thường của nó?”
+
+sau đó mới đến:
+
+### Risk Prediction
+
+> “Trong 7–14 ngày tới nguy cơ bệnh có tăng không?”
+
+---
+
+# 11. Dashboard
+
+Một dashboard cho người nuôi không nên hiển thị:
+
+> 15.000 species
+> 2 triệu reads
+> 3.000 genes.
+
+Người nuôi cần thấy:
+
+```text
+┌────────────────────────────────────┐
+│        SHRIMP FARM #CT-023         │
+├────────────────────────────────────┤
+│                                    │
+│ Biological Risk                    │
+│                                    │
+│             MEDIUM                 │
+│                                    │
+├──────────────┬─────────────────────┤
+│ Microbiome   │ ⚠ Abnormal change   │
+│ Pathogen     │ ✓ Low               │
+│ AMR          │ ⚠ Increased         │
+│ Water        │ ✓ Normal             │
+└──────────────┴─────────────────────┘
+```
+
+Và:
+
+> **“Cần lấy mẫu xác nhận”**
+
+thay vì đưa ra một kết luận bệnh học tuyệt đối.
+
+---
+
+# 12. Dashboard dành cho cơ quan quản lý
+
+Đây lại là một hệ thống khác.
+
+Cơ quan quản lý cần:
+
+### Bản đồ
+
+```text
+        MEKONG DELTA
+
+      🟢 Farm
+      🟢 Farm
+      🟡 Farm
+      🔴 Farm
+      🟢 Farm
+```
+
+Có thể hiển thị:
+
+* disease risk;
+* pathogen distribution;
+* AMR hotspots;
+* microbiome anomalies;
+* water quality;
+* temporal trends.
+
+Từ đó hình thành:
+
+# Aquaculture Biological Surveillance Map
+
+---
+
+# 13. Cơ sở dữ liệu trung tâm
+
+Tôi đề nghị thiết kế 5 nhóm dữ liệu:
+
+```text
+Farm
+ ├── Location
+ ├── Species
+ ├── Production cycle
+ └── Management
+
+Sample
+ ├── Water
+ ├── Sediment
+ ├── Host
+ └── Wastewater
+
+Sequencing
+ ├── Raw reads
+ ├── Taxonomy
+ ├── ARG
+ ├── Pathogen
+ └── Functional genes
+
+Environment
+ ├── pH
+ ├── DO
+ ├── Temperature
+ ├── Salinity
+ └── Nutrients
+
+Outcome
+ ├── Disease
+ ├── Mortality
+ ├── Growth
+ └── Harvest
+```
+
+Điểm cực kỳ quan trọng:
+
+> **Outcome phải được lưu.**
+
+Nếu không biết cuối cùng ao có bệnh hay không, hệ thống sẽ không có dữ liệu để huấn luyện AI.
+
+---
+
+# 14. Dữ liệu phải liên kết theo “Farm → Cycle → Sample”
+
+Tôi đề xuất khóa dữ liệu:
+
+```text
+Farm
+  ↓
+Production Cycle
+  ↓
+Sampling Event
+  ↓
+Sample
+  ↓
+Sequencing Run
+  ↓
+Bioinformatics Result
+  ↓
+Risk Assessment
+  ↓
+Disease Outcome
+```
+
+Ví dụ:
+
+```text
+CT-023
+ └── Cycle-2026-01
+      ├── Week-01
+      ├── Week-02
+      ├── Week-03
+      ├── Week-04
+      └── Week-05
+```
+
+Đây là nền tảng để sau này phân tích **longitudinal microbiome**.
+
+---
+
+# 15. Phạm vi thí điểm
+
+Nếu đây là **đề xuất nhiệm vụ khoa học công nghệ**, tôi không khuyến nghị triển khai toàn ĐBSCL ngay.
+
+Nên làm:
+
+## Giai đoạn 1 — Pilot
+
+Chọn khoảng:
+
+* 20–30 ao;
+* 2–3 mô hình nuôi;
+* một số địa bàn đại diện;
+* theo dõi trọn 1–2 vụ.
+
+Mục tiêu:
+
+> xây dựng baseline.
+
+---
+
+## Giai đoạn 2 — Validation
+
+Mở rộng:
+
+* 50–100 ao.
+
+Đặc biệt phải có:
+
+* ao khỏe;
+* ao có dấu hiệu bệnh;
+* ao bệnh;
+* ao có lịch sử sử dụng kháng sinh khác nhau.
+
+Mục tiêu:
+
+> tìm biomarker.
+
+---
+
+## Giai đoạn 3 — Prediction
+
+Hàng trăm ao.
+
+Tích hợp:
+
+**NGS + sensor + farm data + disease records**
+
+→ AI.
+
+---
+
+## Giai đoạn 4 — Regional Surveillance
+
+Mở rộng thành:
+
+# Mekong Delta Aquaculture Biological Surveillance Network
+
+---
+
+# 16. Các sản phẩm đầu ra
+
+Nếu xây dựng thành nhiệm vụ KH&CN, tôi sẽ đặt **sản phẩm rất cụ thể**.
+
+### Sản phẩm 1
+
+**Bộ quy trình lấy mẫu và bảo quản mẫu sinh học thủy sản.**
+
+### Sản phẩm 2
+
+**Bộ quy trình NGS/metagenomics cho mẫu nước, bùn và tôm/cá.**
+
+### Sản phẩm 3
+
+**Cơ sở dữ liệu Microbiome–Pathogen–AMR ĐBSCL.**
+
+### Sản phẩm 4
+
+**Microbiome reference profile của ao nuôi.**
+
+### Sản phẩm 5
+
+**Cơ sở dữ liệu pathogen và AMR.**
+
+### Sản phẩm 6
+
+**Bioinformatics pipeline tự động.**
+
+### Sản phẩm 7
+
+**Aquaculture Biological Risk Score.**
+
+### Sản phẩm 8
+
+**Dashboard giám sát.**
+
+### Sản phẩm 9
+
+**Mô hình cảnh báo sớm.**
+
+### Sản phẩm 10
+
+**Bản đồ phân bố pathogen/AMR/microbiome của khu vực thí điểm.**
+
+---
+
+# 17. Một sản phẩm khoa học đặc biệt giá trị: “Microbiome Fingerprint”
+
+Mỗi mô hình ao có thể có một fingerprint:
+
+```text
+Healthy Farm A
+      │
+      ▼
+Microbiome Signature
+      │
+ ┌────┼────┐
+ ▼    ▼    ▼
+Taxa  AMR  Function
+```
+
+Sau nhiều vụ, có thể xác định:
+
+> **“Healthy-state microbiome signature”**
+
+và:
+
+> **“Disease-associated microbiome signature.”**
+
+Đây mới là cơ sở khoa học để tiến tới **early warning**.
+
+---
+
+# 18. Một điểm rất quan trọng: NGS không thay thế PCR, nuôi cấy và xét nghiệm truyền thống
+
+Đây là nguyên tắc tôi sẽ đưa vào đề tài.
+
+Hệ thống nên hoạt động theo:
+
+> **NGS + qPCR + culture + environmental monitoring**
+
+chứ không phải:
+
+> NGS thay thế tất cả.
+
+Ví dụ:
+
+**NGS phát hiện tín hiệu bất thường**
+
+↓
+
+**qPCR xác nhận pathogen**
+
+↓
+
+**culture/isolate nếu cần**
+
+↓
+
+**WGS isolate**
+
+↓
+
+**AMR + virulence + strain typing**
+
+Đây là mô hình **multi-layer validation** có giá trị khoa học cao hơn.
+
+---
+
+# 19. Điểm khác biệt của mô hình
+
+Nếu phải viết thành một câu để đưa vào thuyết minh đề tài, tôi sẽ dùng:
+
+> **“Xây dựng hệ thống giám sát sinh học dựa trên tích hợp dữ liệu microbiome, pathogen, kháng kháng sinh và các yếu tố môi trường nhằm phát hiện sớm biến động bất thường của hệ sinh thái ao nuôi, hỗ trợ quản lý sức khỏe thủy sản và giảm nguy cơ phát sinh, lan truyền tác nhân gây bệnh và kháng kháng sinh tại ĐBSCL.”**
+
+Và điểm mới:
+
+> **Không chỉ phát hiện pathogen mà giám sát đồng thời “hệ sinh thái vi sinh + pathogen + resistome + môi trường + diễn biến sức khỏe vật nuôi”.**
+
+---
+
+# 20. Tôi sẽ ưu tiên 3 use-case đầu tiên
+
+Nếu nguồn lực hạn chế, **không nên làm tất cả**.
+
+### Use-case 1 — Tôm thẻ chân trắng
+
+**Microbiome + Vibrio + AMR**
+
+Đây là ưu tiên cao nhất.
+
+### Use-case 2 — Nước ao → nước xả → kênh
+
+**Pathogen + AMR + microbiome**
+
+Mục tiêu:
+
+> đánh giá nguy cơ phát tán ra môi trường.
+
+### Use-case 3 — AI early warning
+
+**NGS + environmental data + disease outcome**
+
+Mục tiêu:
+
+> chứng minh NGS có thể tạo ra giá trị dự báo chứ không chỉ tạo dữ liệu.
+
+Các nghiên cứu hiện có cho thấy hướng này có nền tảng thực tế: bệnh tôm là vấn đề đáng kể tại ĐBSCL và đã có nghiên cứu sử dụng GIS + machine learning để dự báo bệnh trên các trang trại tôm ở khu vực này. ([CTUJS][3])
+
+---
+
+## Mô hình cuối cùng tôi đề xuất
+
+```text
+                 ĐBSCL
+                   │
+          ┌────────┴────────┐
+          │                 │
+      Tôm/Cá              Môi trường
+          │                 │
+          ▼                 ▼
+      Biological        Environmental
+       Sampling           Sampling
+          │                 │
+          └────────┬────────┘
+                   ▼
+             ┌───────────┐
+             │    NGS    │
+             └─────┬─────┘
+                   │
+        ┌──────────┼───────────┐
+        ▼          ▼           ▼
+    MICROBIOME  PATHOGEN      AMR
+        │          │           │
+        └──────────┼───────────┘
+                   ▼
+             BIOINFORMATICS
+                   │
+                   ▼
+             KNOWLEDGE BASE
+                   │
+        ┌──────────┼───────────┐
+        ▼          ▼           ▼
+     Baseline   Biomarker    Trend
+        │          │           │
+        └──────────┼───────────┘
+                   ▼
+                  AI
+                   │
+                   ▼
+            BIOLOGICAL RISK
+                   │
+          ┌────────┴────────┐
+          ▼                 ▼
+       FARM ALERT       REGIONAL MAP
+          │                 │
+          ▼                 ▼
+    EARLY ACTION       SURVEILLANCE
+```
+
+**Đây là mô hình tôi đánh giá có khả năng phát triển thành một nền tảng công nghệ thực sự**, chứ không chỉ là một đề tài sequencing.
+
+Đặc biệt, với dữ liệu thực nghiệm đã có ở Cần Thơ về **microbiome nước + dư lượng kháng sinh + ARG**, và bằng chứng mới năm 2026 về **genome/AMR của vi khuẩn từ nước ao tôm ĐBSCL**, có thể xây dựng đề xuất theo hướng **“One Health + Aquaculture + Genomics”** thay vì giới hạn trong “NGS cho tôm”. ([PubMed][1])
+
+Nếu phát triển tiếp, tôi sẽ đi theo **4 tầng sản phẩm: `NGS Lab → Bioinformatics Platform → Biological Risk Engine → Mekong Delta Surveillance Platform`**. Đây là cấu trúc phù hợp hơn nếu mục tiêu cuối cùng là vừa **nghiên cứu khoa học**, vừa có **khả năng chuyển giao cho doanh nghiệp nuôi tôm/cá, phòng xét nghiệm và cơ quan quản lý**.
+
+[1]: https://pubmed.ncbi.nlm.nih.gov/28062224/?utm_source=chatgpt.com "Water metagenomic analysis reveals low bacterial diversity and the presence of antimicrobial residues and resistance genes in a river containing wastewater from backyard aquacultures in the Mekong Delta, Vietnam - PubMed"
+[2]: https://pmc.ncbi.nlm.nih.gov/articles/PMC7600832/?utm_source=chatgpt.com "Prevalence of Vibrio parahaemolyticus Causing Acute Hepatopancreatic Necrosis Disease of Shrimp in Shrimp, Molluscan Shellfish and Water Samples in the Mekong Delta, Vietnam - PMC"
+[3]: https://ctujs.ctu.edu.vn/index.php/ctujs/article/view/473?utm_source=chatgpt.com "Disease incidence in shrimp farms located in east coastal region of the Mekong Delta, Vietnam | CTU Journal of Innovation and Sustainable Development"
+
+

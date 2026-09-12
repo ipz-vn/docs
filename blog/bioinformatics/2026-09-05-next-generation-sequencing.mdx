@@ -1,0 +1,1511 @@
+
+---
+
+### 1. Bảng chú giải thuật ngữ chuyên ngành (Glossary)
+
+* **Next-generation sequencing (Giải trình tự thế hệ mới):** Một phương pháp giải trình tự trong đó toàn bộ bộ gen được giải trình tự từ các đoạn DNA bị phân mảnh, tạo ra các đoạn đọc ngắn (dưới 300 bp) với tốc độ cao và chi phí thấp.
+
+
+* **Sequence-by-synthesis (Giải trình tự bằng tổng hợp):** Một công nghệ giải trình tự chủ yếu được Illumina sử dụng, trong đó DNA polymerase tổng hợp một sợi DNA bổ sung với sợi khuôn bằng cách tích hợp một deoxynucleoside triphosphate được đánh dấu huỳnh quang; tín hiệu này được chụp hình lại để xác định loại bazơ nitơ và sau đó bị cắt bỏ (cleaved) trước khi quy trình lặp lại để xác định thứ tự và định danh của từng bazơ trong sợi DNA.
+
+
+* **Single-nucleotide variants - SNVs (Biến thể đơn nucleotide):** Các trường hợp trong đó một bazơ đơn lẻ trong một đoạn đọc hoặc bộ gen khác với bazơ được tìm thấy ở cùng vị trí ở các cá thể hoặc quần thể khác.
+
+
+* **Copy number variants - CNVs (Biến thể số lượng bản sao):** Các trường hợp trong đó một trình tự bazơ trong bộ gen có số lượng bản sao khác nhau giữa các cá thể hoặc quần thể.
+
+
+* **Indels:** Sự chèn thêm (insertions) hoặc mất đi (deletions) của các bazơ trong bộ gen của một sinh vật.
+
+
+* **Structural variant - SV (Biến thể cấu trúc):** Một biến thể di truyền có chiều dài lớn hơn 50 bp, bao gồm chèn đoạn, xóa đoạn, đảo đoạn hoặc chuyển vị các đoạn DNA và sự khác biệt về số bản sao.
+
+
+* **Segmental duplications (Lặp đoạn từng phần):** Các khối DNA có chiều dài lớn hơn 1 kb, xuất hiện ở nhiều hơn một vị trí trong bộ gen và có mức độ tương đồng trình tự lớn hơn 90%.
+
+
+* **Linked-read sequencing (Giải trình tự đọc liên kết):** Một phương pháp giải trình tự DNA đọc dài tổng hợp, trong đó quy trình giải trình tự đọc ngắn được áp dụng lên các phân tử DNA dài nhằm "liên kết" các đoạn đọc phát xuất từ cùng một phân tử dài ban đầu lại với nhau.
+
+
+* **Long-read sequencing (Giải trình tự đọc dài):** Phương pháp giải trình tự được Pacific Biosciences và Oxford Nanopore Technologies sử dụng, trong đó các phân tử DNA hoặc RNA tự nhiên (native) được giải trình tự theo thời gian thực, thường không cần khuếch đại, tạo ra các đoạn đọc dài hơn 10kb.
+
+* **Contigs (Đoạn trình tự lắp ráp / Trình tự nối tiếp):** Các trình tự DNA liên tục được tạo ra bằng cách lắp ráp các đoạn đọc giải trình tự chồng lấp lên nhau.
+
+
+* **Single-molecule, real-time (SMRT) sequencing (Giải trình tự phân tử đơn theo thời gian thực):** Một phương pháp giải trình tự DNA do Pacific Biosciences sử dụng, trong đó trình tự của một phân tử DNA đơn lẻ được xác định theo thời gian thực, không có sự gián đoạn sau khi phát hiện các bazơ.
+
+
+* **SMRTbell:** Khuôn mẫu DNA sợi kép được sử dụng trong giải trình tự PacBio SMRT, trong đó cả hai đầu DNA đều được khóa lại bằng các bộ tiếp nối dạng kẹp tóc (hairpin adapters). Khuôn SMRTbell có dạng vòng về mặt cấu trúc không gian nhưng thẳng về mặt kiến trúc.
+
+
+* **SMRT Cell:** Một flow cell bao gồm các mảng cấu trúc nano ống dẫn sóng chế độ không, được sử dụng trong quá trình giải trình tự PacBio SMRT.
+
+
+* **Zero-mode waveguides - ZMW (Ống dẫn sóng chế độ không):** Các thiết bị quang tử nano giới hạn ánh sáng ở một thể tích quan sát siêu nhỏ, là một phần của SMRT Cell được sử dụng trong giải trình tự PacBio SMRT.
+
+
+* **Flow cell:** Thành phần tiêu hao (dùng một lần) của các nền tảng giải trình tự đọc ngắn và đọc dài, chứa đựng các hóa chất cần thiết để giải trình tự phân tử DNA và/hoặc RNA.
+
+
+### 1. Bảng chú giải thuật ngữ bổ sung (Glossary)
+
+* **Subreads (Đoạn đọc con):** Trình tự thu được từ một vòng di chuyển đơn lẻ của DNA polymerase khi nó đi qua khuôn SMRTbell nhiều lần trong quá trình giải trình tự PacBio SMRT; subread không chứa bất kỳ trình tự tiếp nối (adapter) nào.
+
+
+* **Homopolymers (Đoạn đồng nucleotide / Chuỗi bazơ trùng lặp):** Các chuỗi bao gồm các bazơ giống hệt nhau đứng liên tiếp nhau.
+
+
+* **Single-pass (Đơn vòng):** Sự di chuyển qua một sợi đơn duy nhất trong khuôn SMRTbell của DNA polymerase trong quá trình giải trình tự.
+
+
+* **Polishing tools (Công cụ tinh chỉnh / Sửa lỗi lắp ráp):** Các công cụ tính toán giúp tăng chất lượng và độ chính xác của bản lắp ráp bộ gen; các công cụ này thường so sánh các đoạn đọc với bản lắp ráp để rút ra trình tự đồng thuận (consensus sequence) chính xác hơn.
+
+
+* **Squiggle (Tín hiệu sóng điện thế):** Chuỗi biến đổi điện thế đại diện cho các k-mer (chuỗi bazơ độ dài k) chồng lấp từ phân tử DNA khi nó di chuyển qua lỗ nano trong quá trình giải trình tự ONT.
+
+
+* **Sequencing coverage (Độ bao phủ giải trình tự / Độ sâu giải trình tự):** Số lượng trung bình các đoạn đọc duy nhất căn gióng (align) hoặc "bao phủ" một trình tự hoặc toàn bộ bộ gen.
+
+
+* **Circular consensus sequencing - CCS (Giải trình tự đồng thuận vòng):** Một chế độ giải trình tự của PacBio, trong đó DNA polymerase thực hiện nhiều vòng quay quanh khuôn SMRTbell, tạo ra các subread chứa nhiễu ngẫu nhiên; các subread này sau đó được kết hợp bằng thuật toán để tạo ra một đoạn đọc đồng thuận có độ chính xác cao (HiFi).
+
+
+* **Read N50 (N50 của đoạn đọc):** Chiều dài trình tự của đoạn đọc ngắn nhất trong tập hợp 50% tổng dung lượng dữ liệu giải trình tự (sau khi đã sắp xếp các đoạn đọc theo độ dài giảm dần).
+
+
+* **Phased de novo genome assembly (Lắp ráp de novo định pha):** Bản lắp ráp bộ gen trong đó các tổ hợp di truyền (haplotype) có nguồn gốc từ mẹ và từ bố được phân tách hoàn toàn.
+
+**Thuật ngữ chuyên ngành bổ sung**
+
+* **Contig N50 (N50 của contig):** Chiều dài của contig ngắn nhất trong tập hợp 50% tổng chiều dài bộ gen (sau khi đã sắp xếp các contig theo chiều dài giảm dần).
+
+
+* **Optical mapping (Lập bản đồ quang học):** Kỹ thuật xây dựng bản đồ gen sắp xếp từ các phân tử DNA đơn lẻ dựa trên tín hiệu huỳnh quang để định hướng và nối các contig.
+
+
+* **Trio binning (Phân loại theo bộ gen cha mẹ):** Phương pháp sử dụng các đoạn đọc ngắn từ cha mẹ để phân loại các đoạn đọc dài của con thành hai nhóm haplotype riêng biệt trước khi tiến hành lắp ráp.
+
+
+* **CHM13 human genome (Bộ gen người CHM13):** Bộ gen từ dòng tế bào chửa trứng toàn phần (complete hydatidiform mole) đã mất bộ gen từ mẹ và nhân đôi bộ gen từ bố, mang bản chất đơn bội giúp đơn giản hóa việc lắp ráp.
+
+### 1. Bảng chú giải thuật ngữ bổ sung (Glossary)
+
+* **SVA:** Một loại retrotransposon chèn (chèn nhân tố di truyền vận động) bao gồm vùng lặp lại đơn giản hexamer (CCCTCT) ở đầu 5', vùng giống Alu, vùng lặp lại song song số lượng thay đổi (VNTR), nhân tố phân tán ngắn có nguồn gốc retrovirus (vùng SINE-R), và đuôi poly(A) nằm sau tín hiệu polyadenyl hóa giả định.
+
+
+* **Uniparental disomy (Disomy đơn nguồn gốc / Lưỡng bội đồng nguồn):** Sự di truyền hai bản sao của một nhiễm sắc thể hoặc các đoạn của một nhiễm sắc thể từ cùng một cha hoặc mẹ, thay vì nhận một bản sao từ cha và một bản sao từ mẹ.
+
+
+* **Expression quantitative trait loci - eQTLs (Locus tính trạng số lượng biểu hiện):** Các locus (vị trí gen) giải thích cho một phần biến thể di truyền của một kiểu hình biểu hiện gen.
+
+
+* **Introgression (Sự xâm nhập gen):** Sự chuyển giao thông tin di truyền từ loài này sang loài khác do kết quả của sự lai tạo giữa chúng và lai ngược (backcrossing) lặp đi lặp lại.
+
+
+* **Genome-wide association studies - GWAS (Nghiên cứu tương quan toàn bộ gen):** Một phương pháp được sử dụng trong nghiên cứu di truyền học để liên kết các biến dị di truyền cụ thể với các tính trạng đặc thù.
+
+
+---
+
+### 3. Phần mở đầu (Introduction)
+
+Công nghệ giải trình tự DNA thống trị nghiên cứu hệ gen học trong thập kỷ qua không nghi ngờ gì chính là nền tảng Illumina, một nền tảng giải trình tự thế hệ mới, đọc ngắn, tận dụng phương pháp tiếp cận giải trình tự bằng tổng hợp để xác định thứ tự các nucleotide trong một sợi DNA.
+
+Công nghệ giải trình tự DNA của Illumina tạo ra các đoạn đọc (reads) có độ chính xác rất cao (trên 99,9%), với chi phí rẻ để tạo ra trên quy mô lớn. Những ưu điểm này đã thúc đẩy nền tảng Illumina vươn lên trở thành tiêu chuẩn vàng hiện tại trong giải trình tự lâm sàng và nghiên cứu. Giải trình tự thế hệ mới của Illumina đã dẫn đến vô số khám phá khoa học trong thập kỷ qua, giúp nâng cao hiểu biết của chúng ta về sự tiến hóa, thích nghi và bệnh tật thông qua việc phát hiện các biến thể gây bệnh, bao gồm các biến thể đơn nucleotide, biến thể số bản sao và đột biến chèn/xóa (indels). Quan trọng hơn, thông lượng của công nghệ này đã cho phép nó đóng vai trò như một xét nghiệm cung cấp dữ liệu số để nghiên cứu vô số hiện tượng sinh học, bao gồm khả năng tiếp cận chất nhiễm sắc (chromatin accessibility), sự chiếm chỗ của yếu tố phiên mã, biểu hiện gen và liên kết RNA, cùng nhiều ứng dụng mới mẻ khác.
+
+Tuy nhiên, việc áp dụng các công nghệ đọc ngắn vào phát hiện biến thể cấu trúc và lắp ráp bộ gen một cách rộng rãi hơn đã bộc lộ một nhược điểm lớn: độ dài đoạn đọc bị hạn chế. Các đoạn đọc dài dưới 300 bazơ, điển hình như các đoạn đọc do giải trình tự thế hệ mới Illumina tạo ra, quá ngắn để có thể phát hiện hơn 70% biến thể cấu trúc của bộ gen người (tức là biến thể ảnh hưởng đến các trình tự dài hơn 50 bp), trong đó các biến thể cấu trúc kích thước trung bình (dưới 2kb) đặc biệt ít được phát hiện và trình bày. Hơn nữa, toàn bộ những vùng rộng lớn trong bộ gen của chúng ta (hơn 15%) vẫn không thể tiếp cận được để tiến hành lắp ráp hoặc phát hiện biến thể do thành phần lặp lại (repeat content) hoặc hàm lượng GC không điển hình. Vì vậy, một số vùng dễ bị đột biến nhất trong bộ gen của chúng ta thường ít được nghiên cứu.
+
+Chào bạn, tôi xin gửi bản dịch phần tiếp theo của bài báo. Ở phần này, các tác giả đề cập đến các nỗ lực vượt qua rào cản của công nghệ đọc ngắn, đồng thời đi sâu vào cơ chế hoạt động của 2 công nghệ đọc dài hàng đầu hiện nay: **Pacific Biosciences (PacBio)** và **Oxford Nanopore Technologies (ONT)**.
+
+Tôi cũng đính kèm thêm các thuật ngữ chuyên ngành mới xuất hiện trong phần này để bạn tiện tra cứu.
+
+---
+
+### 4. Phần còn lại của mục Mở đầu (Tiếp nối Introduction)
+
+Một giải pháp được đưa ra là phát triển các phương pháp giải trình tự đọc ngắn nhưng giúp tái tạo lại trình tự của các phân tử DNA dài. Giải trình tự đọc liên kết (linked-read sequencing), giải trình tự đọc dài tổng hợp (synthetic long-read sequencing) và giải trình tự Hi-C đều là những phương pháp tiết kiệm chi phí, cung cấp thông tin tầm xa về vị trí của các đoạn đọc mà chỉ sử dụng các đoạn đọc ngắn từ công nghệ Illumina. Ví dụ, công nghệ Hi-C sử dụng phương pháp nối không gian lân cận (proximity ligation) để tạo ra thư viện toàn bộ gen từ các locus (vị trí gen) vốn nằm gần nhau trong nhân, với phần lớn các locus nằm trên cùng một nhiễm sắc thể. Dữ liệu giải trình tự Hi-C có thể được sử dụng để cung cấp thông tin tầm xa giữa các cặp locus cách nhau hàng chục megabase trên cùng một nhiễm sắc thể; điều này đã được chứng minh là giúp liên kết các **contig** (đoạn trình tự lắp ráp) trong các bản lắp ráp bộ gen bị đứt gãy, định pha các haplotype (tổ hợp alen) và dẫn đến việc phát hiện các biến thể cấu trúc.
+
+Mặc dù Hi-C vượt trội hơn các phương pháp giải trình tự đọc ngắn đơn thuần trong việc phát hiện biến thể cấu trúc, nhưng đơn vị lắp ráp cơ bản vẫn là một đoạn đọc ngắn, điều này làm hạn chế đáng kể khả năng phát hiện và lắp ráp hoàn chỉnh các vùng biến thể cấu trúc, đặc biệt là ở các vùng lặp lại có kích thước lớn. Đối với các ứng dụng này, các phương pháp giải trình tự đọc liên kết, đọc dài tổng hợp và Hi-C nhìn chung kém hiệu quả hơn so với các phương pháp giải trình tự đọc dài (long-read sequencing) đúng nghĩa.
+
+Trong bài tổng quan này, chúng tôi tập trung vào hai công nghệ giải trình tự đọc dài chính: công nghệ của Pacific Biosciences (còn được gọi là giải trình tự phân tử đơn theo thời gian thực - SMRT, hay giải trình tự PacBio) và công nghệ của Oxford Nanopore Technologies (ONT). Chúng tôi so sánh chúng với các công nghệ giải trình tự đọc ngắn (chẳng hạn như Illumina) về độ chính xác của đoạn đọc, thông lượng và chi phí. Ngoài ra, chúng tôi thảo luận về ứng dụng thực tiễn của các công nghệ này trong hệ gen học (genomics), hệ phiên mã học (transcriptomics) và biểu sinh học (epigenomics), cũng như cách chúng đang mở ra những hiểu biết sinh học mới. Bài tổng quan này không đi sâu đánh giá các phần mềm và thuật toán lắp ráp bộ gen (một lĩnh vực tiến triển rất nhanh và đã được thảo luận ở nhiều tài liệu khác). Thay vào đó, chúng tôi tập trung vào các định hướng tương lai, đặc biệt nhấn mạnh vào các nghiên cứu về bệnh học và tính đa dạng ở người, đồng thời nhận thấy các công nghệ này đã và đang tác động to lớn lên nhiều loài và các ngành sinh vật học khác.
+
+---
+
+### 5. Các công nghệ giải trình tự đọc dài (Long-read sequencing technologies)
+
+Trái ngược với các phương pháp đọc ngắn, công nghệ đọc dài có thể tạo ra các trình tự liên tục có chiều dài từ 10 kilobase đến vài megabase trực tiếp từ DNA tự nhiên (native DNA). Cùng với những tiến bộ gần đây về thông lượng và độ chính xác, điều này đã làm tăng đáng kể tiện ích và tính ứng dụng của chúng. Cả công nghệ giải trình tự PacBio và ONT đều tạo ra các đoạn đọc có thể dễ dàng đi xuyên qua các vùng lặp lại nhiều nhất trong bộ gen người, nhưng những khác biệt cơ sở về mặt hóa học và phương pháp nhận diện trình tự đã dẫn tới sự khác biệt về độ dài đoạn đọc, độ chính xác của từng bazơ và thông lượng của chúng.
+
+#### Pacific Biosciences (PacBio)
+
+Công nghệ giải trình tự PacBio SMRT sử dụng khuôn mẫu phân tử DNA có cấu trúc không gian dạng vòng, được gọi là **SMRTbell**. SMRTbell bao gồm một đoạn DNA chèn (insert) sợi kép với các bộ tiếp nối (adapters) dạng kẹp tóc sợi đơn ở cả hai đầu. Đoạn DNA chèn có thể dài từ một đến hơn 100 kilobase, cho phép tạo ra các đoạn giải trình tự dài. Sau khi SMRTbell được hình thành, nó sẽ liên kết với một enzym DNA polymerase và được nạp vào một **SMRT Cell** (chứa tới 8 triệu ống dẫn sóng chế độ không - **ZMW**) để tiến hành giải trình tự.
+
+Trong quá trình phản ứng giải trình tự, enzym polymerase sẽ di chuyển vòng quanh khuôn mẫu SMRTbell và gắn các deoxynucleoside triphosphate (dNTP) có đánh dấu huỳnh quang vào sợi đang được tổng hợp. Sau mỗi lần gắn kết, một tia laser sẽ kích thích phân tử phát huỳnh quang (fluorophore), và một camera sẽ ghi lại tín hiệu phát xạ. Phân tử phát huỳnh quang sau đó sẽ bị cắt bỏ khỏi nucleotide trước khi dNTP tiếp theo được gắn vào. Quá trình này được lặp lại hàng nghìn lần để xác định danh tính và trình tự của từng nucleotide trong khuôn SMRTbell. Công nghệ PacBio thường tạo ra các đoạn đọc dài hàng chục kilobase, vượt xa chiều dài các đoạn đọc thu được từ giải trình tự Illumina.
+
+#### Oxford Nanopore Technologies (ONT)
+
+Công nghệ giải trình tự đọc dài ONT sử dụng các phân tử DNA dạng thẳng thay vì dạng vòng. Những phân tử DNA thẳng này thường dài từ 1 đến vài trăm kilobase nhưng cũng có thể dài tới vài megabase. Quy trình giải trình tự ONT bắt đầu bằng việc gắn một phân tử DNA sợi kép vào một bộ tiếp nối (sequencing adapter), bộ tiếp nối này đã được nạp sẵn một protein động cơ (motor protein).
+
+Hỗn hợp DNA được nạp vào một **flow cell** chứa hàng trăm đến hàng nghìn lỗ nano (nanopores) gắn trên một màng tổng hợp. Protein động cơ tháo xoắn DNA sợi kép và, kết hợp cùng một dòng điện, đẩy DNA (mang điện tích âm) đi xuyên qua lỗ nano với tốc độ được kiểm soát. Khi DNA đi xuyên qua lỗ, nó gây ra những nhiễu loạn đặc trưng đối với dòng điện; các nhiễu loạn này được phân tích theo thời gian thực để xác định trình tự các bazơ trong sợi DNA. Với công nghệ ONT, người ta đã tạo ra các đoạn đọc dài hơn 1 Mb, với đoạn đọc dài nhất được ghi nhận đạt gần 2,3 Mb khi được ghép nối bằng máy tính từ các đoạn đọc ngắn hơn. Nhìn chung, những thành tựu này lần đầu tiên đã đưa cộng đồng hệ gen học bước vào kỷ nguyên của các đoạn đọc có kích thước hàng megabase.
+
+---
+
+Bản dịch chi tiết phần **Các loại dữ liệu giải trình tự đọc dài (Long-read sequencing data types)** cùng các khái niệm thuật ngữ liên quan:
+
+
+
+### 2. Các loại dữ liệu giải trình tự đọc dài (Long-read sequencing data types)
+
+Nhờ những phát triển mới trong hóa học giải trình tự và sự khác biệt trong quy trình chuẩn bị DNA, mỗi công nghệ giải trình tự đọc dài hiện có thể tạo ra các loại dữ liệu đọc dài khác nhau về cả độ dài lẫn độ chính xác. Do đó, các loại dữ liệu đa dạng này đang bắt đầu được ứng dụng cho các mục đích nghiên cứu chuyên biệt.
+
+#### Đoạn đọc dài liên tục PacBio (PacBio continuous long reads - CLR)
+
+CLR hiện là loại dữ liệu PacBio phổ biến nhất, được tạo ra bằng cách xây dựng các thư viện khuôn mẫu SMRTbell tiêu chuẩn với đoạn DNA chèn (insert) dài hơn 30 kb. Do kích thước đoạn chèn lớn, enzym polymerase chỉ thực hiện một hoặc một vài vòng di chuyển quanh khuôn mẫu, tạo ra các subread thường dài từ 5 đến 60 kb nhưng có thể vượt quá 100 kb.
+
+Phân tích meta chỉ ra rằng độ chính xác subread của CLR thường đạt 85–92%, với khoảng 85% các đoạn homopolymer dài ít nhất 5 bazơ được đọc chính xác. Mặc dù độ chính xác đơn vòng (single-pass) của CLR thấp hơn so với độ chính xác đọc ngắn của Illumina (>99,9%), dạng sai số của CLR lại mang tính ngẫu nhiên (stochastic). Nhờ đó, các lỗi có thể được sửa chữa bằng các công cụ tinh chỉnh (polishing tools) như Quiver và Arrow, vốn tận dụng các phép căn gióng CLR cùng với thông tin tín hiệu xung thô để suy ra trình tự thực sự dựa trên sự đồng thuận trình tự.
+
+Dữ liệu CLR có thể được tạo ra từ các nền tảng RS II, Sequel và Sequel II. Trong khi RS II và Sequel chỉ tạo ra tương ứng tối đa 2 Gb và 20 Gb dữ liệu mỗi flow cell, nền tảng Sequel II gần đây với 8 triệu ZMW có khả năng tạo ra tới 160 Gb mỗi flow cell ở chế độ CLR. Do đó, hiện tại người ta có thể đạt được độ bao phủ bộ gen người hơn 40 lần chỉ với 1 hoặc 2 flow cell Sequel II, mang lại độ chính xác trình tự đồng thuận đạt trên 99,9%.
+
+#### Đoạn đọc độ chính xác cao PacBio (PacBio high-fidelity reads - HiFi)
+
+Đoạn đọc HiFi đại diện cho loại dữ liệu mới nhất do PacBio phát triển. Đây là loại dữ liệu đầu tiên vừa có chiều dài lớn (>10 kb) vừa có độ chính xác rất cao (>99%). Ở phương pháp này, các đoạn DNA chèn nhỏ hơn (10–30 kb) được lắp ráp thành khuôn SMRTbell và giải trình tự thông qua chế độ giải trình tự đồng thuận vòng (CCS).
+
+Do kích thước đoạn chèn tương đối nhỏ, enzym polymerase có thể thực hiện nhiều vòng di chuyển qua khuôn SMRTbell, tạo ra các đoạn đọc polymerase cực dài (độ dài N50 > 150 kb) chứa nhiều subread từ cả sợi thuận và sợi đảo bổ sung. Các subread từ một đoạn đọc polymerase đơn lẻ sau đó được thuật toán CCS tổng hợp để tạo ra đoạn đọc đồng thuận HiFi, thu được tổng sản lượng 15–25 Gb dữ liệu HiFi từ một SMRT Cell 8M duy nhất.
+
+Các đoạn đọc HiFi có độ chính xác trung vị lớn hơn 99,9%, với hơn 99,5% các đoạn homopolymer dài ít nhất 5 bazơ được giải mã chính xác. Độ chính xác cao của dữ liệu HiFi đã giúp cải thiện việc phát hiện biến thể, rút ngắn thời gian lắp ráp và cho phép tiếp cận các vùng DNA lặp lại phức tạp hơn, bao gồm cả việc lắp ráp liên tục một số vùng tâm động (centromere) ở người.
+
+#### Đoạn đọc dài ONT (ONT long reads)
+
+Độ dài đoạn đọc của ONT có thể vượt qua PacBio ít nhất một bậc kích thước bằng cách tạo ra các trình tự liên tục dài từ hàng trăm đến hàng nghìn kilobase. Các yếu tố chính hạn chế độ dài đoạn đọc ONT nằm ở khâu trích xuất và chuẩn bị DNA có khối lượng phân tử cao (HMW DNA).
+
+Loại đoạn đọc phổ biến nhất là đoạn đọc dài ONT tiêu chuẩn. Các đoạn đọc này thường dài 10–100 kb và đạt độ chính xác trung bình 87–98%. Khoảng 91% đoạn homopolymer dài ít nhất 5 bazơ được đọc chính xác trong dữ liệu đọc thô.
+
+Dữ liệu đọc dài có thể được tạo ra trên bất kỳ nền tảng nào trong ba nền tảng tiêu chuẩn của ONT: MinION, GridION và PromethION. PromethION cung cấp thông lượng gấp gần 6 lần trên mỗi flow cell so với MinION hay GridION, tạo ra 50–100 Gb dữ liệu đọc dài mỗi flow cell. Đối với các ứng dụng thông lượng thấp hoặc nghiên cứu dã ngoại/lâm sàng lưu động, ONT cung cấp thiết bị Flongle và MinION với kích thước nhỏ gọn, tốc độ giải trình tự nhanh và chi phí tối ưu.
+
+#### Đoạn đọc siêu dài ONT (ONT ultra-long reads)
+
+Đoạn đọc siêu dài ONT thường có chiều dài >100 kb và có thể kéo dài tới vài megabase. Độ chính xác trung bình của đoạn đọc siêu dài tương đương với đoạn đọc dài tiêu chuẩn (87–98%), với hơn 93% đoạn homopolymer dài ≥5 bazơ được gọi chính xác.
+
+Mặc dù phá vỡ các kỷ lục về độ dài đoạn đọc, thông lượng của đoạn đọc siêu dài thấp hơn nhiều so với đoạn đọc dài tiêu chuẩn (thường chỉ đạt 500 Mb đến 2 Gb dữ liệu mỗi flow cell trên MinION và GridION). Do đó, việc tạo ra dữ liệu giải trình tự siêu dài đạt độ bao phủ 20 lần có thể mất vài tuần trên hệ thống GridION.
+
+
+
+
+
+---
+
+**Lắp ráp bộ gen bằng công nghệ đọc dài (Genome assembly with long reads)**
+
+**Lắp ráp de novo (De novo genome assembly)**
+Lắp ráp de novo là quá trình tái tạo các đoạn trình tự được lấy mẫu ngẫu nhiên nhằm xác định thứ tự của từng bazơ trong bộ gen. Các đoạn trình tự ghép nối nối tiếp với nhau được gọi là contig, và trong trường hợp lý tưởng, mỗi nhiễm sắc thể sẽ tương ứng với một contig duy nhất. Công nghệ đọc ngắn gặp nhiều hạn chế khi lắp ráp de novo bộ gen động vật có vú, thường để lại hàng trăm nghìn khoảng trống (gaps) do các vùng lặp lại mà đọc ngắn không thể đi xuyên qua.
+
+Nhiều nghiên cứu chứng minh bản lắp ráp bằng đọc dài vượt trội hơn nhiều bậc về độ liên tục (contiguity) so với các phương pháp đọc ngắn hoặc Sanger trước đây. Sự gia tăng độ liên tục này được thúc đẩy không chỉ bởi các đoạn đọc dài hơn mà còn nhờ sự phát triển của các công cụ lắp ráp tối ưu cho dữ liệu đọc dài (như Canu, HiCanu, Peregrine, FALCON, Flye, wtdbg2 và Shasta) cùng các công nghệ hỗ trợ như bản đồ quang học (Bionano Genomics) hay bản đồ điện tử (Nabsys). Hiện nay, các phòng thí nghiệm độc lập đã có thể giải trình tự và lắp ráp bộ gen người trong vài tuần với độ liên tục tiệm cận hoặc vượt qua Dự án Bộ gen Người (Human Genome Project).
+
+**Tinh chỉnh và định pha (Polishing and phasing)**
+Dù có tốc độ lắp ráp nhanh, các bản đọc dài từng bị chỉ trích vì độ chính xác chưa cao. Các bản lắp ráp chưa qua tinh chỉnh (unpolished) thường chứa nhiều lỗi indel nhỏ làm phức tạp hóa quá trình chú giải gen. Hầu hết các lỗi này có thể giải quyết bằng các công cụ tinh chỉnh (Racon, Nanopolish, MarginPolish, HELEN, Quiver, Arrow, Medaka) kết hợp dữ liệu đọc ngắn từ cùng cá thể.
+
+Mục tiêu trọng tâm hiện nay là tạo ra bộ gen lưỡng bội chất lượng cao được định pha hoàn toàn (fully phased), nơi cả hai haplotype đều được đại diện. Quy trình này về bản chất chuyển đổi một bộ gen người 3-Gb dạng gộp (collapsed) thành bộ gen 6-Gb đại diện cho cả bộ di truyền từ mẹ và bố, giúp tăng độ nhạy trong phát hiện biến thể. Việc lắp ráp de novo định pha hiện đã khả thi nhờ các chiến lược tận dụng thông tin cha mẹ (như trio binning), thuật toán tự định pha từ dữ liệu đọc dài (FALCON-Unzip) hoặc kết hợp công nghệ bổ trợ (Strand-seq, Hi-C).
+
+**Bản lắp ráp nhiễm sắc thể từ telomere đến telomere (Telomere-to-telomere chromosome assemblies)**
+Bản lắp ráp bộ gen hoàn chỉnh nhất là đạt được một contig duy nhất cho mỗi nhiễm sắc thể, nơi thứ tự và chiều của toàn bộ trình tự được giải mã liên tục từ telomere này sang telomere khác. Hơn một nửa số khoảng trống còn lại trong các bản lắp ráp đọc dài nằm ở vùng lặp đoạn từng phần (segmental duplications).
+
+Bằng cách kết hợp dữ liệu đọc dài PacBio và ONT siêu dài trên bộ gen CHM13, Liên minh Telomere-to-Telomere (T2T) đã chứng minh khả năng tạo ra bản lắp ráp từ telomere đến telomere. Miga và cộng sự đã đại diện bộ gen CHM13 thành 590 contig, bao gồm bản lắp ráp hoàn chỉnh đầu tiên từ telomere đến telomere của nhiễm sắc thể X. Chìa khóa của bước tiến này là dữ liệu ONT siêu dài độ bao phủ cao, cho phép giải mã mảng lặp lại a-satellite phức tạp ở vùng tâm động. Mặc dù quy trình T2T hiện chưa hoàn toàn tự động, những công cụ mới như CentroFlye hay HiCanu đang từng bước tự động hóa việc lắp ráp các vùng tâm động này.
+
+---
+Dưới đây là bản dịch cho các phần tiếp theo của bài báo, đi sâu vào việc **Hiểu về biến dị di truyền bằng công nghệ đọc dài** và các ứng dụng **Vượt ra ngoài giải trình tự DNA**.
+
+---
+
+
+
+
+
+---
+
+### 2. Hiểu về biến dị di truyền bằng công nghệ đọc dài (Understanding variation with long reads)
+
+Độ chính xác và độ liên tục ngày càng tăng của các bản lắp ráp bộ gen chắc chắn sẽ nâng cao hiểu biết của chúng ta về các dạng biến dị di truyền phức tạp hơn, từ đó giúp cải thiện sự hiểu biết về các quá trình đột biến và tiến hóa.
+
+**Phát hiện biến thể cấu trúc quy mô lớn và bệnh lý (Large-scale structural variant detection and disease)**
+Giải trình tự bộ gen bằng công nghệ đọc dài đã tăng cường đáng kể hiểu biết của chúng ta về toàn bộ phổ phổ biến dị di truyền ở người. Việc so sánh bộ gen của cùng một cá thể được giải trình tự bằng nền tảng đọc ngắn Illumina và đọc dài PacBio cho thấy 47% đột biến mất đoạn (deletions) và gần 78% đột biến chèn đoạn (insertions) đã bị bỏ sót bởi nền tảng Illumina, ngay cả khi áp dụng tới 11 công cụ gọi biến thể khác nhau. Hầu hết các cải thiện về độ nhạy này liên quan đến các biến thể có kích thước trung bình (từ 50 bp đến 2 kb). Đi kèm với đó là sự ra đời của hàng loạt công cụ gọi biến thể cấu trúc mới (như SMRT-SV, MsPAC, Phased-SV, Sniffles) được thiết kế đặc thù để khám phá, giải trình tự và định pha các biến thể cấu trúc dựa trên dữ liệu đọc dài.
+
+Ứng dụng trực tiếp của việc tăng độ nhạy này là khám phá ra các dạng biến dị gây bệnh phức tạp. Các ví dụ điển hình bao gồm: phát hiện sự mở rộng lặp lại GGC mới liên quan đến bệnh thể vùi nội nhân thần kinh và bệnh não trắng ở người lớn; phát hiện đoạn chèn SVA retrotransposon gây ra hội chứng loạn trương lực cơ-Parkinson liên kết nhiễm sắc thể X ở Philippines; và việc khám phá các vùng nhân ba phức tạp cũng như các vùng disomy đơn nguồn gốc liên quan đến hội chứng Temple.
+
+
+### 3. Vượt xa hơn giải trình tự DNA (Beyond DNA sequencing)
+
+Ngoài lắp ráp bộ gen và phát hiện biến thể, giải trình tự đọc dài còn được áp dụng để phát hiện các đồng phân RNA (RNA isoforms) toàn chiều dài, cũng như các biến đổi sinh hóa trên RNA và DNA tự nhiên.
+
+**Giải trình tự RNA toàn chiều dài (Full-length RNA sequencing)**
+Một thế mạnh lớn của công nghệ đọc dài là khả năng xác định trình tự của các bản sao RNA toàn chiều dài. Cả nền tảng PacBio và ONT đều có thể giải quyết trình tự của các phân tử RNA toàn chiều dài thông qua giải trình tự cDNA; riêng ONT còn có khả năng giải trình tự RNA tự nhiên (native RNA sequencing). Dữ liệu này giúp cải thiện việc chú giải gen và loại bỏ nhu cầu phải tái tạo các đồng phân từ việc lắp ráp các đoạn đọc RNA ngắn vốn dễ mắc lỗi. Phương pháp chính do PacBio sử dụng là Iso-Seq, trong khi đó phương pháp giải trình tự RNA tự nhiên của ONT mang lại lợi thế là đảm bảo thu thập được tất cả các phân tử RNA (kể cả các bản sao dài thường bị bỏ sót khi tổng hợp cDNA) và tránh được sự sai lệch trình tự (sequence biases) do quá trình khuếch đại PCR.
+
+**Phát hiện quá trình methyl hóa DNA và RNA (DNA and RNA methylation detection)**
+Vì công nghệ PacBio và ONT đều nhắm mục tiêu vào các khuôn mẫu tự nhiên không qua quá trình khuếch đại, các phân tử DNA và RNA giữ lại được toàn bộ các biến đổi bazơ. Điều này cho phép phát hiện các thay đổi biểu sinh thông qua động học của enzym polymerase (đối với PacBio) hoặc sự thay đổi dòng điện (đối với ONT). Công nghệ giải trình tự đọc dài mang lại lợi thế lớn so với phương pháp bisulfite tiêu chuẩn vì nó cho phép xác định một mảng biến đổi đa dạng hơn nhiều, bao gồm 4-methylcytosine, 5-methylcytosine, 5-hydroxymethylcytosine, N-methyladenine và 8-oxoguanine. Các công cụ tin sinh học như Nanopolish, signalAlign, DeepSignal đã được phát triển để phát hiện các trạng thái methyl hóa ở những vùng bộ gen và hệ phiên mã mà trước đây không thể tiếp cận, chẳng hạn như vùng tâm động của nhiễm sắc thể X.
+
+
+
+Chào bạn, tiếp nối phong cách dịch thuật khoa học, tôi xin gửi đến bạn bản dịch cho phần **Tiêu đề**, **Tóm tắt (Abstract)**, **Mở đầu (Introduction)** và phần **Tổng quan về trạng thái của công nghệ giải trình tự đọc dài** từ bài báo *"Opportunities and challenges in long-read sequencing data analysis"* (Cơ hội và thách thức trong phân tích dữ liệu giải trình tự đọc dài - Tác giả Amarasinghe et al., Genome Biology 2020).
+
+Giống như lần trước, để đảm bảo chất lượng văn bản, tôi sẽ dịch trước các phần mang tính nền tảng. Bài báo này cũng rất dài và chứa nhiều nội dung chuyên sâu về các công cụ tin sinh học. Bạn hãy cho tôi biết nếu muốn dịch tiếp các phần sau (như Basecalling, Error correction, hay Phân tích hệ phiên mã) nhé!
+
+---
+
+### Tiêu đề: Cơ hội và thách thức trong phân tích dữ liệu giải trình tự đọc dài
+
+
+
+**Từ khóa:** Giải trình tự đọc dài, Phân tích dữ liệu, PacBio, Oxford Nanopore.
+
+### 1. Tóm tắt (Abstract)
+
+Các công nghệ giải trình tự đọc dài đang vượt qua những hạn chế ban đầu về độ chính xác và thông lượng, mở rộng các lĩnh vực ứng dụng của chúng trong hệ gen học (genomics). Do đó, các công cụ phân tích chuyên dụng có khả năng tính toán các đặc điểm của dữ liệu đọc dài là rất cần thiết, nhưng tốc độ phát triển quá nhanh của những công cụ này có thể gây choáng ngợp. Để hỗ trợ trong việc thiết kế và phân tích các dự án giải trình tự đọc dài, chúng tôi điểm lại bức tranh toàn cảnh hiện tại về các công cụ sẵn có và giới thiệu một cơ sở dữ liệu tương tác trực tuyến, *long-read-tools.org*, để tạo điều kiện thuận lợi cho việc tra cứu. Hơn nữa, chúng tôi tập trung vào các nguyên lý sửa lỗi (error correction), phát hiện biến đổi bazơ (base modification) và phân tích hệ phiên mã (transcriptomics) đọc dài, đồng thời nêu bật những thách thức vẫn còn tồn tại.
+
+---
+
+### 2. Mở đầu (Introduction)
+
+Giải trình tự đọc dài, hay giải trình tự thế hệ thứ ba, mang lại một số lợi thế so với giải trình tự đọc ngắn. Trong khi các máy giải trình tự đọc ngắn như các thiết bị NovaSeq, HiSeq, NextSeq và MiSeq của Illumina; các mẫu MGISEQ và BGISEQ của BGI; hoặc máy giải trình tự Ion Torrent của Thermo Fisher tạo ra các đoạn đọc có chiều dài lên đến 600 bazơ, thì các công nghệ giải trình tự đọc dài thường xuyên tạo ra các đoạn đọc vượt quá 10 kb.
+
+Giải trình tự đọc ngắn có hiệu quả về chi phí, độ chính xác cao và được hỗ trợ bởi một loạt các công cụ và quy trình (pipelines) phân tích. Tuy nhiên, các chuỗi polyme axit nucleic tự nhiên trải dài qua tám bậc độ lớn về chiều dài, và việc giải trình tự chúng dưới dạng các mảnh khuếch đại ngắn làm phức tạp hóa nhiệm vụ tái tạo và đếm các phân tử ban đầu. Do đó, các đoạn đọc dài có thể cải thiện quá trình lắp ráp de novo, độ chắc chắn khi lập bản đồ (mapping certainty), nhận dạng các đồng phân (isoform) bản sao, và phát hiện các biến thể cấu trúc (structural variants). Hơn nữa, việc giải trình tự đọc dài các phân tử tự nhiên (native), cả DNA và RNA, giúp loại bỏ sự sai lệch do khuếch đại (amplification bias) trong khi vẫn bảo tồn được các biến đổi bazơ. Những khả năng này, cùng với những tiến bộ không ngừng về độ chính xác, thông lượng và việc giảm chi phí, đã bắt đầu đưa giải trình tự đọc dài trở thành một lựa chọn cho hàng loạt ứng dụng trong hệ gen học đối với cả sinh vật mô hình và phi mô hình.
+
+Hai công nghệ hiện đang thống trị không gian giải trình tự đọc dài: giải trình tự phân tử đơn theo thời gian thực (SMRT) của Pacific Biosciences (PacBio) và giải trình tự lỗ nano (nanopore sequencing) của Oxford Nanopore Technologies (ONT). Từ đây trở đi, chúng tôi gọi đơn giản là giải trình tự SMRT và giải trình tự nanopore. Các công nghệ giải trình tự SMRT và nanopore được phát hành thương mại lần lượt vào năm 2011 và 2014, và kể từ đó đã trở nên phù hợp với ngày càng nhiều ứng dụng. Dữ liệu mà các nền tảng này tạo ra khác biệt về mặt định tính so với giải trình tự thế hệ thứ hai, do đó đòi hỏi các công cụ phân tích được thiết kế riêng.
+
+Với sự quan tâm ngày càng lớn đối với giải trình tự đọc dài và sự phát triển nhanh chóng của các ứng dụng cũng như công cụ, bài tổng quan hiện tại nhằm mục đích cung cấp một mô tả về các nguyên tắc chỉ đạo trong phân tích dữ liệu đọc dài, khảo sát các công cụ hiện có cho các tác vụ khác nhau cũng như thảo luận về những lĩnh vực trong phân tích đọc dài cần được cải thiện. Chúng tôi cũng giới thiệu một danh mục mã nguồn mở bổ trợ về các công cụ phân tích đọc dài: *long-read-tools.org*. Cơ sở dữ liệu *long-read-tools.org* cho phép người dùng tìm kiếm và lọc các công cụ dựa trên nhiều thông số khác nhau như công nghệ hoặc ứng dụng.
+
+---
+
+### 3. Trạng thái hiện tại của giải trình tự đọc dài và phân tích dữ liệu (The state of long-read sequencing and data analysis)
+
+Các công nghệ giải trình tự đọc dài Nanopore và SMRT dựa trên các nguyên lý rất khác biệt. Máy giải trình tự Nanopore (MinION, GridION và PromethION) đo lường các dao động dòng ion khi axit nucleic sợi đơn đi qua các lỗ nano sinh học. Các nucleotide khác nhau tạo ra các mức điện trở khác nhau đối với đoạn axit nucleic nằm bên trong lỗ nano; do đó, trình tự các bazơ có thể được suy ra từ các dạng biến thiên dòng điện đặc trưng. Ngược lại, máy giải trình tự SMRT (RSII, Sequel và Sequel II) phát hiện các sự kiện huỳnh quang tương ứng với việc một enzym polymerase (được cố định ở đáy của một giếng cực nhỏ) bổ sung thêm một nucleotide cụ thể.
+
+Chiều dài đoạn đọc trong giải trình tự SMRT bị giới hạn bởi tuổi thọ của enzym polymerase. Một polymerase hoạt động nhanh hơn dành cho máy Sequel (được giới thiệu cùng với hóa chất phiên bản 3 vào năm 2018) đã tăng chiều dài đoạn đọc lên mức trung bình là 30-kb cho một đoạn đọc polymerase. Kích thước đoạn chèn thư viện (library insert) phù hợp cho giải trình tự SMRT nằm trong khoảng từ 250 bp đến 50 kbp. Trong khi đó, giải trình tự Nanopore cung cấp các đoạn đọc dài nhất, từ 500 bp cho đến kỷ lục hiện tại là 2,3 Mb, với các thư viện bộ gen kích thước 10–30-kb là rất phổ biến. Chiều dài đoạn đọc trong giải trình tự nanopore chủ yếu bị hạn chế bởi khả năng đưa DNA có khối lượng phân tử rất cao vào lỗ nano và tác động tiêu cực của điều này đối với hiệu suất của quá trình chạy (run yield). Độ chính xác trong việc gọi bazơ (basecalling) của các đoạn đọc tạo ra bởi cả hai công nghệ này đã tăng lên đáng kể trong thời gian gần đây; tỷ lệ lỗi gọi bazơ thô (raw base-called error rate) được công bố là đã giảm xuống dưới 1% đối với máy giải trình tự SMRT và dưới 5% đối với trình tự nanopore.
+
+Mặc dù nanopore và SMRT là những công nghệ giải trình tự đọc dài thực sự (và là trọng tâm của bài tổng quan này), cũng có các phương pháp tiếp cận giải trình tự đọc dài tổng hợp (synthetic long-read sequencing). Các phương pháp này bao gồm đọc liên kết (linked reads), các chiến lược nối không gian lân cận (proximity ligation) và lập bản đồ quang học (optical mapping), có thể được sử dụng phối hợp cùng với các đoạn đọc dài thực thụ.
+
+Với tiềm năng trong việc lắp ráp và tái lắp ráp chính xác các bộ gen, hệ thống methyl hóa (methylomes), các biến thể, đồng phân (isoforms), haplotype hoặc định danh loài, các công cụ phân tích dữ liệu cung cấp bởi các nền tảng đọc dài đang được phát triển tích cực, đặc biệt là từ năm 2011.
+
+Một cuộc khảo sát qua các ấn bản, bản thảo chưa in (preprints), kho lưu trữ trực tuyến và phương tiện truyền thông xã hội đã xác định được 354 công cụ phân tích dữ liệu đọc dài. Phần lớn các công cụ này được phát triển để phân tích dữ liệu đọc nanopore (262 công cụ), trong khi có 170 công cụ được phát triển để phân tích dữ liệu SMRT. Các công cụ này được phân thành 31 nhóm dựa trên chức năng của chúng. Sự phân loại này cho thấy các xu hướng tiến hóa trong mối quan tâm của giới nghiên cứu: có lẽ do thông lượng ban đầu khiêm tốn của các công nghệ đọc dài, phần lớn các công cụ đã được thử nghiệm trên dữ liệu phi người (non-human data); các công cụ dành cho lắp ráp de novo, sửa lỗi (error correction) và tinh chỉnh (polishing) đã nhận được sự chú ý nhiều nhất, trong khi phân tích hệ phiên mã vẫn đang ở những giai đoạn phát triển ban đầu.
+
+Chúng tôi trình bày một cái nhìn tổng quan về các quy trình phân tích (pipelines) cho dữ liệu nanopore và SMRT, đồng thời nêu bật các công cụ phổ biến. Chúng tôi không cố gắng đưa ra một đánh giá toàn diện về hiệu suất của công cụ cho tất cả các ứng dụng đọc dài; các nghiên cứu đánh giá chuẩn (benchmark studies) chuyên dụng là không thể thay thế, và chúng tôi khuyến nghị người đọc tham khảo các tài liệu đó nếu có thể. Thay vào đó, chúng tôi trình bày các nguyên lý và những rủi ro tiềm ẩn trong phân tích dữ liệu đọc dài với trọng tâm vào một số loại phân tích hạ nguồn (downstream analyses) chính: gọi biến thể cấu trúc, sửa lỗi, phát hiện biến đổi bazơ và hệ phiên mã học.
+
+---
+
+Tiếp theo trong bài báo là các phần phân tích rất chi tiết về các khía cạnh tin sinh học:
+
+1. **Basecalling (Gọi bazơ / Xác định trình tự bazơ)**
+2. **Errors, correction, and polishing (Lỗi, sửa lỗi và tinh chỉnh trình tự)**
+3. **Detecting structural variation (Phát hiện biến thể cấu trúc)**
+4. **Detecting base modifications (Phát hiện các biến đổi bazơ như methyl hóa DNA/RNA)**
+5. **Analysing long-read transcriptomes (Phân tích hệ phiên mã đọc dài)**
+
+Bạn muốn tôi dịch phần nào tiếp theo, hay cứ dịch tiếp theo thứ tự của bài?
+
+Dưới đây là bản dịch chi tiết cho các phần nội dung chuyên sâu tiếp theo của bài báo (*Amarasinghe et al., Genome Biology 2020*), bao gồm các khâu xử lý tin sinh học cốt lõi từ basecalling, sửa lỗi, phát hiện biến thể cấu trúc, biến đổi bazơ cho đến phân tích hệ phiên mã:
+
+---
+
+**Xác định trình tự bazơ (Basecalling)**
+
+Bước đầu tiên trong bất kỳ quy trình phân tích đọc dài nào là basecalling, tức quá trình chuyển đổi dữ liệu tín hiệu thô thành trình tự axit nucleic. Bước này ở dữ liệu đọc dài nhận được sự chú ý nhiều hơn so với đọc ngắn (nơi quy trình đã được chuẩn hóa và do phần mềm thương mại độc quyền thực hiện). Việc basecalling cho dữ liệu nanopore phức tạp hơn so với SMRT: trong số 26 công cụ liên quan đến basecalling được xác định, có tới 23 công cụ dành cho giải trình tự nanopore.
+
+Trong giải trình tự SMRT, chuỗi các tín hiệu phát huỳnh quang được ghi lại dưới dạng video. Vì khuôn mẫu có dạng vòng, enzym polymerase có thể đi qua cả hai sợi của đoạn DNA nhiều lần. Quá trình basecalling của SMRT bắt đầu bằng việc phân đoạn tín hiệu huỳnh quang thành các xung và chuyển đổi các xung này thành các bazơ, tạo ra một đoạn đọc dài liên tục (đoạn đọc polymerase). Đoạn đọc này sau đó được chia thành các đoạn đọc con (subreads), trong đó mỗi subread tương ứng với một lần di chuyển qua đoạn DNA chèn của thư viện. Từ việc căn gióng các subread này lại với nhau, một trình tự đồng thuận vòng (CCS) chính xác cho đoạn chèn sẽ được suy ra. Quy trình basecalling hiện tại của SMRT sử dụng công cụ `ccs`.
+
+Dữ liệu thô của nanopore là các giá trị cường độ dòng điện được đo ở tần số 4 kHz, lưu dưới định dạng `.fast5`. Basecalling cho đoạn đọc nanopore phát triển rất nhanh, chuyển dịch từ mô hình Markov ẩn (HMM) sang các cấu trúc mạng thần kinh nhân tạo (neural networks). ONT cung cấp công cụ basecaller sản xuất chính thức (Guppy) cùng các phiên bản phát triển thử nghiệm (Flappie, Scrappie, Taiyaki, Runnie và Bonito). Basecaller sản xuất mang lại độ chính xác tốt nhất và hiệu suất ổn định nhất. Ngoài ra, các công cụ độc lập như `Chiron` cũng cho phép người dùng tự đào tạo mô hình basecalling phù hợp với đặc tính riêng của mẫu.
+
+---
+
+**Lỗi, sửa lỗi và tinh chỉnh trình tự (Errors, correction, and polishing)**
+
+Cả công nghệ SMRT và nanopore đều có độ chính xác trên mỗi đoạn đọc thấp hơn so với giải trình tự đọc ngắn. Đối với SMRT, chất lượng trình tự đồng thuận vòng (CCS) phụ thuộc vào số lần phân tử được đọc. Với hóa chất v3, ước tính cần 4 lượt đọc để đạt CCS Q20 (độ chính xác 99%) và 9 lượt đọc cho Q30 (99,9%). Do sai số trong subread có tính chất ngẫu nhiên (chứa nhiều indel hơn là thay thế bazơ), các phương pháp đồng thuận có thể loại bỏ các sai lệch hệ thống.
+
+Trái lại, chất lượng đoạn đọc nanopore không phụ thuộc vào độ dài đoạn DNA mà phụ thuộc vào việc duy trì tốc độ di chuyển tối ưu của axit nucleic qua lỗ nano. Độ chính xác đơn vòng (1D) hiện có thể đạt trung vị 95%, trong khi giao thức 1D² (đọc hai sợi bổ sung nối tiếp) đạt độ chính xác đồng thuận 98%.
+
+Để phục vụ các ứng dụng đòi hỏi độ chính xác mức nucleotide cao (lắp ráp de novo, gọi biến thể), hai nhóm phương pháp sửa lỗi được áp dụng:
+
+* **Phương pháp phi lai (Non-hybrid):** Chỉ sử dụng dữ liệu đọc dài. Tất cả các đoạn đọc được căn gióng với nhau để lấy trình tự đồng thuận, hoặc lọc bỏ các k-mer hiếm vốn đại diện cho lỗi giải trình tự (như cách bộ lắp ráp `wtdbg2` thực hiện).
+
+
+* **Phương pháp lai (Hybrid):** Tận dụng độ chính xác của dữ liệu đọc ngắn.
+
+
+* *Dựa trên căn gióng (Alignment-based):* Căn gióng trực tiếp đọc ngắn lên đọc dài (LSC, proovread, Nanocorr).
+
+
+* *Dựa trên lắp ráp (Assembly-based):* Dùng đọc ngắn dựng đồ thị de Bruijn hoặc bản lắp ráp trước, sau đó sửa lỗi đọc dài bằng cách đi qua đồ thị (FMLRC, LoRDEC, Jabba). `FMLRC` được đánh giá cao nhất về tốc độ và chất lượng sửa lỗi.
+
+
+
+
+
+Sau khi lắp ráp, quá trình loại bỏ các lỗi còn sót lại trên các contig được gọi là **tinh chỉnh trình tự (polishing)**. Lắp ráp có thể được tinh chỉnh bằng subread SMRT (`Arrow`), tín hiệu dòng điện nanopore (`Nanopolish`), hoặc dùng đọc ngắn (`Pilon`, `Racon`). Công cụ `ntEdit` giúp tăng tốc quy trình bằng cách so sánh k-mer của bản lắp ráp với bộ lọc Bloom được dựng từ các đoạn đọc giải trình tự.
+
+---
+
+**Phát hiện biến thể cấu trúc (Detecting structural variation)**
+
+Mặc dù đọc ngắn hoạt động tốt trong việc xác định các biến thể đơn nucleotide (SNV) và biến thể chèn/xóa nhỏ (indels), chúng không phù hợp để phát hiện các thay đổi trình tự quy mô lớn. Các đột biến chèn đoạn, xóa đoạn, nhân đoạn, đảo đoạn hoặc chuyển vị có kích thước $\ge 50$ bp được gọi chung là **biến thể cấu trúc (SVs)** và dễ tiếp cận hơn nhiều thông qua giải trình tự đọc dài.
+
+Khả năng đi qua các vùng lặp lại của đọc dài cung cấp các điểm neo độc nhất, giúp đơn giản hóa việc lắp ráp de novo và gọi biến thể cấu trúc. Độ bao phủ vừa phải bằng đọc dài đã đủ để phát hiện biến thể cấu trúc: độ bao phủ $8,6\times$ với SMRT hoặc $15–17\times$ với nanopore đã chứng minh hiệu quả trong việc phát hiện các biến thể gây bệnh ở người.
+
+---
+
+**Phát hiện các biến đổi bazơ (Detecting base modifications)**
+
+Bên cạnh các bazơ kinh điển (A, T, C, G), axit nucleic tự nhiên chứa nhiều bazơ biến đổi có vai trò sinh học quan trọng (như 6mA, 4mC, 5mC, 5hmC trên DNA hoặc m6A trên RNA). Giải trình tự đọc dài cho phép xác định trực tiếp các biến đổi này ở độ phân giải đơn nucleotide trên từng phân tử đơn lẻ mà không cần xử lý hóa học làm tổn hại DNA.
+
+* **Trong giải trình tự SMRT:** Các biến đổi bazơ được suy ra từ khoảng thời gian giữa hai xung huỳnh quang liên tiếp (Interpulse Duration - IPD) do enzym polymerase bị chậm lại khi gặp bazơ biến đổi. Việc phát hiện 6mA và 4mC yêu cầu độ bao phủ $25\times$ mỗi sợi, trong khi 5mC yêu cầu tới $250\times$ do tác động mờ nhạt hơn lên động học của polymerase.
+
+
+* **Trong giải trình tự Nanopore:** Các bazơ biến đổi gây ra sự dịch chuyển mức dòng điện khi đi qua lỗ. Có 3 phương pháp nhận diện:
+
+
+1. *De novo:* So sánh tín hiệu dòng điện với tham chiếu *in silico* hoặc mẫu đối chứng PCR không biến đổi bằng kiểm định thống kê (`Tombo`, `NanoMod`).
+
+
+2. *Sử dụng mô hình đào tạo trước:* Sử dụng mô hình Markov ẩn (HMM) hoặc mạng thần kinh để phân loại bazơ (`Nanopolish` cho 5mCpG; `signalAlign` cho 6mA, 5mC, 5hmC; `DeepSignal`, `DeepMod`, `mCaller` cho 6mA/5mC; `EpiNano` cho m6A RNA).
+
+
+3. *Basecalling trực tiếp:* Nhận diện bazơ biến đổi ngay trong quá trình gọi bazơ bằng bảng chữ cái mở rộng (`Guppy`, `Taiyaki`, `RepNano`).
+
+
+
+
+
+---
+
+**Phân tích hệ phiên mã đọc dài (Analysing long-read transcriptomes)**
+
+Cắt nối thay thế (Alternative splicing) là cơ chế chính làm tăng tính phức tạp của biểu hiện gen ở sinh vật nhân thực. Các đoạn đọc ngắn phân mảnh không thể lắp ráp hay định lượng chính xác các đồng phân bản sao (isoforms) ở các locus phức tạp. Giải trình tự đọc dài khắc phục điều này bằng cách giải trình tự trực tiếp các bản sao toàn chiều dài (full-length transcripts).
+
+Hầu hết các công cụ phát hiện đồng phân đọc dài hoạt động bằng cách gom nhóm (clustering) các đoạn đọc đã được căn gióng và sửa lỗi, sau đó gộp (collapsing) chúng thành các dạng đồng phân. Quy trình `Iso-Seq3` của PacBio là giải pháp hoàn thiện nhất hiện nay. Các công cụ khác như `SQANTI`, `TALON`, `IsoCon`, `FLAIR`, `TAMA`, `Mandalorion` giúp lọc bỏ artefact, hạn chế việc gộp nhầm các bản sao tương tự và đối chiếu với chú giải tham chiếu.
+
+Đối với phân tích định lượng và biểu hiện sai biệt:
+
+* Định lượng cấp độ gen hoặc đồng phân sử dụng `Salmon`, `featureCounts`, `Wub`, `FLAIR`.
+
+
+* Phân tích biểu hiện gen/đồng phân sai biệt có thể áp dụng các công cụ `limma`, `edgeR`, `DESeq2`. Đối với phân tích sử dụng đồng phân sai biệt (Differential Transcript Usage - DTU), công cụ `DRIMSeq` được ứng dụng phổ biến.
+
+Dưới đây là bản dịch chi tiết các phần nội dung cuối cùng của bài báo (*Amarasinghe et al., Genome Biology 2020*), hoàn tất toàn bộ tài liệu:
+
+---
+
+**Kết hợp đọc dài, đọc dài tổng hợp và đọc ngắn**
+
+Các bản lắp ráp chỉ dựa vào đọc dài thường tạo ra các bộ gen có độ hoàn chỉnh và độ liên tục cao. Tuy nhiên, trong nhiều trường hợp, việc kết hợp thêm đọc ngắn hoặc dữ liệu từ công nghệ đọc dài tổng hợp sẽ giúp cải thiện kết quả hơn nữa.
+
+Các công nghệ khác nhau can thiệp ở các quy mô khác nhau:
+
+* Đọc ngắn đảm bảo độ chính xác ở cấp độ nucleotide.
+
+
+* Đọc PacBio SMRT chất lượng cao (5–15 kb) tạo ra các contig tốt.
+
+
+* Đọc Oxford Nanopore siêu dài (>100 kb), lập bản đồ quang học (optical mapping) hoặc Hi-C giúp định khung (scaffolding) các contig thành nhiễm sắc thể hoàn chỉnh.
+
+
+
+Sự kết hợp phổ biến nhất hiện nay là giữa đọc dài (Nanopore/SMRT) và giải trình tự đọc ngắn. Ví dụ: bản lắp ráp đọc dài Nanopore ở chủng dại *Drosophila melanogaster* được hỗ trợ bởi khung Hi-C đã sửa được 2 vị trí căn gióng sai contig ở bản tham chiếu. Bản đồ quang học cũng giúp giải quyết các lỗi lắp ráp sai ở cấp độ nhiễm sắc thể dựa trên SMRT ở ba loài thực vật họ hàng của *Arabidopsis thaliana*. Đối với việc phát hiện biến thể cấu trúc hoặc biến đổi bazơ, việc có sự hỗ trợ độc lập từ cả dữ liệu SMRT và Nanopore giúp xác nhận phát hiện và hạn chế các kết quả dương tính giả.
+
+Một số công cụ như `Unicycler` tích hợp trực tiếp dữ liệu đọc dài và đọc ngắn để tạo ra bản lắp ráp lai (hybrid assembly), trong khi các công cụ khác được kết hợp dạng quy trình (như Canu, Pilon và Racon trong quy trình `ont-assembly-polish`).
+
+---
+
+**long-read-tools.org: Danh mục các công cụ phân tích dữ liệu đọc dài**
+
+Sự quan tâm ngày càng tăng đối với tiềm năng của đọc dài được phản ánh qua sự phát triển theo chiều hướng mũ của các công cụ phân tích. Việc dễ dàng xác định công cụ nào đang tồn tại (hoặc chưa tồn tại) là điều cốt yếu để lập kế hoạch, thực hiện phân tích chuẩn mực, xây dựng các bộ dữ liệu đánh giá (benchmark) và định hướng phát triển phần mềm mới.
+
+Vì mục đích đó, nhóm tác giả giới thiệu `long-read-tools.org`, một cơ sở dữ liệu thu thập toàn diện các công cụ được sử dụng trong phân tích dữ liệu đọc dài. Người dùng có thể tìm kiếm tương tác các công cụ được phân loại theo công nghệ (SMRT, Nanopore, 10X linked reads, Hi-C, Bionano) và loại hình phân tích. Cơ sở dữ liệu này cũng đánh dấu các công cụ đã lỗi thời hoặc không còn được bảo trì.
+
+---
+
+**Thảo luận và Triển vọng (Discussion)**
+
+Với chi phí khoảng 1.500 USD, người dùng có thể thu được khoảng 30 Gb dữ liệu SMRT CCS độ chính xác >99% (1 SMRT cell trên Sequel II 8M) hoặc 50–150 Gb dữ liệu Nanopore dài hơn nhưng nhiều nhiễu hơn (1 flow cell PromethION). Nếu trước đây đọc dài chủ yếu dùng để lắp ráp bộ gen vi khuẩn nhỏ, thì những cải tiến gần đây về thông lượng và độ chính xác đã mở rộng phạm vi ứng dụng sang lắp ráp bộ gen phức tạp (từ telomere đến telomere), phát hiện biến thể cấu trúc, định pha, biểu sinh học và hệ phiên mã học.
+
+Tuy nhiên, phân tích dữ liệu đọc dài vẫn đối mặt với nhiều thách thức lớn:
+
+* **Khả năng mở rộng và tốc độ xử lý (Scalability):** Công cụ `Canu` tạo bản lắp ráp rất tốt cho bộ gen nhỏ nhưng chạy quá chậm trên bộ gen lớn. Các bộ lắp ráp thế hệ mới như `wtdbg2`, `TULIP`, `Shasta`, `Peregrine`, `Flye` và `Ra` có tốc độ nhanh hơn nhiều lần. Tương tự, công cụ `f5c` (được viết lại từ tính năng gọi methyl hóa của `Nanopolish`) giúp tăng đáng kể tốc độ xử lý dữ liệu biểu sinh trên bộ gen lớn.
+
+
+* **Lưu trữ và quản lý dữ liệu:** Dữ liệu Nanopore thô rất nặng (khoảng 20 bytes/bazơ), dẫn đến chi phí CNTT lớn cho các dự án quy mô. Trong khi đó, dữ liệu SMRT không lưu lại video movie nên chỉ tốn khoảng 3,5 bytes/bazơ.
+
+
+* **Sửa lỗi (Error correction):** Mặc dù độ chính xác của đọc dài ngày càng tăng, sửa lỗi vẫn là bước bắt buộc. Các bản lắp ráp bỏ qua khâu sửa lỗi cẩn thận dễ dự đoán sai nhiều protein bị đột biến cắt ngắn. Phương pháp sửa lỗi lai (dùng đọc ngắn) hiện vẫn cho kết quả tốt hơn phương pháp chỉ dùng đọc dài.
+
+
+* **Hạn chế trong biểu sinh học & Hệ phiên mã học:**
+* Nhiều biến đổi bazơ (như 5mC) không làm thay đổi động học của SMRT polymerase đủ mạnh để phát hiện ở độ nhạy cao (cần độ bao phủ tới $250\times$).
+
+
+* Với Nanopore, việc thiếu dữ liệu chuẩn (ground truth) để đào tạo mô hình và tính phức tạp tổ hợp khi mở rộng bảng chữ cái bazơ vẫn đang cản trở việc gọi trực tiếp các bazơ biến đổi.
+
+
+* Trong phân tích hệ phiên mã, các hiện tượng lệch độ bao phủ (coverage bias về đầu 3' trong giải trình tự RNA trực tiếp), sự xuất hiện của nhiều đồng phân chưa được chú giải và số lượng bản lặp lại thí nghiệm (replicates) còn hạn chế đang là những rào cản cần tiếp tục hoàn thiện.
+
+
+
+
+
+
+
+Dưới đây là bản dịch chi tiết bài báo khoa học *"Accurate circular consensus long-read sequencing improves variant detection and assembly of a human genome"* (Wenger et al., *Nature Biotechnology* 2019) với các thuật ngữ chuyên ngành di truyền và hệ gen học chuẩn xác.
+
+---
+
+**Giải trình tự đọc dài đồng thuận vòng độ chính xác cao giúp cải thiện việc phát hiện biến thể và lắp ráp bộ gen người**
+
+**Tóm tắt (Abstract)**
+Các công nghệ giải trình tự DNA hiện nay tạo ra các đoạn đọc ngắn có độ chính xác cao hoặc các đoạn đọc dài ít chính xác hơn. Chúng tôi báo cáo sự tối ưu hóa phương pháp giải trình tự đồng thuận vòng (CCS) nhằm cải thiện độ chính xác của giải trình tự phân tử đơn theo thời gian thực (SMRT) của PacBio và tạo ra các đoạn đọc có độ chính xác cao (HiFi) dài với độ chính xác 99,8% và chiều dài trung bình 13,5 kilobase (kb). Chúng tôi áp dụng phương pháp này để giải trình tự bộ gen người HG002/NA24385 vốn đã được đặc trưng kỹ lưỡng và đạt tỷ lệ độ chuẩn xác (precision) và độ nhạy (recall) ít nhất 99,91% đối với các biến thể đơn nucleotide (SNVs), 95,98% đối với các đột biến chèn/xóa nhỏ <50 bp (indels) và 95,99% đối với các biến thể cấu trúc (SVs). Phương pháp CCS của chúng tôi ngang bằng hoặc vượt qua khả năng của giải trình tự đọc ngắn trong việc phát hiện các biến thể nhỏ và biến thể cấu trúc. Chúng tôi ước tính có 2.434 điểm bất đồng có thể sửa chữa trong bộ dữ liệu chuẩn 'Genome in a Bottle' (GIAB). Gần như toàn bộ (99,64%) các biến thể có thể được định pha thành các haplotype, giúp cải thiện hơn nữa việc phát hiện biến thể. Lắp ráp de novo bộ gen chỉ sử dụng các đoạn đọc CCS đã tạo ra một bộ gen liên tục và chính xác với N50 của contig >15 megabase (Mb) và độ tương hợp 99,997%, vượt trội đáng kể so với việc lắp ráp bằng các đoạn đọc dài ít chính xác hơn.
+
+---
+
+**Mở đầu (Introduction)**
+Các công nghệ giải trình tự DNA đã cải tiến với tốc độ vượt qua định luật Moore, tạo ra cuộc cách mạng trong các khoa học sinh học. Bắt đầu từ những năm 1970, giải trình tự Sanger và sự tự động hóa sau đó đã tạo điều kiện cho các dự án giải trình tự DNA quy mô lớn và mở đường cho nghiên cứu hệ gen học hiện đại. Sau các bộ gen tham chiếu đầu tiên là sự ra đời của nhiều công nghệ giải trình tự thông lượng cao (giải trình tự thế hệ mới hay NGS) bao gồm 454, Solexa/Illumina, ABI Solid, Complete Genomics và Ion Torrent. Tất cả đều tạo ra các đoạn đọc tương đối chính xác nhưng bị hạn chế về độ dài, thường dưới 300 cặp bazơ (bp). Các đoạn đọc ngắn chính xác này rất phù hợp để gọi SNV và indel nhỏ, nhưng ít hữu ích hơn cho việc lắp ráp de novo, định pha haplotype và phát hiện biến thể cấu trúc—những tác vụ đòi hỏi thông tin trên các dải trình tự dài hơn.
+
+Để phát hiện các biến thể cấu trúc, định pha haplotype và lắp ráp bộ gen, kết quả vượt trội có thể thu được bằng các công nghệ như giải trình tự PacBio SMRT và Oxford Nanopore, cả hai đều tạo ra các đoạn đọc dài (>10 kb). Các công nghệ này dựa trên sự phát hiện phân tử đơn và có đặc điểm là độ chính xác đoạn đọc giảm (75–90%). Độ chính xác đồng thuận cao có thể đạt được bằng cách sửa lỗi giữa các đoạn đọc với nhau, nhưng đòi hỏi tính toán lớn và các lỗi vẫn tồn tại do căn gióng sai hoặc gộp nhầm các haplotype trong quá trình sửa lỗi. Do tỷ lệ lỗi cao, các công nghệ đọc dài hiếm khi được sử dụng để phát hiện SNV hoặc indel. Mặc dù bộ gen người có thể được giải trình tự ở quy mô quần thể, việc kết hợp nhiều công nghệ giải trình tự để phát hiện tất cả các dạng biến dị di truyền vẫn là cần thiết, làm tăng chi phí và độ phức tạp của dự án. Một công nghệ giải trình tự vừa có độ dài đoạn đọc lớn vừa có độ chính xác cao sẽ cho phép khám phá toàn diện các biến thể chỉ trong một thí nghiệm đơn lẻ.
+
+CCS suy ra một trình tự đồng thuận từ nhiều lượt đọc qua một phân tử khuôn mẫu đơn lẻ, tạo ra các đoạn đọc chính xác từ các đoạn đọc con (subreads) riêng lẻ chứa nhiễu. Độ dài và độ chính xác của các đoạn đọc CCS (còn gọi là HiFi) bị hạn chế bởi số lượt đọc cần thiết để đạt độ chính xác mong muốn và chiều dài đoạn đọc tổng thể (polymerase read length) của nền tảng giải trình tự. Trước đây, CCS chủ yếu được áp dụng cho các đoạn DNA chèn ngắn hơn 2 kb và chưa từng được sử dụng để tạo ra bộ dữ liệu độ bao phủ sâu cho toàn bộ bộ gen người.
+
+---
+
+**Kết quả (Results)**
+
+**Chuẩn bị thư viện CCS và giải trình tự**
+Một cơ hội để tạo ra các đoạn đọc CCS dài đã xuất hiện từ sự gia tăng 16 lần về tỉ lệ các đoạn đọc polymerase dài hơn 100 kb ở thư viện đoạn khuếch đại (amplicon) 10-kb của *E. coli* so với thư viện đoạn chèn dài (>30 kb) của DNA bộ gen *E. coli* bị cắt nhỏ. Điều này gợi ý rằng các enzym polymerase trên các đoạn chèn mới tổng hợp, ngắn hơn và có kích thước xác định có sự sống sót tốt hơn; chúng tôi đặt giả thuyết điều này là do tổn thương DNA trên các đoạn chèn dài làm chấm dứt phản ứng của polymerase.
+
+Cuối cùng, một thư viện SMRTbell được phân bố chặt chẽ ở mức 15 kb đã được chọn để giải trình tự CCS độ bao phủ cao dựa trên ước tính chiều dài đọc polymerase là 150 kb và yêu cầu 10 lượt đọc để đạt độ chính xác Q30. Tổng sản lượng đoạn đọc CCS đạt 89 Gb (trung bình $2,3 \pm 0,4$ Gb trên 39 SMRT cell của hệ thống Sequel), với chiều dài đoạn đọc là $13,5 \pm 1,2$ kb. Độ chính xác dự đoán của các đoạn đọc CCS có trung vị là Q30 (99,9%) và trung bình là Q27 (99,8%). Độ bao phủ căn gióng trung bình của bộ gen là 28 lần, với sự khác biệt tối thiểu giữa các vùng có hàm lượng GC khác nhau.
+
+**Đánh giá chất lượng và khả năng định vị (mappability) của đoạn đọc CCS**
+Độ tương hợp trung bình của đoạn đọc CCS với tham chiếu là 99,8%, tương đương với các đoạn đọc ngắn từ Illumina NovaSeq (99,9%) và HiSeq 2500 (99,5%). Phần lớn các điểm bất đồng trong đoạn đọc CCS là đột biến indel trong bối cảnh các chuỗi đồng nucleotide (homopolymers): 3,4% là đột biến thay thế (mismatches), 4,6% là indel ngoài vùng homopolymer và 92,0% là indel trong vùng homopolymer. Tỷ lệ đột biến thay thế thấp hơn 17 lần so với đọc ngắn Illumina NovaSeq, trong khi tỷ lệ indel cao hơn 181 lần.
+
+Ở giá trị chất lượng căn gióng cao nhất (60), 97,5% bộ gen GRCh37 không chứa khoảng trống có thể định vị được bằng đoạn đọc CCS 13,5 kb, trong khi chỉ có 94,8% định vị được bằng đọc ngắn NGS. Trong số 193 gen liên quan đến y học đã được báo cáo là chứa ít nhất một exon khó định vị bằng NGS, có 152 gen hoàn toàn có thể định vị được bằng các đoạn đọc CCS (bao gồm *CYP2D6*, *GBA*, *PMS2* và *STRC*).
+
+**Phát hiện và định pha các biến thể nhỏ bằng đoạn đọc CCS**
+Sử dụng công cụ học sâu Google DeepVariant được đào tạo trên dữ liệu CCS, việc gọi biến thể đạt độ chuẩn xác (precision) 99,914% và độ nhạy (recall) 99,959% cho SNVs; đối với indels, độ chuẩn xác đạt 96,901% và độ nhạy đạt 95,980%.
+
+Sử dụng WhatsHap để định pha các biến thể do DeepVariant gọi, gần như toàn bộ (99,64%) các biến thể dị hợp tử trên nhiễm sắc thể thường đã được định pha thành 19.215 khối (blocks) với N50 đạt 206 kb. Việc kết hợp thông tin định pha haplotype trực tiếp vào mô hình DeepVariant đã giúp giảm khoảng 30% số lượng âm tính giả và dương tính giả ở indel, nâng độ chuẩn xác lên 97,835% và độ nhạy lên 97,141%.
+
+**Phát hiện biến thể cấu trúc và Lắp ráp de novo bộ gen bằng đọc CCS**
+Một tập hợp biến thể cấu trúc tích hợp (kết hợp pbsv, Sniffles và paftools) đã xác định được 12.091 đột biến chèn đoạn và 8.432 đột biến xóa đoạn $\ge 50$ bp, đạt độ chuẩn xác 96,13% và độ nhạy 95,99%, vượt trội hoàn toàn so với các tập hợp biến thể gọi từ đọc ngắn (Manta, Delly) hay đọc liên kết 10x Genomics.
+
+Đối với lắp ráp de novo bộ gen, việc bỏ qua bước sửa lỗi giữa các đoạn đọc ban đầu giúp thuật toán chạy nhanh hơn $10–100$ lần.
+
+* Lắp ráp de novo gộp (mixed) đạt N50 của contig từ 15,43 đến 28,95 Mb.
+
+
+* Khi kết hợp phân loại đọc theo bộ gen cha mẹ (trio binning), các bản lắp ráp riêng cho từng haplotype mẹ/bố đạt N50 của contig từ 12,10 đến 19,99 Mb với độ tương hợp đạt Q43–Q48 (độ chính xác >99,99%).
+
+
+* Các bản lắp ráp CCS vượt qua được hơn 60 Mb các vùng lặp đoạn từng phần (segmental duplications) trong bộ gen người, cải thiện 20% so với các bản lắp ráp đọc dài chứa nhiễu trước đây.
+
+
+
+---
+
+**Thảo luận (Discussion)**
+Bài báo chứng minh rằng các đoạn đọc dài độ chính xác cao (PacBio HiFi/CCS) kết hợp được ưu điểm của cả hai thế giới: độ chính xác tiệm cận đọc ngắn NGS và khả năng vượt qua các vùng lặp phức tạp của đọc dài.
+
+Sự cải tiến này mang lại nhiều lợi ích lớn cho phân tích hệ gen học:
+
+1. Nâng cao độ chính xác gọi biến thể ở các vùng gen bệnh lý phức tạp mà đọc ngắn không thể tiếp cận.
+
+
+2. Đơn giản hóa quy trình lắp ráp bộ gen bằng cách loại bỏ bước sửa lỗi tốn kém tài nguyên tính toán.
+
+
+3. Giảm độ sâu bao phủ yêu cầu xuống chỉ còn $15\times$ là đủ cho hầu hết các tác vụ gọi biến thể và lắp ráp de novo.
+
+
+4. Cung cấp cơ sở dữ liệu chính xác hơn để sửa lỗi cho các bộ dữ liệu tham chiếu tiêu chuẩn như GIAB.
+
+
+**The complete sequence of a human genome** (Trình tự hoàn chỉnh của một bộ gen người — Nurk et al., *Science* 2022) đại diện cho cột mốc lịch sử khi lần đầu tiên toàn bộ 3,055 tỷ cặp bazơ của bộ gen người được giải trình tự hoàn chỉnh không còn khoảng trống (gapless).
+
+---
+
+### 1. Tóm tắt (Abstract)
+
+Từ khi phát hành lần đầu vào năm 2000, bộ gen người tham chiếu mới chỉ bao phủ phần chân nhiễm sắc (euchromatic), bỏ dở các vùng dị nhiễm sắc (heterochromatic) quan trọng. Giải quyết 8% bộ gen còn thiếu này, Liên minh Telomere-to-Telomere (T2T) giới thiệu trình tự hoàn chỉnh 3,055 tỷ cặp bazơ của bộ gen người (bản T2T-CHM13), bao gồm các bản lắp ráp không khoảng trống cho tất cả các nhiễm sắc thể ngoại trừ Y, sửa chữa các lỗi trong các tham chiếu trước đó và bổ sung gần 200 triệu cặp bazơ chứa 1.956 dự đoán gen (trong đó 99 gen được dự đoán mã hóa protein). Các vùng được hoàn thành bao gồm tất cả các mảng vệ tinh tâm động (centromeric satellite arrays), các lặp đoạn từng phần (segmental duplications) gần đây, và toàn bộ nhánh ngắn của cả 5 nhiễm sắc thể tâm lệch (acrocentric chromosomes), mở khóa các vùng phức tạp này cho các nghiên cứu chức năng và biến dị.
+
+---
+
+### 2. Bảng chú giải thuật ngữ chuyên ngành (Glossary)
+
+* **T2T-CHM13:** Bản lắp ráp bộ gen người hoàn chỉnh từ telomere đến telomere dựa trên dòng tế bào thai trứng toàn phần (complete hydatidiform mole) CHM13hTERT.
+
+
+* **Acrocentric chromosomes (Nhiễm sắc thể tâm lệch):** Các nhiễm sắc thể có tâm động nằm gần một đầu (ở người gồm các nhiễm sắc thể 13, 14, 15, 21 và 22).
+
+
+* **String graph (Đồ thị chuỗi):** Đồ thị hướng trong đó các đỉnh (nodes) đại diện cho các đoạn trình tự được lắp ráp không mơ hồ và các cạnh (edges) đại diện cho các đoạn chồng lấp giữa chúng.
+
+
+* **rDNA arrays (Mảng DNA ribosom):** Các mảng lặp lại song song lớn (kích thước ~45 kbp mỗi đơn vị) mã hóa cho rRNA 45S, nằm trên nhánh ngắn của các nhiễm sắc thể tâm lệch.
+
+
+* **Higher-Order Repeats - HORs (Trình tự lặp cấp cao):** Các đơn vị lặp cấu trúc phức tạp được tạo thành từ nhiều đơn vị monomer alpha-satellite sắp xếp nối tiếp nhau ở vùng tâm động.
+
+
+* **Non-syntenic regions (Vùng không đồng tuyến):** Các vùng trình tự mới hoặc bị đảo/chuyển vị không thể căn gióng thẳng hàng theo thứ tự song song với bộ gen tham chiếu cũ (GRCh38).
+
+
+
+---
+
+### 3. Nội dung chi tiết bài báo
+
+#### Bối cảnh và hạn chế của bộ gen tham chiếu cũ (GRCh38)
+
+* Bộ gen tham chiếu GRCh38 chứa 151 Mbp trình tự chưa xác định (ký hiệu N) phân bố ở vùng quanh tâm động (pericentric), cận đầu mút (subtelomeric), lặp đoạn từng phần và các mảng rDNA.
+
+
+* GRCh38 được xây dựng từ thư viện BAC của nhiều cá thể khác nhau, tạo ra một bức tranh khảm (mosaic) các haplotype incompat tự nhiên khiến nhiều khoảng trống không thể giải quyết.
+
+
+* Nhiều vùng trong GRCh38 là mô hình giả lập (ví dụ: các mảng alpha-satellite tâm động được tạo bằng máy tính để làm "mồi nhử" cho phân tích giải trình tự).
+
+
+
+#### Mẫu tế bào và dữ liệu giải trình tự
+
+* Nghiên cứu sử dụng dòng tế bào thai trứng toàn phần CHM13 (46,XX), có bản chất đồng hợp tử hoàn toàn trên toàn bộ bộ gen do sự nhân đôi bộ gen từ tinh trùng sau khi mất bộ gen từ trứng.
+
+
+* Dữ liệu giải trình tự độ bao phủ cao gồm: PacBio HiFi 30×, ONT Ultra-long 120×, Illumina PCR-free 100×, Hi-C 70×, Strand-seq và bản đồ quang học BioNano.
+
+
+
+#### Thuật toán và chiến lược lắp ráp bộ gen
+
+* **Xây dựng String Graph từ PacBio HiFi:**
+* Nén các chuỗi đồng nucleotide (homopolymers) thành một nucleotide đơn (ví dụ $A_n \rightarrow A$).
+
+
+* Căn gióng các đoạn đọc đã nén để loại bỏ lỗi indel nhỏ và xây dựng đồ thị chuỗi chỉ dựa trên các đoạn chồng lấp chính xác hoàn toàn.
+
+
+
+
+* **Gỡ rối đồ thị bằng ONT Ultra-long:**
+* Các đoạn đọc ONT cực dài (>100 kb) được căn gióng trực tiếp vào các nút phức tạp trên đồ thị chuỗi để tìm ra đường đi (walk) đúng duy nhất đi qua các vùng lặp.
+
+
+
+
+* **Lắp ráp mảng rDNA bằng Đồ thị de Bruijn thưa (Sparse de Bruijn Graph):**
+* Bộ gen CHM13 chứa khoảng 400 bản sao rDNA (~9,9 Mbp).
+
+
+* Nhóm nghiên cứu xây dựng đồ thị de Bruijn thưa riêng cho từng mảng rDNA, phân loại các đơn vị lặp thành các dạng hình thái ("morphs") dựa trên độ tương đồng trình tự và định vị thứ tự bằng đọc ONT.
+
+
+
+
+
+#### So sánh giữa GRCh38 và T2T-CHM13v1.1
+
+* **Kích thước & Độ liên tục:** T2T-CHM13 có tổng chiều dài 3,055 Gb (tăng thêm 4,5% so với 2,92 Gb của GRCh38), số lượng contig giảm từ 949 xuống còn 24 (mỗi nhiễm sắc thể là 1 contig liên tục), N50 contig tăng từ 56,4 Mb lên 154,3 Mb.
+
+
+* **Chú giải Gen:** Bổ sung 3.604 gen duy nhất (140 gen mã hóa protein mới). Hầu hết các gen mới là các bản sao paralog nằm ở vùng quanh tâm động và nhánh ngắn nhiễm sắc thể tâm lệch.
+
+
+* **Độ chính xác:** Độ chính xác đồng thuận của T2T-CHM13 đạt dưới 1 lỗi trên 10 Mbp (Phred Q70+), cao hơn tiêu chuẩn "hoàn thành" lịch sử nhiều bậc kích thước.
+
+
+
+#### Giải mã kiến trúc nhánh ngắn các nhiễm sắc thể tâm lệch (13, 14, 15, 21, 22)
+
+* Lần đầu tiên toàn bộ 66,1 Mbp thuộc nhánh ngắn của 5 nhiễm sắc thể tâm lệch được giải trình tự hoàn chỉnh.
+
+
+* Các nhánh ngắn có cấu trúc chung từ telomere đến tâm động: *Telomere $\rightarrow$ Vùng lặp đảo ngược cận đầu mút $\rightarrow$ Mảng rDNA $\rightarrow$ Vùng lặp quanh tâm động (HSat, BSat) $\rightarrow$ Vùng tâm động Alpha-satellite*.
+
+
+* Độ tương đồng giữa các nhánh ngắn của các nhiễm sắc thể tâm lệch khác nhau đạt trung vị 98,7%, giải thích lý do tại sao các nhiễm sắc thể này thường xuyên tham gia vào các chuyển vị Robertsonian gây ra các dị tật bẩm sinh.
+
+
+
+#### Ứng dụng y sinh: Giải quyết các họ gen song trùng bị mất (Ví dụ họ gen *FRG1*)
+
+* Gen *FRG1* liên quan đến bệnh loạn dưỡng cơ mặt - cánh tay - vai (FSHD).
+
+
+* Trong GRCh38 chỉ có 9 bản sao *FRG1*, dẫn đến việc các đoạn đọc giải trình tự từ các bản sao bị thiếu bị xếp gióng sai (mismapped) vào gen *FRG1DP* trên nhiễm sắc thể 20, tạo ra hàng loạt biến thể dương tính giả.
+
+
+* T2T-CHM13 đã phát hiện chính xác 23 bản sao paralog của *FRG1* phân bố trên tất cả các nhiễm sắc thể tâm lệch và nhiễm sắc thể 9, 20; giúp sửa chữa hoàn toàn sai lệch khi phân tích biến thể ở các bệnh nhân.
+
+
+
+---
+
+### Triển vọng tương lai
+
+Bản lắp ráp T2T-CHM13 là bước ngoặt đặt nền móng cho Dự án Bộ gen Tham chiếu Pangenome Người (Human Pangenome Reference Consortium) nhằm xây dựng các bộ gen tham chiếu T2T đa dạng cho nhiều quần thể người khác nhau, loại bỏ hoàn toàn các vùng "tối" trong di truyền học người.
+
+
+Bản dịch và tổng hợp khoa học chuẩn xác bài báo **"Evaluation of 16S rRNA gene sequencing for species and strain-level microbiome analysis"** (Johnson et al., *Nature Communications* 2019).
+
+**Đánh giá giải trình tự gen 16S rRNA trong phân tích vi hệ vi sinh ở cấp độ loài và chủng**
+
+**Tóm tắt (Abstract)**
+Gen 16S rRNA là nền tảng trong phân tích vi khuẩn dựa trên trình tự qua nhiều thập kỷ, nhưng việc giải trình tự thông lượng cao toàn bộ gen này mới chỉ trở nên khả thi gần đây. Thông qua các thí nghiệm *in silico* và thực nghiệm giải trình tự, nghiên cứu này đánh giá lại tiềm năng của gen 16S trong việc cung cấp độ phân giải phân loại ở cấp độ loài và chủng. Kết quả chứng minh việc nhắm vào các vùng biến đổi ngắn (sub-regions) bằng các nền tảng đọc ngắn không thể đạt độ phân giải phân loại như khi giải trình tự toàn bộ gen (~1500 bp). Ngược lại, các nền tảng đọc dài toàn chiều dài có đủ độ chính xác để giải mã các thay đổi nucleotide nhỏ giữa các bản sao gen 16S trong cùng một bộ gen (intragenomic variation). Do đó, các phương pháp phân tích hiện đại cần tính đến sự biến đổi nội gen này để phân loại chính xác cộng đồng vi khuẩn ở cấp độ loài và chủng.
+
+**Chú giải thuật ngữ chuyên ngành (Glossary)**
+
+* **Full-length 16S rRNA (~1500 bp):** Toàn bộ chiều dài gen 16S rRNA bao gồm 9 vùng biến đổi (V1–V9) xen kẽ giữa các vùng bảo tồn.
+
+
+* **Sub-regions (Vùng biến đổi ngắn):** Các đoạn ngắn của gen 16S được nhắm tới khi giải trình tự đọc ngắn (như V4, V1–V3, V3–V5) do giới hạn độ dài đọc của Illumina.
+
+
+* **Intragenomic 16S copy variants (Biến thể bản sao gen 16S nội gen):** Sự tồn tại của nhiều bản sao gen 16S rRNA trong cùng một bộ gen vi khuẩn với các sai khác nucleotide nhỏ giữa các operon.
+
+
+* **Exact Sequence Variants (ESVs) / Amplicon Sequence Variants (ASVs):** Các biến thể trình tự chính xác ở độ phân giải đơn nucleotide, đại diện cho trình tự thực sự không bị gộp nhóm OTU.
+
+
+
+**Các kết quả nghiên cứu chính**
+
+**Giải trình tự toàn bộ gen 16S vượt trội hơn các vùng biến đổi ngắn**
+
+* Thí nghiệm *in silico* trên cơ sở dữ liệu Greengenes cho thấy các vùng biến đổi ngắn không cung cấp đủ thông tin để định danh chính xác ở cấp độ loài.
+
+
+* Vùng V4 cho kết quả kém nhất: 56% trình tự *in silico* không thể định danh chính xác đến cấp độ loài tương ứng.
+
+
+* Việc nhắm vào các vùng biến đổi ngắn gây ra sự thiên vị (bias) đối với các ngành vi khuẩn nhất định: V1–V2 phân loại kém ngành Proteobacteria, trong khi V3–V5 phân loại kém ngành Actinobacteria.
+
+
+* Giải trình tự toàn bộ gen 16S (V1–V9) đạt độ chính xác phân loại cấp loài gần như tuyệt đối đối với hầu hết các nhóm vi khuẩn.
+
+
+
+**Đa hình bản sao gen 16S nội gen phản ánh sự biến đổi ở cấp độ chủng**
+
+* Nhiều bộ gen vi khuẩn chứa nhiều operon 16S rRNA không giống nhau hoàn toàn (ví dụ: *Escherichia coli* K-12 MG1655 có 7 bản sao 16S với các nucleotide sai khác ở một số vị trí).
+
+
+* Công nghệ đọc dài PacBio CCS với độ bao phủ >10 passes đạt tỷ lệ lỗi <1,0%, đủ độ chính xác để phân biệt các sự thay đổi nucleotide đơn giữa các bản sao 16S trong cùng một bộ gen.
+
+
+* Sự sai khác bản sao 16S nội gen cho phép phân biệt các chủng thuộc cùng một loài (như phân biệt *E. coli* K-12 MG1655 và chủng gây bệnh *E. coli* O157 Sakai).
+
+
+
+**Ứng dụng thực tế trên mẫu vi hệ vi sinh phân người và vi khuẩn phân lập**
+
+* Giải trình tự full-length 16S trên mẫu phân người thực tế thu được độ phân giải phân loại loài *Bacteroides* tương đương với phương pháp giải trình tự ngẫu nhiên toàn bộ hệ gen (metagenomic WGS).
+
+
+* Gom nhóm OTU ở ngưỡng tương đồng 99% giúp gộp hiệu quả các bản sao 16S nội gen của cùng một bộ gen mà không làm mất đi độ phân giải cấp loài.
+
+
+* Phân tích 381 chủng vi khuẩn thu thuần từ ruột người cho thấy 91,6% (349/381) phân lập chứa ít nhất một SNP giữa các bản sao 16S nội gen, khẳng định sự phổ biến của hiện tượng này trong tự nhiên.
+
+
+
+**Ý nghĩa đối với phân tích Microbiome**
+
+* **Từ bỏ sự thỏa hiệp lịch sử:** Việc nhắm vào các vùng biến đổi ngắn như V4 chỉ là giải pháp tạm thời do rào cản công nghệ đọc ngắn trước đây.
+
+
+* **Thận trọng với ESV/ASV:** Quan điểm cho rằng ESV đại diện cho các đơn vị phân loại riêng biệt có thể dẫn đến việc thổi phồng sự đa dạng loài, vì nhiều ESV khác nhau thực chất xuất phát từ các operon khác nhau trong cùng một bộ gen vi khuẩn.
+
+
+* **Định danh cấp loài và chủng:** Giải trình tự full-length 16S rRNA kết hợp với thuật toán gom nhóm OTU 99% phù hợp mở ra khả năng định danh vi khuẩn chính xác ở cấp độ loài và chủng với chi phí tối ưu hơn so với metagenomics WGS.
+
+**Nanopore sequencing and assembly of a human genome with ultra-long reads** (Giải trình tự Nanopore và lắp ráp bộ gen người bằng các đoạn đọc siêu dài — Jain et al., *Nature Biotechnology* 2018).
+
+**Tóm tắt (Abstract)**
+Nghiên cứu báo cáo việc giải trình tự và lắp ráp bộ gen tham chiếu cho dòng tế bào GM12878 (Utah/CEPH) người bằng máy giải trình tự lỗ nano MinION (Oxford Nanopore Technologies). Tổng cộng 91,2 Gb dữ liệu trình tự đã được tạo ra, tương đương độ bao phủ lý thuyết ~30×. Việc căn gióng dựa trên bộ gen tham chiếu cho phép phát hiện các biến thể cấu trúc lớn và các biến đổi biểu sinh. Lắp ráp de novo chỉ dựa vào các đoạn đọc nanopore thu được bản lắp ráp liên tục (NG50 ~3 Mb). Nhóm tác giả phát triển một quy trình tạo ra các đoạn đọc siêu dài (ultra-long reads với N50 >100 kb, độ dài đoạn đọc lên tới 882 kb). Việc bổ sung thêm độ bao phủ 5× từ các đoạn đọc siêu dài này đã làm tăng hơn gấp đôi độ liên tục của bản lắp ráp (NG50 ~6,4 Mb). Bộ gen lắp ráp cuối cùng có kích thước 2.867 triệu bazơ, bao phủ 85,8% bộ gen tham chiếu. Độ chính xác của bản lắp ráp sau khi kết hợp dữ liệu giải trình tự đọc ngắn bổ trợ đạt trên 99,8%. Các đoạn đọc siêu dài đã cho phép lắp ráp và định pha hoàn toàn phức hợp hòa hợp mô chính (MHC) dài 4 Mb, đo chiều dài đoạn lặp telomere và đóng các khoảng trống (gaps) trong bộ gen người tham chiếu GRCh38.
+
+---
+
+**Bảng chú giải thuật ngữ chuyên ngành (Glossary)**
+
+* **Ultra-long reads (Đoạn đọc siêu dài):** Các đoạn đọc giải trình tự Nanopore có chiều dài N50 >100 kb và có thể kéo dài tới gần 1 Mb (kỷ lục trong bài là 882 kb) nhờ quy trình trích xuất DNA hạn chế tối đa sự đứt gãy vật lý.
+
+
+* **MinION R9.4:** Nền tảng giải trình tự Nanopore cầm tay sử dụng lỗ protein CsgG đột biến, cho tốc độ giải trình tự ~450 bazơ/giây.
+
+
+* **Major Histocompatibility Complex - MHC (Phức hợp hòa hợp mô chính):** Vùng gen dài ~4 Mb trên nhiễm sắc thể 6 rất đa hình và phức tạp, đóng vai trò cốt lõi trong hệ miễn dịch.
+
+
+* **Signal-level polishing (Tinh chỉnh cấp độ tín hiệu):** Phương pháp sửa lỗi bản lắp ráp bằng cách quay lại phân tích tín hiệu dòng điện thô (raw ionic current) đi qua lỗ nano (ví dụ: công cụ Nanopolish).
+
+
+
+---
+
+**Nội dung & Kết quả nghiên cứu chính**
+
+**Tạo lập dữ liệu & Đột phá về độ dài đoạn đọc**
+
+* Nghiên cứu sử dụng 39 flow cell MinION R9.4 tạo ra 91,2 Gb dữ liệu đọc dài tiêu chuẩn (N50 ~10,5 kb, độ bao phủ 26×) từ DNA tự nhiên không qua khuếch đại PCR.
+
+
+* Phát triển quy trình trích xuất DNA nhẹ nhàng (phương pháp Sambrook & Russell) kết hợp bộ kit Rapid Ligation, tạo ra dữ liệu đọc siêu dài (N50 ~99,7 kb) với độ bao phủ bổ sung 5×. Đoạn đọc dài nhất đạt 882 kb (tương ứng khoảng không gian 993 kb trên bộ gen tham chiếu).
+
+
+
+**Lắp ráp De novo & Tinh chỉnh trình tự (Polishing)**
+
+* Lắp ráp de novo ban đầu bằng thuật toán Canu từ 30× dữ liệu tiêu chuẩn thu được bản lắp ráp 2,88 Gb với NG50 contig đạt 3 Mb và độ chính xác trình tự thô 95,2%.
+
+
+* Khi bổ sung thêm 5× dữ liệu đọc siêu dài, độ liên tục của bản lắp ráp tăng vọt lên NG50 ~6,4 Mb (tăng hơn gấp đôi).
+
+
+* Sử dụng tín hiệu dòng điện thô (Nanopolish) nâng độ chính xác lên 99,44%, và kết hợp tinh chỉnh bằng đọc ngắn Illumina (Pilon) đưa độ chính xác tổng thể đạt >99,8% (và >99,95% ở các vùng không chứa lặp lại).
+
+
+
+**Giải mã các vùng phức tạp & Định pha Haplotype**
+
+* **Lắp ráp & Định pha vùng MHC:** Lần đầu tiên toàn bộ vùng MHC (4–5 Mb) đa hình phức tạp được lắp ráp liên tục trong một contig đơn lẻ và được định pha thành hai haplotype riêng biệt.
+
+
+* **Lấp khoảng trống bộ gen tham chiếu GRCh38:** Đóng thành công 12 khoảng trống lớn (>50 kb) trong GRCh38, bao gồm việc giải mã mảng lặp song song 8 bản sao chứa họ gen ung thư/tinh hoàn *CT47* ở vị trí Xq24.
+
+
+* **Đo chiều dài Telomere:** Nhận diện 140 đoạn đọc siêu dài chứa chuỗi lặp telomere (TTAGGG), xác định chính xác chiều dài mảng telomere dao động từ 2–11 kb trên 14 vùng cận đầu mút nhiễm sắc thể.
+
+
+
+**Phát hiện biến đổi biểu sinh (5mC)**
+
+* Phân tích trực tiếp biến đổi biểu sinh 5-methylcytosine (5mC) tại các vị trí dinucleotide CpG bằng Nanopolish và SignalAlign trực tiếp từ dòng điện thô mà không cần xử lý bisulfite.
+
+
+* Kết quả thu được có độ tương hợp rất cao với dữ liệu giải trình tự bisulfite tiêu chuẩn ($r = 0,895$ đối với Nanopolish).
+
+
+
+---
+
+**Ý nghĩa khoa học**
+Nghiên cứu là minh chứng lịch sử cho thấy thiết bị giải trình tự Nanopore nhỏ gọn (MinION) hoàn toàn có đủ khả năng giải trình tự, lắp ráp de novo và phân tích toàn bộ bộ gen người. Đột phá về các đoạn đọc siêu dài (ultra-long reads) đã mở ra kỷ nguyên mới trong việc giải mã các vùng lặp phức tạp, lấp khoảng trống bộ gen tham chiếu và phân tích biểu sinh phân tử đơn.
+
+
+
+
+
+
+
+
+
+# Ứng dụng NGS trong giám sát và phát triển công nghệ sinh học tại Việt Nam và ĐBSCL
+
+## 1. Giám sát sức khỏe tôm và cá bằng microbiome
+
+Đây có thể là **ứng dụng ưu tiên số 1 của ĐBSCL**.
+
+Thay vì chỉ kiểm tra:
+
+* pH;
+* nhiệt độ;
+* độ mặn;
+* DO;
+* NH₃;
+* NO₂;
+* H₂S;
+
+có thể bổ sung một lớp thông tin sinh học:
+
+> **Trong nước, bùn, mang, gan tụy và đường ruột đang tồn tại cộng đồng vi sinh vật nào?**
+
+NGS có thể tạo ra:
+
+**Microbial Profile**
+
+```text
+Mẫu nước
+Mẫu bùn
+Mẫu tôm/cá
+      │
+      ▼
+DNA/RNA extraction
+      │
+      ▼
+16S / ITS / Shotgun metagenomics
+      │
+      ▼
+Microbiome profile
+      │
+ ┌────┼─────────────┐
+ ▼    ▼             ▼
+Taxa  Pathogen      AMR
+ │     │             │
+ └─────┼─────────────┘
+       ▼
+   Risk Score
+       │
+       ▼
+ Cảnh báo sớm
+```
+
+Điều quan trọng là **không nên coi sự xuất hiện của một vi khuẩn là đồng nghĩa với bệnh**. Giá trị của NGS nằm ở việc theo dõi **thay đổi của cả hệ vi sinh**, kết hợp với chỉ tiêu môi trường và tình trạng vật nuôi.
+
+Các nghiên cứu ở Việt Nam đã cho thấy NGS có thể phân biệt cộng đồng vi khuẩn ở tôm khỏe và tôm bệnh; ví dụ nghiên cứu tại Sóc Trăng ghi nhận sự khác biệt về *Vibrio* và các nhóm vi khuẩn giữa các ao có tình trạng sức khỏe khác nhau. ([VAST Journals System][2])
+
+---
+
+# 2. Phát hiện sớm nguy cơ bệnh trên tôm
+
+Đây là bước phát triển từ **“diagnosis” sang “early warning”**.
+
+Ví dụ với bệnh AHPND/EMS, thay vì chờ tôm chết rồi mới xét nghiệm, có thể thiết kế chương trình:
+
+### Giai đoạn 1 — Baseline
+
+Lấy mẫu khi ao khỏe:
+
+* nước;
+* bùn;
+* tôm;
+* biofloc.
+
+Xây dựng **microbiome baseline**.
+
+### Giai đoạn 2 — Monitoring
+
+Lấy mẫu định kỳ.
+
+Theo dõi:
+
+* abundance;
+* diversity;
+* pathogen-associated taxa;
+* functional genes;
+* virulence genes;
+* AMR genes.
+
+### Giai đoạn 3 — Risk detection
+
+Hệ thống phát hiện:
+
+> microbiome đang chuyển khỏi trạng thái bình thường.
+
+### Giai đoạn 4 — Intervention
+
+Khuyến nghị:
+
+* kiểm tra chất lượng nước;
+* giảm stress;
+* điều chỉnh thức ăn;
+* quản lý biofloc;
+* kiểm tra pathogen bằng PCR/qPCR;
+* điều chỉnh biện pháp quản lý ao.
+
+Đây là mô hình rất phù hợp để kết hợp **NGS + AI**.
+
+---
+
+# 3. AHPND và các bệnh vi khuẩn trên tôm
+
+AHPND là ví dụ rất phù hợp để minh họa.
+
+Bệnh đã gây thiệt hại đáng kể tại các vùng nuôi tôm của ĐBSCL; nghiên cứu tại một số tỉnh ĐBSCL ghi nhận tỷ lệ diện tích bị ảnh hưởng rất khác nhau giữa các địa phương và đã phân lập các chủng *Vibrio parahaemolyticus* liên quan AHPND để tiếp tục nghiên cứu genome. ([JAD][3])
+
+NGS/WGS có thể được sử dụng để:
+
+* giải trình tự genome chủng *V. parahaemolyticus*;
+* xác định gene độc lực;
+* phân tích plasmid;
+* so sánh các chủng;
+* xác định quan hệ tiến hóa;
+* theo dõi sự xuất hiện của chủng mới;
+* phân tích gene kháng kháng sinh.
+
+Từ đó chuyển từ:
+
+> **“Có Vibrio hay không?”**
+
+sang:
+
+> **“Chủng Vibrio nào? Mang yếu tố độc lực nào? Có quan hệ với các chủng đang lưu hành hay không?”**
+
+---
+
+# 4. Giám sát virus thủy sản
+
+NGS đặc biệt hữu ích với các bệnh virus vì có thể sử dụng:
+
+* targeted sequencing;
+* amplicon sequencing;
+* whole-genome sequencing;
+* metatranscriptomics.
+
+Có thể ứng dụng để theo dõi các virus quan trọng trong nuôi tôm và thủy sản.
+
+Giá trị không chỉ là phát hiện virus mà còn:
+
+* xác định genotype;
+* phát hiện biến thể;
+* theo dõi sự thay đổi genome;
+* nghiên cứu nguồn gốc;
+* giám sát sự lan truyền.
+
+---
+
+# 5. Cá tra ĐBSCL
+
+Đây là một mảng nên có riêng.
+
+Đối với ngành cá tra, NGS có thể ứng dụng cho:
+
+### Cá
+
+* genome;
+* transcriptome;
+* microbiome đường ruột;
+* pathogen;
+* gene liên quan tăng trưởng;
+* gene liên quan miễn dịch.
+
+### Nước và bùn
+
+* bacterial community;
+* pathogen;
+* AMR;
+* functional genes.
+
+### Thức ăn
+
+* microbiome;
+* contamination;
+* microbial safety.
+
+### Hệ thống nuôi
+
+Có thể xây dựng:
+
+> **Fish Health Microbiome Profile**
+
+để so sánh:
+
+```text
+Ao khỏe
+    ↕
+Ao tăng trưởng kém
+    ↕
+Ao có bệnh
+```
+
+và tìm các **biomarker sinh học** có khả năng dự báo tình trạng ao.
+
+---
+
+# 6. Biofloc và hệ vi sinh có lợi
+
+Đây là một hướng nghiên cứu rất đáng chú ý.
+
+Không nên chỉ xem vi khuẩn là “tác nhân gây bệnh”.
+
+Một ao nuôi là một **hệ sinh thái vi sinh**.
+
+NGS có thể xác định:
+
+* vi khuẩn phân giải hữu cơ;
+* nitrifying bacteria;
+* denitrifying bacteria;
+* vi khuẩn cạnh tranh với pathogen;
+* nhóm có lợi cho biofloc;
+* thay đổi microbiome khi thay đổi độ mặn.
+
+Một nghiên cứu công bố năm 2026 cho thấy phân tích microbiome định lượng và functional profiling có thể được sử dụng để nghiên cứu cách biofloc ảnh hưởng đến biến động cộng đồng vi khuẩn trong điều kiện stress độ mặn. ([ScienceDirect][4])
+
+Điều này mở ra hướng:
+
+> **NGS → thiết kế microbiome có lợi → tối ưu hệ thống nuôi.**
+
+Đây có thể trở thành một hướng nghiên cứu/chuyển giao rất mạnh.
+
+---
+
+# 7. AMR trong nuôi trồng thủy sản ĐBSCL
+
+Đây là một **ứng dụng chiến lược**.
+
+Không chỉ xét nghiệm:
+
+> “vi khuẩn có kháng thuốc hay không?”
+
+mà có thể xây dựng:
+
+### AMR Resistome
+
+```text
+Water
+Sediment
+Shrimp/Fish
+Feed
+Wastewater
+     │
+     ▼
+Shotgun Metagenomics
+     │
+     ▼
+Resistance genes
+     │
+     ├── bla
+     ├── tet
+     ├── sul
+     ├── erm
+     ├── qnr
+     └── mcr
+```
+
+Một nghiên cứu tại Cần Thơ trước đây đã phát hiện đồng thời dư lượng kháng sinh, ARG và thay đổi microbiome trong các hệ thống nước liên quan đến nuôi thủy sản. ([ScienceDirect][1])
+
+Đáng chú ý hơn, một báo cáo genome năm 2026 về *Enterobacter cloacae* phân lập từ nước nuôi tôm ở ĐBSCL đã xác định nhiều gene kháng thuốc, trong đó có *blaCTX-M-15*. ([ScienceDirect][5])
+
+Điều này cho thấy **AMR surveillance bằng genomics ở ĐBSCL hoàn toàn có cơ sở thực tiễn**.
+
+---
+
+# 8. Giám sát nước ao và nước sông
+
+Đây là một ứng dụng rất phù hợp với ĐBSCL vì hệ thống:
+
+> ao nuôi → kênh → sông → vùng nuôi khác
+
+có tính liên kết cao.
+
+Có thể thiết kế:
+
+### Aquatic Microbial Surveillance
+
+Lấy mẫu:
+
+* đầu nguồn;
+* nước cấp;
+* ao;
+* nước xả;
+* kênh;
+* sông;
+* vùng hạ lưu.
+
+Phân tích:
+
+**Pathogen + Microbiome + AMR + Functional genes**
+
+Từ đó xây dựng bản đồ:
+
+> **Microbial Risk Map**
+
+cho từng khu vực.
+
+---
+
+# 9. Giám sát nước thải bằng metagenomics
+
+Đây là một ứng dụng tôi đánh giá **rất có tiềm năng triển khai thực tế**.
+
+Thay vì chỉ xét:
+
+* COD;
+* BOD;
+* TSS;
+* nitrogen;
+* phosphorus;
+
+có thể bổ sung:
+
+* pathogen;
+* AMR genes;
+* microbial diversity;
+* virulence genes;
+* mobile genetic elements.
+
+Đặc biệt, nước thải có thể trở thành một **nguồn giám sát sinh học thụ động**.
+
+Ví dụ:
+
+```text
+Nước thải bệnh viện
+       │
+       ▼
+Metagenomics
+       │
+ ┌─────┼─────┐
+ ▼     ▼     ▼
+Pathogen AMR  Virus
+       │
+       ▼
+Early Warning
+```
+
+---
+
+# 10. Giám sát AMR theo mô hình One Health
+
+Tôi đặc biệt đề nghị đưa khái niệm này vào tài liệu.
+
+Không nên nghiên cứu AMR riêng biệt ở:
+
+> người / động vật / thủy sản / môi trường.
+
+Mà phải nhìn theo:
+
+# One Health
+
+```text
+             HUMAN
+               │
+               ▼
+        ┌─────────────┐
+        │     AMR     │
+        └─────────────┘
+        ▲      ▲      ▲
+        │      │      │
+ AQUACULTURE  FOOD  ENVIRONMENT
+        │      │      │
+        └──────┼──────┘
+               ▼
+          WASTEWATER
+```
+
+NGS có thể giúp theo dõi **gene kháng thuốc và vi khuẩn kháng thuốc xuyên qua các môi trường**.
+
+Đây là hướng đặc biệt phù hợp với ĐBSCL vì nông nghiệp, thủy sản, khu dân cư và hệ thống sông ngòi có mối liên hệ chặt chẽ.
+
+---
+
+# 11. An toàn thực phẩm thủy sản
+
+Đây là điểm kết nối rất tốt với ngành xuất khẩu.
+
+NGS/WGS có thể hỗ trợ:
+
+* Salmonella;
+* *Vibrio*;
+* *E. coli*;
+* Listeria;
+* các vi sinh vật gây bệnh khác.
+
+Nhưng giá trị lớn hơn là:
+
+> **truy nguồn contamination.**
+
+Ví dụ:
+
+```text
+Ao nuôi
+   ↓
+Thu hoạch
+   ↓
+Nhà máy
+   ↓
+Chế biến
+   ↓
+Kho
+   ↓
+Xuất khẩu
+```
+
+Nếu phát hiện cùng một chủng vi khuẩn tại nhiều điểm, WGS có thể giúp điều tra mối liên hệ di truyền giữa các isolate.
+
+---
+
+# 12. Truy xuất nguồn gốc sinh học
+
+Đây là hướng rất thú vị nếu kết hợp NGS với hệ sinh thái dữ liệu.
+
+Thay vì truy xuất nguồn gốc chỉ bằng:
+
+* mã QR;
+* hồ sơ;
+* giấy chứng nhận;
+
+có thể bổ sung:
+
+> **Microbial fingerprint**
+
+của vùng nuôi hoặc quá trình sản xuất.
+
+Ví dụ:
+
+**Pond → Microbiome signature → Processing → Product**
+
+Không nên xem đây là “mã nhận dạng tuyệt đối” cho sản phẩm, nhưng có thể trở thành một **lớp dữ liệu sinh học bổ trợ cho truy xuất nguồn gốc và xác thực chuỗi sản xuất**.
+
+---
+
+# 13. Vi sinh đất ở ĐBSCL
+
+NGS có thể được sử dụng để lập bản đồ:
+
+### Soil microbiome
+
+Phân tích:
+
+* vi khuẩn;
+* nấm;
+* archaea;
+* functional genes;
+* pathogen.
+
+Từ đó nghiên cứu:
+
+* độ phì đất;
+* phân hủy hữu cơ;
+* chu trình nitrogen;
+* chu trình phosphorus;
+* tác động của phân bón;
+* tác động của thuốc bảo vệ thực vật;
+* bệnh cây.
+
+---
+
+# 14. Nông nghiệp chính xác dựa trên microbiome
+
+Đây là bước tiếp theo:
+
+```text
+Soil sample
+     ↓
+NGS
+     ↓
+Microbiome profile
+     ↓
+Functional prediction
+     ↓
+Soil health score
+     ↓
+Khuyến nghị canh tác
+```
+
+Có thể tiến tới:
+
+> **Microbiome-based precision agriculture**
+
+thay vì chỉ dựa vào hóa lý đất.
+
+---
+
+# 15. Giám sát vi sinh trong nước sinh hoạt và nước thải
+
+Có thể xây dựng mạng lưới:
+
+**Wastewater → NGS → Pathogen/AMR surveillance**
+
+Theo dõi:
+
+* virus;
+* vi khuẩn;
+* AMR;
+* microbial community.
+
+Đặc biệt hữu ích tại:
+
+* bệnh viện;
+* khu dân cư;
+* khu công nghiệp;
+* khu chế biến thủy sản;
+* vùng nuôi tập trung.
+
+---
+
+# 16. NGS + AI: từ xét nghiệm sang hệ thống cảnh báo
+
+Đây mới là phần tôi cho rằng có thể tạo thành **một sản phẩm công nghệ**.
+
+Thu thập:
+
+* NGS;
+* pH;
+* DO;
+* nhiệt độ;
+* độ mặn;
+* NH₃;
+* NO₂;
+* lượng thức ăn;
+* thời tiết;
+* lịch sử bệnh;
+* tỷ lệ chết;
+* tốc độ tăng trưởng.
+
+Sau đó:
+
+```text
+             DATA
+               │
+     ┌─────────┼─────────┐
+     ▼         ▼         ▼
+   NGS      Sensors    Farm Data
+     │         │         │
+     └─────────┼─────────┘
+               ▼
+             AI/ML
+               │
+       ┌───────┼────────┐
+       ▼       ▼        ▼
+   Disease   AMR     Microbiome
+    Risk      Risk      Risk
+       └───────┼────────┘
+               ▼
+          RISK SCORE
+               │
+               ▼
+          EARLY WARNING
+```
+
+Đây là mô hình **“Digital Biology”** rất đáng nghiên cứu.
+
+---
+
+# 17. Một mô hình sản phẩm có thể triển khai ở ĐBSCL
+
+Nếu nhìn dưới góc độ chuyển giao công nghệ, tôi sẽ không xây dựng một sản phẩm đơn thuần là:
+
+> “dịch vụ giải trình tự NGS”.
+
+Mà xây dựng:
+
+# **Aquaculture Genomic & Microbiome Surveillance Platform**
+
+Có thể gồm 5 module:
+
+### Module 1 — Farm Health
+
+Theo dõi:
+
+* microbiome;
+* pathogen;
+* disease risk.
+
+### Module 2 — AMR
+
+Theo dõi:
+
+* ARG;
+* ARB;
+* antibiotic residues.
+
+### Module 3 — Water Intelligence
+
+Theo dõi:
+
+* nước ao;
+* nước cấp;
+* nước xả;
+* sông/kênh.
+
+### Module 4 — Food Safety
+
+Theo dõi:
+
+* pathogen;
+* contamination;
+* genomic fingerprint.
+
+### Module 5 — AI Early Warning
+
+Tích hợp:
+
+**NGS + sensor + environmental data + historical disease data**
+
+→ **Risk Prediction**.
+
+---
+
+# 18. Đặc biệt phù hợp để xây dựng “Bản đồ sinh học ĐBSCL”
+
+Một hướng nghiên cứu dài hạn có thể là:
+
+# **Mekong Delta Microbial Atlas**
+
+Xây dựng cơ sở dữ liệu:
+
+```text
+             MEKONG DELTA
+                   │
+     ┌─────────────┼──────────────┐
+     ▼             ▼              ▼
+   WATER          SOIL        AQUACULTURE
+     │             │              │
+     ▼             ▼              ▼
+Microbiome     Microbiome     Microbiome
+     │             │              │
+     └─────────────┼──────────────┘
+                   ▼
+             NGS DATABASE
+                   │
+       ┌───────────┼───────────┐
+       ▼           ▼           ▼
+     AMR        Pathogen     Ecology
+       │           │           │
+       └───────────┼───────────┘
+                   ▼
+              AI ANALYSIS
+                   │
+                   ▼
+          BIOLOGICAL RISK MAP
+```
+
+Dữ liệu có thể phục vụ:
+
+* nghiên cứu;
+* quản lý dịch bệnh;
+* quản lý môi trường;
+* nuôi trồng thủy sản;
+* AMR surveillance;
+* an toàn thực phẩm;
+* cảnh báo dịch bệnh.
+
+---
+
+## 19. Nếu xếp theo mức độ ưu tiên tại ĐBSCL
+
+Tôi sẽ xếp như sau:
+
+| Ưu tiên | Ứng dụng                 | Giá trị thực tế         |
+| ------- | ------------------------ | ----------------------- |
+| ⭐⭐⭐⭐⭐   | Microbiome tôm/cá        | Rất cao                 |
+| ⭐⭐⭐⭐⭐   | Giám sát bệnh thủy sản   | Rất cao                 |
+| ⭐⭐⭐⭐⭐   | AMR surveillance         | Rất cao                 |
+| ⭐⭐⭐⭐⭐   | Nước ao/nước thải        | Rất cao                 |
+| ⭐⭐⭐⭐    | WGS truy nguồn dịch bệnh | Cao                     |
+| ⭐⭐⭐⭐    | An toàn thực phẩm        | Cao                     |
+| ⭐⭐⭐⭐    | Soil microbiome          | Cao                     |
+| ⭐⭐⭐⭐    | Wastewater surveillance  | Cao                     |
+| ⭐⭐⭐⭐    | AI disease prediction    | Rất có tiềm năng        |
+| ⭐⭐⭐     | Probiotic QC             | Có tiềm năng thương mại |
+| ⭐⭐⭐     | Enzyme/gene discovery    | Tiềm năng dài hạn       |
+
+**Điểm đặc biệt:** Việt Nam đã có dữ liệu thực nghiệm cho thấy shotgun metagenomics bằng Oxford Nanopore có thể được dùng để khảo sát microbiome và hồ sơ kháng kháng sinh trong ao nuôi tôm; nghiên cứu này được thực hiện trên mẫu ao tôm ở Việt Nam. ([ScienceDirect][6])
+
+---
+
+## 20. Cách tôi khuyến nghị định vị toàn bộ ứng dụng
+
+Thay vì viết:
+
+> **“NGS dùng để giải trình tự DNA.”**
+
+nên chuyển thành:
+
+> **“NGS là nền tảng thu nhận dữ liệu sinh học có độ phân giải cao, cho phép chuyển từ phát hiện tác nhân đơn lẻ sang giám sát toàn bộ hệ sinh thái vi sinh, gene kháng thuốc, yếu tố độc lực và biến đổi di truyền; từ đó hỗ trợ chẩn đoán, cảnh báo sớm, truy xuất nguồn lây, quản lý môi trường và tối ưu hóa sản xuất.”**
+
+Đối với ĐBSCL, chuỗi giá trị quan trọng nhất có thể được mô hình hóa thành:
+
+> **NGS → Microbiome → Pathogen/AMR → AI → Risk Score → Early Warning → Intervention**
+
+Đây theo tôi là **hướng có giá trị hơn rất nhiều so với việc chỉ trình bày các kỹ thuật NGS riêng lẻ**.
+
+Đặc biệt, Cần Thơ có một lợi thế khá rõ để phát triển hướng này: đã có nghiên cứu metagenomics về nước và hệ vi sinh liên quan đến nuôi thủy sản ngay tại Cần Thơ, trong đó ghi nhận mối liên hệ giữa hệ vi sinh, nước thải nuôi thủy sản và các gene kháng thuốc. ([PubMed][7]) Vì vậy, nếu anh đang xây dựng **đề xuất nhiệm vụ khoa học/công nghệ hoặc đề án ứng dụng NGS cho ĐBSCL**, tôi sẽ ưu tiên xây dựng một mô hình **“Hệ thống giám sát microbiome–pathogen–AMR cho nuôi trồng thủy sản ĐBSCL”** hơn là một đề tài chung chung về “ứng dụng NGS”.
+
+[1]: https://www.sciencedirect.com/science/article/pii/S0269749116307345?utm_source=chatgpt.com "Water metagenomic analysis reveals low bacterial diversity and the presence of antimicrobial residues and resistance genes in a river containing wastewater from backyard aquacultures in the Mekong Delta, Vietnam - ScienceDirect"
+[2]: https://vjs.ac.vn/vjbt/article/view/13086?utm_source=chatgpt.com "Comparison of bacterial community structures in digestive tract between healthy and disease whiteleg shrimp (Litopenaeus vannamei) in Soc Trang, Vietnam | Vietnam Journal of Biotechnology"
+[3]: https://jad.hcmuaf.edu.vn/index.php/jad/article/view/432?utm_source=chatgpt.com "Current status of acute hepatopancreatic necrosis disease (AHPND) and result of isolating AHPND-causing strains of farmed shrimp in Mekong Delta Region of Vietnam | The Journal of Agriculture and Development"
+[4]: https://www.sciencedirect.com/science/article/pii/S2468550X26000870?utm_source=chatgpt.com "Biofloc acts as a microbial reservoir buffering salinity-induced community turnover in shrimp aquaculture: Insights from quantitative and functional microbiome analysis - ScienceDirect"
+[5]: https://www.sciencedirect.com/org/science/article/pii/S2576098X26003804?utm_source=chatgpt.com "Draft genome sequence of Enterobacter cloacae strain TG-C5.2 isolated from shrimp aquaculture water in the Mekong Delta, Vietnam - ScienceDirect"
+[6]: https://www.sciencedirect.com/science/article/pii/S2352340920306259?utm_source=chatgpt.com "Microbiome dataset analysis from a shrimp pond in Ninh Thuan, Vietnam using shotgun metagenomics - ScienceDirect"
+[7]: https://pubmed.ncbi.nlm.nih.gov/28062224/?utm_source=chatgpt.com "Water metagenomic analysis reveals low bacterial diversity and the presence of antimicrobial residues and resistance genes in a river containing wastewater from backyard aquacultures in the Mekong Delta, Vietnam - PubMed"

@@ -1,0 +1,2002 @@
+---
+id: ngs-data-formats
+title: Định dạng dữ liệu và dòng xử lý trong phân tích NGS
+sidebar_label: Định dạng dữ liệu NGS
+description: Hiểu các định dạng FASTA, FASTQ, SAM, BAM, CRAM, VCF và GFF/GTF trong dòng xử lý dữ liệu NGS.
+---
+
+# Định dạng dữ liệu và dòng xử lý trong phân tích NGS
+
+## 1. Tổng quan
+
+NGS (Next-Generation Sequencing) là nhóm các công nghệ giải trình tự có thông lượng cao (high-throughput), cho phép đọc một lượng rất lớn trình tự DNA/RNA trong một lần chạy.
+
+Trong các dự án tin sinh học hiện đại, đặc biệt là các dự án sử dụng **Next-Generation Sequencing (NGS)**, dữ liệu không chỉ được biểu diễn dưới dạng một chuỗi ký tự đơn giản.
+
+Trong quá trình phân tích, dữ liệu được chuyển qua nhiều **định dạng có cấu trúc**, trong đó mỗi định dạng phản ánh một trạng thái khác nhau của dữ liệu.
+
+Một workflow NGS điển hình có thể được mô tả như sau:
+
+```text
+Sequencing
+    │
+    ▼
+ FASTQ
+    │
+    ▼
+Quality Control
+    │
+    ▼
+Clean FASTQ
+    │
+    ▼
+Alignment
+    │
+    ▼
+SAM / BAM / CRAM
+    │
+    ▼
+Variant Calling
+    │
+    ▼
+VCF / gVCF
+    │
+    ▼
+Annotation
+    │
+    ▼
+Biological Interpretation
+```
+
+Các định dạng FASTQ, FASTA, SAM/BAM, GFF/GTF, BED và VCF là những định dạng thường gặp trong phân tích dữ liệu NGS. NGS có thể tạo ra một lượng rất lớn các reads, sau đó các bước xử lý tiếp theo bổ sung thêm thông tin về chất lượng, vị trí trên genome, biến thể và chú giải sinh học.
+
+---
+
+## 2. Vì sao cần hiểu định dạng dữ liệu?
+
+Một người làm tin sinh học không chỉ cần biết cách chạy một phần mềm.
+
+Điều quan trọng hơn là phải hiểu:
+
+1. **Dữ liệu đầu vào là gì?**
+2. **Dữ liệu đang được biểu diễn dưới định dạng nào?**
+3. **Định dạng đó chứa những thông tin gì?**
+4. **Phần mềm đang biến đổi dữ liệu như thế nào?**
+5. **Đầu ra sẽ được sử dụng ở bước tiếp theo ra sao?**
+
+Có thể hình dung:
+
+```text
+Dữ liệu sinh học
+      │
+      ▼
+Định dạng dữ liệu
+      │
+      ▼
+Công cụ phân tích
+      │
+      ▼
+Định dạng dữ liệu mới
+      │
+      ▼
+Phân tích tiếp theo
+```
+
+Do đó, **hiểu định dạng dữ liệu chính là hiểu dòng chảy của dữ liệu trong workflow tin sinh học**.
+
+---
+
+## 3. Các lớp dữ liệu trong một workflow NGS
+
+| Giai đoạn | Định dạng tiêu biểu | Ý nghĩa |
+|---|---|---|
+| Reference | FASTA | Chuỗi DNA hoặc protein tham chiếu |
+| Sequencing | FASTQ | Reads và chất lượng từng base |
+| Alignment | SAM/BAM/CRAM | Vị trí reads trên reference |
+| Variant | VCF/gVCF | Các biến thể được phát hiện |
+| Annotation | GFF/GTF/BED | Gene và các đặc trưng trên genome |
+
+Một điểm quan trọng là các định dạng này **không tồn tại độc lập**.
+
+Chúng liên kết với nhau theo quá trình xử lý:
+
+```text
+FASTA
+Reference
+   │
+   │ Alignment
+   ▼
+FASTQ ──────────────► SAM/BAM/CRAM
+Reads                   Alignment
+                         │
+                         │ Variant Calling
+                         ▼
+                      VCF/gVCF
+                         │
+                         │ Annotation
+                         ▼
+                    Biological Meaning
+```
+
+---
+
+# 4. FASTA
+
+## 4.1 FASTA là gì?
+
+**FASTA** là một định dạng văn bản đơn giản dùng để lưu trữ các trình tự nucleotide hoặc amino acid.
+
+Một bản ghi FASTA thường gồm:
+
+1. Một dòng tiêu đề bắt đầu bằng `>`
+2. Một hoặc nhiều dòng chứa trình tự
+
+Ví dụ:
+
+```text
+>sequence_001
+ATGCGTACGTTAGCTAGCTAGCTAG
+```
+
+Trong đó:
+
+```text
+>sequence_001
+```
+
+là phần định danh của sequence.
+
+```text
+ATGCGTACGTTAGCTAGCTAGCTAG
+```
+
+là trình tự sinh học.
+
+---
+
+## 4.2 FASTA được sử dụng ở đâu?
+
+FASTA thường được sử dụng để lưu:
+
+- Reference genome
+- Reference chromosome
+- DNA sequence
+- RNA sequence
+- Protein sequence
+- Contigs
+- Assembled genomes
+
+Ví dụ:
+
+```text
+Reference genome
+        │
+        ▼
+reference.fasta
+```
+
+Trong nhiều workflow NGS, FASTA đóng vai trò là **reference** để các reads trong FASTQ được gióng hàng.
+
+---
+
+# 5. FASTQ
+
+## 5.1 FASTQ là gì?
+
+**FASTQ** là định dạng phổ biến để lưu dữ liệu reads tạo ra từ quá trình sequencing.
+
+Khác với FASTA, FASTQ lưu cả:
+
+- Trình tự nucleotide
+- Chất lượng của từng base
+
+FASTQ thường được tổ chức thành **4 dòng cho mỗi read**:
+
+```text
+@READ001
+ATGCGTACGTAGCTAG
++
+IIIIIIIIIIIIIIII
+```
+
+Ý nghĩa:
+
+| Dòng | Nội dung |
+|---|---|
+| 1 | ID của read |
+| 2 | Trình tự nucleotide |
+| 3 | Dòng phân cách |
+| 4 | Chất lượng từng base |
+
+---
+
+## 5.2 Quality score
+
+Điểm chất lượng trong FASTQ thường được biểu diễn bằng **Phred quality score**.
+
+Công thức:
+
+$$
+Q = -10\log_{10}(P_e)
+$$
+
+Trong đó:
+
+- `Q`: Phred quality score
+- `P_e`: xác suất base bị gọi sai
+
+Một số giá trị thường gặp:
+
+| Phred score | Xác suất lỗi | Độ chính xác |
+|---:|---:|---:|
+| Q10 | 10% | 90% |
+| Q20 | 1% | 99% |
+| Q30 | 0.1% | 99.9% |
+| Q40 | 0.01% | 99.99% |
+
+Ví dụ, một base có:
+
+```text
+Q30
+```
+
+có xác suất sai khoảng:
+
+```text
+0.1%
+```
+
+hay độ chính xác khoảng:
+
+```text
+99.9%
+```
+
+---
+
+## 5.3 FASTQ trong NGS
+
+FASTQ thường là một trong những định dạng đầu tiên mà người phân tích nhận được sau khi dữ liệu sequencing được chuyển đổi sang định dạng dùng cho downstream analysis.
+
+Workflow đơn giản:
+
+```text
+Sequencing
+     │
+     ▼
+   FASTQ
+     │
+     ▼
+Quality Control
+     │
+     ▼
+Clean FASTQ
+```
+
+Các công cụ QC như **FastQC** có thể được sử dụng để đánh giá chất lượng reads.
+
+---
+
+# 6. SAM
+
+## 6.1 SAM là gì?
+
+**SAM** là viết tắt của:
+
+> Sequence Alignment/Map
+
+SAM là định dạng văn bản dùng để lưu thông tin về việc các reads được gióng hàng với một reference sequence.
+
+Ví dụ khái niệm:
+
+```text
+Reference:
+
+ATGCGTACGTAGCTAGCTAGCTAG
+   |||||||||||||
+Read:
+
+   CGTACGTAGCTA
+```
+
+Sau quá trình alignment, chúng ta cần lưu lại:
+
+- Read nào?
+- Được gióng hàng vào chromosome nào?
+- Vị trí bắt đầu?
+- Mapping quality?
+- CIGAR?
+- Strand?
+- Sequence?
+- Các thông tin bổ sung khác?
+
+SAM được thiết kế để lưu các thông tin này.
+
+---
+
+## 6.2 Cấu trúc SAM
+
+Một file SAM thường gồm:
+
+```text
+Header
+Alignment records
+```
+
+Header có thể chứa thông tin như:
+
+```text
+@HD
+@SQ
+@RG
+@PG
+```
+
+Các alignment records chứa thông tin của từng read.
+
+Ví dụ đơn giản:
+
+```text
+read001    0    chr1    100    60    50M    *    0    0    ATGCGT...    IIIII...
+```
+
+Một số trường quan trọng:
+
+| Trường | Ý nghĩa |
+|---|---|
+| QNAME | Tên read |
+| FLAG | Thông tin trạng thái alignment |
+| RNAME | Reference sequence |
+| POS | Vị trí bắt đầu |
+| MAPQ | Mapping quality |
+| CIGAR | Mô tả alignment |
+| SEQ | Sequence |
+| QUAL | Base quality |
+
+---
+
+# 7. BAM
+
+## 7.1 BAM là gì?
+
+**BAM** là phiên bản binary và được nén của SAM.
+
+Có thể hình dung:
+
+```text
+SAM
+ │
+ │ compression / binary representation
+ ▼
+BAM
+```
+
+SAM dễ đọc bằng text editor hơn, trong khi BAM phù hợp hơn cho:
+
+- Lưu trữ
+- Xử lý dữ liệu lớn
+- Indexing
+- Truy xuất theo vùng
+- Visualization
+- Downstream analysis
+
+Trong thực tế, các workflow NGS thường sử dụng BAM thay vì giữ SAM trong toàn bộ quá trình.
+
+---
+
+## 7.2 BAM index
+
+BAM thường đi kèm một file index:
+
+```text
+sample.bam
+sample.bam.bai
+```
+
+Index cho phép phần mềm truy xuất nhanh dữ liệu tại một vùng cụ thể của genome mà không cần đọc toàn bộ file.
+
+Ví dụ:
+
+```text
+sample.bam
+     │
+     ├── chromosome 1
+     ├── chromosome 2
+     ├── chromosome 3
+     └── ...
+```
+
+Có index, phần mềm có thể nhanh chóng truy xuất:
+
+```text
+chr1:100000-110000
+```
+
+thay vì phải đọc toàn bộ BAM.
+
+---
+
+# 8. CRAM
+
+**CRAM** là một định dạng alignment được thiết kế để nén dữ liệu hiệu quả hơn BAM bằng cách tận dụng thông tin từ reference.
+
+Quan hệ khái quát:
+
+```text
+SAM
+ │
+ ├── BAM
+ │
+ └── CRAM
+```
+
+CRAM đặc biệt hữu ích khi dữ liệu sequencing có kích thước rất lớn và yêu cầu lưu trữ lâu dài.
+
+---
+
+# 9. VCF
+
+## 9.1 VCF là gì?
+
+**VCF** là viết tắt của:
+
+> Variant Call Format
+
+VCF được sử dụng để lưu thông tin về các biến thể được phát hiện trong quá trình phân tích dữ liệu sequencing.
+
+Ví dụ:
+
+```text
+Reference:
+
+A C G T A C G T
+
+Sample:
+
+A C G A A C G T
+      ↑
+    Variant
+```
+
+Nếu vị trí `4` của sample khác reference:
+
+```text
+Reference: T
+Sample:    A
+```
+
+thì có thể được biểu diễn trong VCF.
+
+---
+
+## 9.2 Các trường cơ bản của VCF
+
+Một VCF thường có các trường:
+
+```text
+CHROM
+POS
+ID
+REF
+ALT
+QUAL
+FILTER
+INFO
+```
+
+Ví dụ:
+
+```text
+#CHROM  POS  ID  REF  ALT  QUAL  FILTER  INFO
+chr1    100  .   A    G    99    PASS    ...
+```
+
+Ý nghĩa:
+
+| Trường | Ý nghĩa |
+|---|---|
+| CHROM | Chromosome/reference |
+| POS | Vị trí biến thể |
+| ID | Identifier |
+| REF | Allele tham chiếu |
+| ALT | Allele thay thế |
+| QUAL | Variant quality |
+| FILTER | Trạng thái lọc |
+| INFO | Thông tin bổ sung |
+
+VCF có thể biểu diễn các loại biến thể như:
+
+- SNP
+- Insertion
+- Deletion
+- Một số dạng structural variation
+
+---
+
+# 10. gVCF
+
+**gVCF** là genomic Variant Call Format.
+
+Khác với VCF thông thường, gVCF có thể chứa cả thông tin về các vùng **không phát hiện biến thể** của sample.
+
+Điều này đặc biệt hữu ích trong các workflow variant calling nhiều mẫu.
+
+Có thể hình dung:
+
+```text
+Sample 1
+   │
+   ▼
+gVCF
+   │
+   ├── Variant regions
+   └── Non-variant regions
+          │
+          ▼
+      Joint Calling
+          │
+          ▼
+         VCF
+```
+
+---
+
+# 11. GFF và GTF
+
+Trong khi VCF mô tả **biến thể**, GFF/GTF thường mô tả **các đặc trưng trên genome**.
+
+Ví dụ:
+
+```text
+Genome
+─────────────────────────────────────
+
+        ┌──────── Gene ─────────┐
+        │                       │
+        ▼                       ▼
+      Exon       Intron       Exon
+```
+
+GFF/GTF có thể chứa thông tin về:
+
+- Gene
+- Transcript
+- Exon
+- CDS
+- UTR
+- Các genomic features khác
+
+Ví dụ:
+
+```text
+chr1    source    gene    1000    5000    .    +    .    ID=gene001
+```
+
+Các định dạng này thường được sử dụng trong bước **annotation**.
+
+---
+
+# 12. BED
+
+**BED** là một định dạng đơn giản dùng để biểu diễn các vùng trên genome.
+
+Ví dụ:
+
+```text
+chr1    1000    2000
+chr1    5000    6000
+```
+
+Có thể sử dụng BED để mô tả:
+
+- Gene regions
+- Target regions
+- Exons
+- Peaks
+- Genomic intervals
+- Các vùng cần phân tích
+
+---
+
+# 13. Quan hệ giữa các định dạng
+
+Một cách rất hữu ích để ghi nhớ là nhìn vào **dòng chảy của thông tin**.
+
+```text
+                    REFERENCE
+                        │
+                        ▼
+                     FASTA
+                        ▲
+                        │
+                        │ Alignment
+                        │
+Sequencing ───────► FASTQ
+                        │
+                        ▼
+                  SAM / BAM / CRAM
+                        │
+                        │ Variant Calling
+                        ▼
+                    VCF / gVCF
+                        │
+                        │ Annotation
+                        ▼
+                   GFF / GTF / BED
+                        │
+                        ▼
+             Biological Interpretation
+```
+
+Mỗi bước làm tăng thêm thông tin:
+
+```text
+FASTQ
+  │
+  │ sequence + quality
+  ▼
+BAM
+  │
+  │ + genomic location
+  ▼
+VCF
+  │
+  │ + variant information
+  ▼
+Annotation
+  │
+  │ + biological context
+  ▼
+Biological interpretation
+```
+
+---
+
+# 14. Một cách nhìn khác: Data → Information → Knowledge
+
+Có thể xem workflow NGS như quá trình chuyển đổi từ dữ liệu thô thành tri thức sinh học:
+
+```text
+RAW DATA
+   │
+   ▼
+FASTQ
+   │
+   │ Quality Control
+   ▼
+CLEAN DATA
+   │
+   │ Alignment
+   ▼
+BAM / CRAM
+   │
+   │ Variant Calling
+   ▼
+VARIANTS
+   │
+   ▼
+VCF
+   │
+   │ Annotation
+   ▼
+BIOLOGICAL INFORMATION
+   │
+   ▼
+BIOLOGICAL INTERPRETATION
+```
+
+Điều này rất quan trọng khi xây dựng một hệ thống bioinformatics vì phần mềm không chỉ xử lý **file** mà thực chất đang xử lý **các trạng thái khác nhau của dữ liệu sinh học**.
+
+---
+
+# 15. Bảng tổng hợp
+
+| Định dạng | Loại dữ liệu | Vai trò chính |
+|---|---|---|
+| `.fasta` | Sequence | Reference hoặc biological sequences |
+| `.fastq` | Reads + Quality | Dữ liệu sequencing |
+| `.sam` | Alignment | Alignment dạng text |
+| `.bam` | Alignment | Alignment dạng binary/compressed |
+| `.cram` | Alignment | Alignment nén hiệu quả |
+| `.vcf` | Variant | Biến thể |
+| `.gvcf` | Variant | Variant + non-variant regions |
+| `.gff` | Annotation | Genomic features |
+| `.gtf` | Annotation | Gene/transcript annotation |
+| `.bed` | Genomic intervals | Các vùng trên genome |
+
+---
+
+# 16. Các câu hỏi cần đặt ra khi gặp một file dữ liệu
+
+Khi bắt đầu một dự án bioinformatics, thay vì chỉ nhìn phần mở rộng của file, nên đặt ra ít nhất 5 câu hỏi:
+
+### 1. File này chứa dữ liệu gì?
+
+Ví dụ:
+
+```text
+Sequence?
+Reads?
+Alignment?
+Variant?
+Annotation?
+```
+
+### 2. Dữ liệu được tạo ra ở bước nào?
+
+Ví dụ:
+
+```text
+Sequencing
+QC
+Alignment
+Variant Calling
+Annotation
+```
+
+### 3. Dữ liệu được tạo ra bởi công cụ nào?
+
+Ví dụ:
+
+```text
+Sequencer
+FastQC
+BWA
+Minimap2
+SAMtools
+GATK
+```
+
+### 4. Công cụ tiếp theo cần định dạng nào?
+
+Ví dụ:
+
+```text
+FASTQ
+   ↓
+Alignment tool
+
+BAM
+   ↓
+Variant caller
+
+VCF
+   ↓
+Annotation tool
+```
+
+### 5. Có metadata đi kèm hay không?
+
+Dữ liệu NGS không chỉ bao gồm sequence.
+
+Một dự án thực tế còn cần quản lý:
+
+```text
+Sample
+   │
+   ├── Patient / Host
+   ├── Species
+   ├── Location
+   ├── Collection date
+   ├── Sequencing platform
+   ├── Library
+   └── Experiment
+```
+
+Do đó, **metadata cũng là một thành phần quan trọng của hệ thống bioinformatics**.
+
+---
+
+# 17. Liên hệ với BiomeIPZ
+
+Trong một nền tảng bioinformatics như **BiomeIPZ**, các định dạng dữ liệu có thể được xem như các tầng dữ liệu thay vì chỉ là phần mở rộng của file.
+
+Ví dụ:
+
+```text
+NGS Lab
+   │
+   ▼
+Raw Sequencing Data
+   │
+   ▼
+FASTQ
+   │
+   ├── Quality Control
+   │
+   ├── Trimming
+   │
+   └── Filtering
+   │
+   ▼
+Clean Reads
+   │
+   ├───────────────┬────────────────┐
+   ▼               ▼                ▼
+Alignment       RNA-seq         Microbiome
+   │               │                │
+   ▼               ▼                ▼
+BAM/CRAM       Expression       Taxonomic/
+                                  Functional
+                                  Profiles
+   │
+   ▼
+Variant Calling
+   │
+   ▼
+VCF
+   │
+   ▼
+Annotation
+   │
+   ▼
+Biological Features
+   │
+   ▼
+Biological Risk Engine
+```
+
+Điểm quan trọng là **không phải mọi dự án bioinformatics đều kết thúc ở VCF**.
+
+Ví dụ:
+
+```text
+WGS
+ │
+ └── Variant Analysis
+       └── VCF
+
+RNA-seq
+ │
+ └── Expression Analysis
+       └── Gene expression matrix
+
+16S / Metagenomics
+ │
+ ├── Taxonomic profiling
+ ├── Functional profiling
+ └── Microbiome features
+```
+
+Vì vậy, FASTQ → BAM → VCF chỉ là **một nhánh quan trọng của NGS workflow**, không phải toàn bộ bioinformatics.
+
+---
+
+# 18. Nguyên tắc cần nhớ
+
+Có thể ghi nhớ bốn định dạng quan trọng nhất theo chuỗi:
+
+```text
+FASTA
+Reference sequence
+      ↓
+FASTQ
+Sequencing reads + quality
+      ↓
+SAM/BAM/CRAM
+Read alignment
+      ↓
+VCF
+Genetic variants
+```
+
+Hay ngắn gọn:
+
+> **FASTA = Reference**  
+> **FASTQ = Reads**  
+> **BAM = Alignment**  
+> **VCF = Variants**
+
+Đây là một trong những chuỗi kiến thức nền tảng cần nắm khi bắt đầu học phân tích NGS.
+
+---
+
+# 19. Tài liệu tham khảo
+
+### Zhang, H. (2016)
+
+**Overview of Sequence Data Formats.**
+
+*Methods in Molecular Biology*, 1418, 3–17.
+
+DOI:
+
+`10.1007/978-1-4939-3578-9_1`
+
+PubMed:
+
+https://pubmed.ncbi.nlm.nih.gov/27008007/
+
+---
+
+### Cock, P. J. A. et al. (2010)
+
+**The Sanger FASTQ file format for sequences with quality scores, and the Solexa/Illumina FASTQ variants.**
+
+*Nucleic Acids Research*, 38(6), 1767–1771.
+
+DOI:
+
+`10.1093/nar/gkp1137`
+
+---
+
+### Li, H. et al. (2009)
+
+**The Sequence Alignment/Map format and SAMtools.**
+
+*Bioinformatics*, 25(16), 2078–2079.
+
+DOI:
+
+`10.1093/bioinformatics/btp352`
+
+---
+
+### Danecek, P. et al. (2011)
+
+**The variant call format and VCFtools.**
+
+*Bioinformatics*, 27(15), 2156–2158.
+
+DOI:
+
+`10.1093/bioinformatics/btr330`
+
+---
+
+## 20. Kết luận
+
+Các định dạng dữ liệu trong NGS không nên được học như những phần mở rộng file độc lập.
+
+Cách tiếp cận hiệu quả hơn là hiểu chúng như **các trạng thái của dữ liệu trong một workflow**:
+
+```text
+Sequencing
+     ↓
+FASTQ
+     ↓
+Quality Control
+     ↓
+Alignment
+     ↓
+SAM / BAM / CRAM
+     ↓
+Variant Calling
+     ↓
+VCF / gVCF
+     ↓
+Annotation
+     ↓
+Biological Interpretation
+```
+
+Khi hiểu được dòng chảy này, việc học các công cụ như `FastQC`, `BWA`, `Bowtie2`, `Minimap2`, `SAMtools`, `BCFtools`, `GATK` hay các công cụ annotation sẽ trở nên dễ dàng hơn, bởi vì ta hiểu **dữ liệu đi vào là gì, công cụ biến đổi dữ liệu như thế nào và đầu ra sẽ được sử dụng ở bước nào tiếp theo**.
+
+
+---
+## Khái niệm cần hiểu:
+
+### Sequencing
+
+Ví dụ DNA: A T G C C A T G G C T A ...
+
+Sequencing là quá trình xác định thứ tự các nucleotide: A → T → G → C → C → A → T → G ...
+
+
+
+### WGS
+
+WGS = Whole Genome Sequencing
+
+Giải trình tự gần như toàn bộ genome.
+
+Ví dụ:
+```text
+Human genome
+~3 billion bp
+
+        ↓ WGS
+
+DNA
+ ↓
+FASTQ
+ ↓
+Alignment
+ ↓
+BAM
+ ↓
+Variant calling
+ ↓
+VCF
+```
+
+### WES
+
+WES = Whole-Exome Sequencing
+
+Thay vì sequencing toàn bộ genome, WES tập trung vào exome — các vùng mã hóa protein.
+
+Có thể hình dung:
+
+```Genome
+────────────────────────────────────
+
+████     ████       ███       █████
+Exon     Exon       Exon        Exon
+
+```
+
+Exon chỉ chiếm một phần nhỏ genome nhưng chứa phần lớn các vùng mã hóa protein.
+
+Do đó:
+
+```
+WGS
+3 billion bp
+      ↓
+Sequencing toàn genome
+
+WES
+~1–2% genome
+      ↓
+Tập trung vùng coding
+```
+
+Ứng dụng
+
+Ví dụ nghiên cứu bệnh di truyền:
+```
+Bệnh nhân
+   ↓
+WES
+   ↓
+FASTQ
+   ↓
+BAM
+   ↓
+VCF
+   ↓
+Danh sách biến thể
+   ↓
+Annotation
+   ↓
+Candidate disease variants
+```
+
+### RNA-seq
+
+Đây là một thuật ngữ rất quan trọng.
+
+RNA-seq = RNA sequencing
+
+Ở đây mục tiêu không đơn giản là:
+
+“Genome của sinh vật có sequence gì?”
+
+mà là:
+
+“Những gene nào đang được biểu hiện và biểu hiện ở mức độ nào?”
+
+Ví dụ một tế bào có:
+```
+Gene A
+Gene B
+Gene C
+Gene D
+```
+
+Nhưng tại thời điểm khảo sát:
+
+```
+Gene A → 10,000 transcripts
+Gene B → 5,000
+Gene C → 100
+Gene D → 0
+```
+
+RNA-seq giúp nghiên cứu sự biểu hiện gene.
+
+Ví dụ ứng dụng
+
+So sánh:
+```
+Tôm khỏe mạnh
+       VS
+Tôm nhiễm bệnh
+```
+
+RNA-seq có thể cho thấy:
+
+```
+Gene miễn dịch
+     ↑↑↑
+
+Gene chuyển hóa
+     ↓
+
+Gene stress
+     ↑↑
+```
+
+Từ đó có thể nghiên cứu cơ chế đáp ứng của tôm đối với pathogen.
+
+Đây là một hướng rất phù hợp với định hướng nghiên cứu thủy sản/NGS của anh.
+
+### miRNA-seq
+
+miRNA = microRNA
+
+Đây là các RNA rất ngắn có vai trò điều hòa biểu hiện gene.
+
+miRNA-seq là sequencing để nghiên cứu các phân tử RNA nhỏ này.
+
+Ví dụ:
+```
+miRNA
+  │
+  └──► ức chế/điều hòa Gene A
+```
+
+Một nghiên cứu có thể tìm:
+```
+miRNA-1 ↑
+miRNA-2 ↓
+miRNA-3 ↑↑
+```
+sau khi cá hoặc tôm bị nhiễm pathogen.
+
+Ứng dụng:
+
+biomarker
+nghiên cứu bệnh
+nghiên cứu gene regulation
+nghiên cứu stress response
+
+### ChIP-seq
+
+ChIP-seq = Chromatin Immunoprecipitation Sequencing
+
+Mục tiêu không phải trực tiếp tìm mutation.
+
+Nó được dùng để nghiên cứu:
+
+Protein nào đang tương tác với vùng DNA nào?
+
+Ví dụ:
+```
+DNA
+──────────────────────────────
+
+       Gene A
+         │
+         ▼
+    Transcription factor
+         │
+         ▼
+   DNA binding site
+```
+
+ChIP-seq có thể giúp xác định các vị trí binding trên genome.
+
+Ứng dụng
+
+Ví dụ nghiên cứu:
+
+Protein X điều hòa những gene nào?
+
+Workflow:
+
+```
+Chromatin
+   ↓
+Immunoprecipitation
+   ↓
+DNA fragments
+   ↓
+NGS
+   ↓
+FASTQ
+   ↓
+Alignment
+   ↓
+Peak calling
+   ↓
+Binding sites
+```
+
+7. DNA Methylation
+
+DNA methylation là một dạng biến đổi biểu sinh (epigenetic modification).
+
+Một cách đơn giản:
+```
+DNA sequence
+      +
+chemical modification
+      ↓
+gene regulation
+```
+
+Methylation có thể ảnh hưởng đến việc gene được biểu hiện mạnh hay yếu.
+
+NGS có thể được sử dụng để khảo sát methylation trên quy mô lớn.
+
+Ví dụ:
+
+```
+Healthy fish
+    ↓
+Methylation profile
+
+Diseased fish
+    ↓
+Methylation profile
+
+        ↓
+
+Compare
+        ↓
+
+Differentially methylated regions
+```
+
+
+Ứng dụng:
+
+ung thư
+phát triển
+stress
+môi trường
+bệnh học
+nghiên cứu biểu sinh trong thủy sản
+
+### 8. “Different platforms” nghĩa là gì?
+
+Đoạn văn nói:
+
+could be conducted with different platforms
+
+Nghĩa là NGS không phải một máy duy nhất.
+
+Có nhiều công nghệ/platform khác nhau.
+
+Đoạn paper anh đưa ra nhắc đến:
+
+```
+Illumina (Solexa)
+Roche 454
+Ion Torrent
+SOLiD
+```
+
+Đây là các nền tảng NGS tiêu biểu trong lịch sử phát triển của sequencing.
+
+Ngày nay, hệ sinh thái sequencing đã thay đổi đáng kể; Illumina vẫn là nền tảng short-read chủ đạo, bên cạnh các công nghệ khác và các nền tảng long-read.
+
+Nature Reviews Genetics mô tả NGS như một họ công nghệ với nhiều chemistry khác nhau, chẳng hạn sequencing-by-synthesis, sequencing-by-ligation, pyrosequencing và real-time sequencing.
+
+9. Illumina/Solexa
+
+Đây là công nghệ mà anh sẽ gặp rất nhiều khi làm NGS.
+
+Ý tưởng đơn giản:
+
+```
+DNA fragment
+     ↓
+Library preparation
+     ↓
+Cluster
+     ↓
+Sequencing by synthesis
+     ↓
+A C G T ...
+
+```
+Illumina sử dụng sequencing by synthesis — SBS.
+
+Mỗi cycle, hệ thống xác định nucleotide được thêm vào chuỗi đang tổng hợp.
+
+Kết quả cuối cùng là:
+
+```
+Read 1:
+ATGCGTACGATCG...
+
+Read 2:
+CGATCGTAGCTAA...
+
+Read 3:
+TTGACCGTAGCTA...
+```
+
+10. Roche 454
+
+Roche 454 là một nền tảng NGS thế hệ đầu, sử dụng nguyên lý liên quan đến pyrosequencing.
+
+Nó có ý nghĩa lịch sử rất lớn trong quá trình phát triển NGS.
+
+Tuy nhiên, nếu anh xây dựng tài liệu NGS hiện tại thì không nên dành quá nhiều thời lượng cho Roche 454, vì mục tiêu của anh là hiểu workflow dữ liệu hiện đại.
+
+11. Ion Torrent
+
+Ion Torrent sử dụng một nguyên lý khác:
+
+phát hiện sự thay đổi ion/hóa học khi nucleotide được đưa vào chuỗi DNA.
+
+Nói đơn giản:
+
+```
+Nucleotide được thêm
+        ↓
+phản ứng hóa học
+        ↓
+thay đổi ion
+        ↓
+tín hiệu điện
+        ↓
+base call
+```
+Điểm thú vị là nó không cần phát hiện fluorescence theo cách giống Illumina.
+
+12. SOLiD
+
+SOLiD sử dụng phương pháp sequencing by ligation.
+
+Đây cũng là một nền tảng quan trọng trong lịch sử NGS nhưng ngày nay ít quan trọng hơn đối với người mới học workflow bioinformatics.
+
+13. Thuật ngữ quan trọng nhất: Read
+
+Đây có lẽ là khái niệm quan trọng nhất trong toàn bộ đoạn văn.
+
+Paper viết:
+
+The main output of a next-generation sequencing experiment is short reads.
+
+Read = một đoạn trình tự DNA/RNA mà máy sequencing đọc được.
+
+Ví dụ DNA thật:
+
+```
+ATGCGTACGTAGCTAGCTAGCTAGCTAGCTAGCTAGCTA...
+```
+
+Máy không nhất thiết đọc toàn bộ một lần.
+
+Nó có thể tạo ra:
+
+```
+Read 1:
+ATGCGTACGTAGCTAG
+
+Read 2:
+CTAGCTAGCTAGCTAG
+
+Read 3:
+GCTAGCTAGCATCGAT
+
+Read 4:
+TTGACCGTAGCTAGCA
+```
+
+Mỗi read chỉ là một mảnh nhỏ của phân tử DNA ban đầu.
+
+14. Vì sao phải tạo ra hàng triệu/billions reads?
+
+Đây là chỗ bản chất của NGS bắt đầu trở nên rõ ràng.
+
+Giả sử genome có:
+```
+Genome:
+
+ATGCGTACGTAGCTAGCTAGCTAGCTAGCTAGCTAGCTA
+```
+
+Máy chỉ đọc các đoạn:
+```
+Read 1 → ATGCGTACGTAG
+Read 2 →    GTACGTAGCTA
+Read 3 →       TAGCTAGCTA
+Read 4 →          GCTAGCTAGC
+
+```
+
+Các reads chồng lấn lên nhau.
+
+Bioinformatics có thể dùng chúng để suy ra:
+
+```
+ATGCGTACGTAGCTAGCTAGCTAGC
+```
+
+Đây là lý do tại sao số lượng reads rất quan trọng.
+
+15. Coverage / Depth
+
+Một thuật ngữ liên quan trực tiếp là coverage hoặc sequencing depth.
+
+Ví dụ một vị trí:
+
+```
+Reference:
+
+        A
+        ↓
+
+Read 1: A
+Read 2: A
+Read 3: A
+Read 4: A
+Read 5: A
+Read 6: A
+
+```
+
+Vị trí này được đọc 6 lần: `Depth = 6×`
+
+Nếu: `30 reads`
+
+bao phủ trung bình mỗi vị trí: `30× coverage`
+
+Coverage là số lần trung bình một base trong vùng mục tiêu được reads bao phủ.
+
+16. “Billions of short reads” nghĩa là gì?
+
+Đoạn văn nói:
+
+one NGS experiment can generate billions of short reads
+
+Điều này cho thấy NGS là một bài toán dữ liệu lớn, chứ không đơn thuần là bài toán sinh học.
+
+Ví dụ:
+```
+1 sample
+   │
+   ├── Read 1
+   ├── Read 2
+   ├── Read 3
+   ├── ...
+   └── Read 1,000,000,000
+```
+
+Không thể xử lý thủ công.
+
+Do đó cần:
+
+```
+Linux
++
+Command line
++
+Algorithms
++
+High-performance computing
++
+Data formats
++
+Bioinformatics tools
+```
+
+Một nghiên cứu trước đây đã ghi nhận một dự án ung thư tạo gần 8 tỷ reads từ 132 sequencing runs, cho thấy quy mô dữ liệu mà các pipeline mapping phải xử lý.
+
+17. FASTQ chính là nơi các reads thường xuất hiện
+
+Sau quá trình sequencing và base calling, dữ liệu reads thường được đưa vào FASTQ.
+
+Ví dụ:
+
+```
+@READ000001
+ATGCGTACGTAGCTAG
++
+IIIIIIIIIIIIIIII
+```
+Đây là một read.
+
+Trong FASTQ:
+
+```
+Sequence
++
+Quality
+```
+
+được lưu cùng nhau.
+
+Các hệ thống Illumina thường chuyển dữ liệu base call thành reads và quality scores trong FASTQ; FASTQ là định dạng đầu vào phổ biến cho downstream analysis.
+
+18. Nhưng FASTQ chưa cho biết read nằm ở đâu trên genome
+
+Đây chính là ý quan trọng nhất trong đoạn paper.
+
+Paper viết:
+
+genomic position information is not included in each short read.
+
+Ví dụ FASTQ:
+```
+@READ001
+ATGCGTACGTAGCTA
+```
+
+Chúng ta biết: `Sequence = ATGCGTACGTAGCTA`
+
+nhưng chưa biết nó nằm ở đâu.
+
+Có thể là: `chr1:100000` hoặc `chr5:827361` hoặc `chr12:453210` 
+
+Máy sequencing chỉ nói:
+
+“Tôi đọc được đoạn DNA này.”
+
+Nó chưa nói:
+
+“Đoạn DNA này nằm ở vị trí 827.361 trên chromosome 5.”
+
+19. Đây chính là bài toán Read Mapping / Alignment
+
+Để biết read nằm ở đâu, chúng ta cần alignment hoặc mapping.
+
+Ví dụ:
+
+Reference
+
+```
+chr1:
+
+...ATGCGTACGTAGCTAGCTAGCTAGCTAG...
+
+```
+
+Read 
+```
+ATGCGTACGTAGCTA
+```
+
+Phần mềm tìm vị trí phù hợp:
+
+```
+chr1:
+
+...ATGCGTACGTAGCTAGCTAGCTAGCTAG...
+    |--------------|
+       READ
+```
+
+Sau đó kết quả có thể được lưu trong:
+
+```
+SAM
+BAM
+CRAM
+```
+
+Read mapping chính là quá trình tìm vị trí có khả năng là nguồn gốc của read trên reference genome.
+
+
+20. Tại sao cần “downstream analysis”?
+
+Downstream analysis nghĩa là:
+
+các bước phân tích tiếp theo sau khi đã có dữ liệu sequencing ban đầu.
+
+Ví dụ:
+
+```
+Sequencing
+     ↓
+FASTQ
+     ↓
+Quality Control
+     ↓
+Trimming
+     ↓
+Alignment
+     ↓
+BAM
+     ↓
+Variant Calling
+     ↓
+VCF
+     ↓
+Annotation
+     ↓
+Biological Interpretation
+```
+
+Mỗi bước bổ sung thêm thông tin cho dữ liệu.
+
+21. “Parse and manipulate raw reads” nghĩa là gì?
+
+Đây là một câu có vẻ đơn giản nhưng rất quan trọng.
+
+Parse
+
+Parse = đọc và phân tích cấu trúc dữ liệu.
+
+Ví dụ phần mềm đọc:
+```
+@READ001
+ATGCGTAC
++
+IIIIIIII
+```
+
+và hiểu:
+```
+ID       = READ001
+Sequence = ATGCGTAC
+Quality  = IIIIIIII
+```
+
+Manipulate
+
+Manipulate = xử lý/thao tác dữ liệu.
+
+Ví dụ:
+```
+FASTQ
+ ↓
+lọc read chất lượng thấp
+ ↓
+loại adapter
+ ↓
+cắt đầu/cuối chất lượng thấp
+ ↓
+Clean FASTQ
+```
+
+22. Quality Control — QC
+
+Một bước điển hình là:
+
+Quality Control (QC)
+
+Ví dụ dữ liệu:
+```
+Read 1  Q35
+Read 2  Q34
+Read 3  Q31
+Read 4  Q12
+Read 5  Q10
+```
+
+Các reads/base có chất lượng thấp có thể cần được xử lý hoặc loại bỏ tùy workflow.
+
+Một công cụ rất phổ biến: `FastQC`
+
+Workflow:
+
+```
+sample.fastq.gz
+       ↓
+     FastQC
+       ↓
+quality report
+```
+
+23. Adapter là gì?
+
+Trong NGS, DNA fragment thường được gắn các đoạn DNA nhân tạo gọi là adapter để phục vụ library preparation và sequencing.
+
+Ví dụ:
+
+```
+Adapter ─ DNA fragment ─ Adapter
+```
+
+
+Sau sequencing, đôi khi adapter xuất hiện trong reads:
+
+```
+Read:
+
+ACGTAGCTAGCTAGCT
+ADAPTER_SEQUENCE
+```
+
+Nếu không xử lý, adapter có thể ảnh hưởng đến alignment hoặc các phân tích downstream.
+
+Do đó có bước: `Adapter trimming`
+
+Illumina mô tả adapter là các oligonucleotide ngắn được gắn vào đầu các DNA fragments trong quá trình chuẩn bị thư viện.
+
+
+24. “Uncovering genomic structures and variations” nghĩa là gì?
+
+Đây là mục tiêu cuối cùng.
+
+Sau khi xử lý reads, chúng ta muốn tìm thông tin sinh học.
+
+Ví dụ:
+
+Structural information
+
+Có thể nghiên cứu:
+```
+Gene
+Exon
+Intron
+Promoter
+Regulatory region
+```
+
+
+Genetic variation
+
+Có thể tìm:
+
+```
+SNP
+Insertion
+Deletion
+CNV
+Structural variation
+
+```
+
+Ví dụ:
+
+```
+Reference:
+
+ATGCGTACGT
+
+Sample:
+
+ATGCGTTCGT
+       ↑
+      SNP
+```
+
+
+25. Toàn bộ đoạn văn thực chất đang nói về một chuỗi rất đơn giản
+
+Nếu bỏ hết thuật ngữ, đoạn paper đang nói:
+```
+
+NGS machine
+     │
+     ▼
+Đọc rất nhiều mảnh DNA nhỏ
+     │
+     ▼
+FASTQ
+     │
+     ▼
+Các mảnh này chưa biết nằm ở đâu
+     │
+     ▼
+Bioinformatics tìm vị trí
+     │
+     ▼
+Alignment / Mapping
+     │
+     ▼
+BAM / CRAM
+     │
+     ▼
+Tìm biến thể / gene / cấu trúc
+     │
+     ▼
+VCF / Annotation / Expression Matrix
+     │
+     ▼
+Biological Interpretation
+
+```
+
+Đây chính là cầu nối giữa NGS và bioinformatics.
+
+26. Ví dụ cụ thể với một mẫu tôm
+
+Đây là ví dụ rất gần với hướng nghiên cứu của anh.
+
+Giả sử muốn nghiên cứu:
+
+Tìm các biến thể gene liên quan đến khả năng kháng bệnh ở tôm.
+
+Bước 1 — Lấy mẫu: 
+```
+Tôm khỏe
+Tôm bệnh
+```
+Bước 2 — Extract DNA
+```
+Tôm
+ ↓
+DNA
+```
+
+Bước 3 — Library preparation
+
+DNA được xử lý thành sequencing library.
+```
+DNA
+ ↓
+Fragmentation
+ ↓
+Adapter
+ ↓
+Library
+```
+
+
+Bước 4 — Sequencing
+
+NGS machine tạo:
+
+```
+Millions/Billions of reads
+```
+
+Bước 5 — FASTQ
+
+```
+healthy_R1.fastq.gz
+healthy_R2.fastq.gz
+
+disease_R1.fastq.gz
+disease_R2.fastq.gz
+```
+
+
+Bước 6 — QC
+
+```
+FastQC
+ ↓
+Quality assessment
+```
+
+Bước 7 — Trimming
+
+```
+Adapter removal
++
+Low-quality filtering
+```
+
+Bước 8 — Mapping
+
+```
+Clean FASTQ
+     ↓
+BWA / Bowtie2 / minimap2
+     ↓
+BAM
+```
+
+Bước 9 — Variant Calling
+
+
+```
+BAM
+ ↓
+GATK / bcftools
+ ↓
+VCF
+```
+
+
+Bước 10 — Annotation
+
+```
+VCF
+ ↓
+SnpEff / VEP / ANNOVAR
+ ↓
+Gene / protein consequence
+
+```
+
+
+Bước 11 — Biological interpretation
+
+Cuối cùng mới có câu hỏi:
+
+Biến thể nào có thể liên quan đến khả năng kháng bệnh?
+
+Đó mới là biological meaning.
+
+27. Một điểm rất quan trọng đối với BiomeIPZ
+
+Nếu anh đang xây dựng BiomeIPZ, tôi nghĩ đoạn paper này nên trở thành một trong những nền tảng tư duy của hệ thống.
+
+Đừng thiết kế BiomeIPZ theo tư duy:
+
+
+```
+FASTQ tool
+BAM tool
+VCF tool
+```
+
+
+mà nên thiết kế theo:
+
+```
+Biological Sample
+       ↓
+Sequencing Data
+       ↓
+Raw Reads
+       ↓
+Quality-controlled Reads
+       ↓
+Mapped / Classified Data
+       ↓
+Biological Features
+       ↓
+Biological Interpretation
+```
+
+Tức là:
+
+File format là biểu diễn của một trạng thái dữ liệu trong workflow, chứ không phải bản thân workflow.
+
+Ví dụ: `FASTQ`
+
+không phải chỉ là “một file”.
+
+Nó đại diện cho:
+
+Sequencing reads + base quality
+
+Còn: `BAM`
+
+đại diện cho:
+
+Reads + vị trí của reads trên reference + alignment information
+
+Và: `VCF`
+
+
+đại diện cho:
+
+Các biến thể được suy ra từ quá trình phân tích alignment
+
+Zhang cũng nhấn mạnh đúng ý này: raw reads ban đầu có ít thông tin hơn; quá trình xử lý downstream bổ sung thêm thông tin, từ đó cần các định dạng khác nhau để lưu trữ và thao tác.
+
+28. Tôi đề xuất anh ghi nhớ 8 thuật ngữ này trước
+
+Nếu đang học NGS từ nền tảng tin học, chưa cần học hàng trăm thuật ngữ. Trước tiên hãy nắm chắc:
+
+| Thuật ngữ               | Hiểu đơn giản                     |
+| ----------------------- | --------------------------------- |
+| **NGS**                 | Công nghệ sequencing quy mô lớn   |
+| **Read**                | Một đoạn sequence máy đọc được    |
+| **FASTQ**               | Read + chất lượng                 |
+| **Reference genome**    | Genome tham chiếu                 |
+| **Alignment / Mapping** | Tìm read nằm ở đâu trên reference |
+| **BAM/CRAM**            | Kết quả alignment                 |
+| **Variant**             | Khác biệt so với reference        |
+| **VCF**                 | File chứa các variant             |
+
+
+Và hãy nhớ chuỗi:
+```
+
+NGS
+ │
+ ▼
+READS
+ │
+ ▼
+FASTQ
+ │
+ │ mapping
+ ▼
+BAM
+ │
+ │ variant calling
+ ▼
+VCF
+ │
+ │ annotation
+ ▼
+BIOLOGICAL MEANING
+```
+
+

@@ -1,0 +1,801 @@
+# Ứng dụng thực tiễn của công nghệ giải trình tự thế hệ mới (NGS)
+
+## 1. Chẩn đoán lâm sàng, Y học di truyền và bệnh hiếm
+
+### 1.1. Phát hiện biến thể di truyền gây bệnh
+
+NGS cho phép phân tích đồng thời hàng nghìn đến hàng triệu vị trí trên hệ gen, hỗ trợ phát hiện:
+
+* SNV – biến thể nucleotide đơn;
+* indel – biến thể thêm/mất đoạn;
+* CNV – biến thể số lượng bản sao;
+* SV – biến thể cấu trúc;
+* các biến thể trong vùng mã hóa và không mã hóa.
+
+Trong khi **short-read sequencing** rất hiệu quả đối với SNV và indel nhỏ, **long-read sequencing** có lợi thế rõ rệt đối với các vùng lặp, biến thể cấu trúc lớn, các vùng giàu GC và các locus phức tạp.
+
+### Tiện ích thực tế
+
+NGS có thể được sử dụng để:
+
+* xác định nguyên nhân di truyền của bệnh hiếm;
+* hỗ trợ chẩn đoán các ca bệnh chưa rõ nguyên nhân;
+* rút ngắn thời gian “diagnostic odyssey” của bệnh nhân;
+* xác định nguy cơ di truyền trong gia đình;
+* hỗ trợ tư vấn di truyền;
+* phát hiện biến thể có ý nghĩa đối với tiên lượng và điều trị;
+* xây dựng hồ sơ genomic của bệnh nhân.
+
+**Giá trị quan trọng nhất không nằm ở việc “đọc DNA”, mà ở việc chuyển dữ liệu DNA thành thông tin có thể hỗ trợ quyết định lâm sàng.**
+
+---
+
+## 1.2. Phát hiện biến thể cấu trúc và vùng gen khó
+
+Một ưu thế quan trọng của long-read sequencing là khả năng đọc các đoạn DNA dài hàng nghìn đến hàng trăm nghìn base.
+
+Điều này đặc biệt hữu ích đối với:
+
+* repeat expansions;
+* tandem repeats;
+* segmental duplications;
+* inversion;
+* translocation;
+* large deletion/insertion;
+* phasing;
+* các vùng gene có nhiều paralog.
+
+Các bệnh liên quan đến repeat expansion là ví dụ điển hình, bao gồm nhiều bệnh thoái hóa thần kinh, động kinh và bệnh thần kinh di truyền.
+
+### Tiện ích thực tế
+
+Có thể xây dựng quy trình:
+
+**DNA bệnh nhân → long-read sequencing → phát hiện repeat/SV → xác định allele → phân loại biến thể → báo cáo lâm sàng.**
+
+Điều này đặc biệt hữu ích khi xét nghiệm short-read cho kết quả âm tính nhưng triệu chứng lâm sàng vẫn rất rõ.
+
+---
+
+# 2. Vi sinh lâm sàng và chẩn đoán tác nhân gây bệnh
+
+Đây là lĩnh vực tôi cho rằng anh nên **đẩy mạnh hơn rất nhiều** trong tài liệu.
+
+NGS không chỉ được dùng để giải trình tự bộ gen người. Trong vi sinh, nó cho phép trả lời một câu hỏi quan trọng hơn:
+
+> **“Trong mẫu bệnh phẩm có những vi sinh vật nào và chúng có đặc điểm gì?”**
+
+---
+
+## 2.1. Metagenomic sequencing – phát hiện tác nhân trực tiếp từ mẫu
+
+Thay vì phải nuôi cấy từng loại vi sinh vật, **metagenomic sequencing (mNGS)** có thể giải trình tự DNA/RNA trực tiếp từ:
+
+* máu;
+* dịch não tủy;
+* đờm;
+* dịch phế quản;
+* phân;
+* nước tiểu;
+* mô;
+* dịch ổ áp-xe;
+* mẫu môi trường.
+
+Sau đó hệ thống bioinformatics sẽ đối chiếu trình tự thu được với cơ sở dữ liệu để xác định:
+
+* vi khuẩn;
+* virus;
+* nấm;
+* ký sinh trùng;
+* đồng nhiễm nhiều tác nhân.
+
+### Tiện ích thực tế
+
+Đặc biệt hữu ích trong:
+
+* viêm não – viêm màng não chưa rõ nguyên nhân;
+* viêm phổi nặng;
+* nhiễm trùng huyết;
+* bệnh nhân suy giảm miễn dịch;
+* nhiễm trùng do tác nhân hiếm;
+* nhiễm trùng sau điều trị kháng sinh;
+* các ca mà nuôi cấy âm tính.
+
+Điểm mạnh của mNGS là:
+
+> **Không cần phải biết trước chính xác tác nhân cần tìm.**
+
+Điều này khác với PCR truyền thống, vốn thường phải thiết kế primer cho tác nhân đã được dự đoán.
+
+---
+
+# 3. Phát hiện và giám sát kháng kháng sinh – AMR
+
+Đây là **một ứng dụng thực tế cực kỳ quan trọng nhưng phần hiện tại của anh còn thiếu**.
+
+NGS có thể phát hiện:
+
+* gene kháng kháng sinh;
+* đột biến liên quan đến kháng thuốc;
+* plasmid mang gene AMR;
+* integron;
+* transposon;
+* các yếu tố di truyền di động.
+
+Ví dụ có thể tìm kiếm các nhóm gene như:
+
+* **bla** – beta-lactamase;
+* **mecA/mecC** – kháng methicillin;
+* **van** – kháng vancomycin;
+* **mcr** – kháng colistin;
+* **tet** – kháng tetracycline;
+* **erm** – kháng macrolide.
+
+### Giá trị thực tế
+
+Có thể xây dựng:
+
+**Sample → sequencing → AMR gene detection → resistance profile → clinical/public-health decision.**
+
+Ứng dụng trong:
+
+* bệnh viện;
+* phòng xét nghiệm vi sinh;
+* giám sát AMR quốc gia;
+* giám sát cộng đồng;
+* trang trại chăn nuôi;
+* nuôi trồng thủy sản;
+* nước thải;
+* môi trường.
+
+---
+
+# 4. Truy tìm nguồn gốc và điều tra ổ dịch
+
+Một ứng dụng rất mạnh của NGS là **Whole Genome Sequencing (WGS)** của vi khuẩn hoặc virus.
+
+Ví dụ khi nhiều bệnh nhân nhiễm cùng một loài vi khuẩn, WGS có thể so sánh genome của các isolate để xác định:
+
+> Các chủng này có phải cùng xuất phát từ một nguồn hay không?
+
+Có thể áp dụng cho:
+
+* Salmonella;
+* Listeria;
+* E. coli;
+* Klebsiella;
+* Staphylococcus;
+* Mycobacterium tuberculosis;
+* các virus gây dịch.
+
+### Tiện ích thực tế
+
+WGS giúp:
+
+1. xác định outbreak;
+2. phân biệt ca bệnh liên quan và không liên quan;
+3. truy tìm nguồn lây;
+4. phát hiện chuỗi lây truyền;
+5. xác định thời gian và hướng lan truyền;
+6. hỗ trợ quyết định cách ly và kiểm soát dịch.
+
+Đây là chuyển đổi rất quan trọng:
+
+> **Từ “xác định vi khuẩn gì” → “xác định chính xác chủng nào và nó liên quan đến ca nào”.**
+
+---
+
+# 5. Giám sát virus và dịch bệnh theo thời gian thực
+
+Long-read sequencing và nanopore sequencing đặc biệt phù hợp với **real-time sequencing**.
+
+Các hệ thống như Oxford Nanopore có thể được triển khai trong:
+
+* phòng xét nghiệm di động;
+* khu vực xảy ra dịch;
+* cửa khẩu;
+* bệnh viện;
+* vùng sâu vùng xa;
+* các chương trình giám sát dịch tễ.
+
+Quy trình có thể là:
+
+**Sample → RNA/DNA extraction → library preparation → sequencing → basecalling → pathogen identification → phylogenetic analysis.**
+
+### Tiện ích
+
+Không chỉ xác định:
+
+> “Có virus hay không?”
+
+mà còn:
+
+> “Virus thuộc dòng nào, có biến thể mới hay không và đang lan truyền theo hướng nào?”
+
+---
+
+# 6. Phân tích hệ vi sinh – Microbiome
+
+Đây là lĩnh vực rất phù hợp để phát triển các ứng dụng thực tế.
+
+## 6.1. 16S rRNA sequencing
+
+Giải trình tự 16S rRNA giúp khảo sát thành phần vi khuẩn trong mẫu.
+
+Có thể áp dụng cho:
+
+* microbiome đường ruột;
+* microbiome miệng;
+* microbiome da;
+* microbiome âm đạo;
+* microbiome đất;
+* microbiome nước;
+* microbiome thủy sản.
+
+Long-read full-length 16S có ưu thế so với việc chỉ giải trình tự một vùng ngắn của 16S vì có thêm thông tin để phân loại taxonomic.
+
+---
+
+# 7. Shotgun metagenomics – bước phát triển cao hơn 16S
+
+Tôi đề nghị bổ sung một mục riêng.
+
+**16S sequencing** chủ yếu trả lời:
+
+> “Trong mẫu có những nhóm vi khuẩn nào?”
+
+Trong khi **shotgun metagenomics** có thể trả lời rộng hơn:
+
+> “Trong mẫu có những sinh vật nào và chúng đang mang những gene/chức năng gì?”
+
+Có thể phân tích:
+
+* bacteria;
+* archaea;
+* fungi;
+* viruses;
+* AMR genes;
+* virulence genes;
+* metabolic pathways;
+* plasmids;
+* mobile genetic elements.
+
+### Ví dụ
+
+Một mẫu phân có thể được phân tích đồng thời:
+
+**Taxonomy + AMR + virulence + metabolic function.**
+
+Đây là nền tảng rất tốt để phát triển **microbiome analytics platform**.
+
+---
+
+# 8. Công nghệ vi sinh trong nông nghiệp và thủy sản
+
+Nếu tài liệu hướng đến **công nghệ vi sinh ứng dụng tại Việt Nam**, tôi đặc biệt khuyến nghị bổ sung phần này.
+
+NGS có thể sử dụng để phân tích:
+
+### Trong đất
+
+* microbiome đất;
+* vi khuẩn cố định nitrogen;
+* vi khuẩn phân giải phosphate;
+* vi sinh vật vùng rễ;
+* tác nhân gây bệnh cây.
+
+### Trong cây trồng
+
+Có thể xác định:
+
+* vi khuẩn gây bệnh;
+* nấm gây bệnh;
+* virus thực vật;
+* hệ vi sinh vật cộng sinh.
+
+### Trong nuôi trồng thủy sản
+
+Có thể phân tích:
+
+* microbiome ao nuôi;
+* vi khuẩn gây bệnh tôm/cá;
+* Vibrio;
+* virus;
+* gene AMR;
+* biến động hệ vi sinh theo thời gian.
+
+Ví dụ:
+
+**Mẫu nước ao → DNA extraction → shotgun/16S → microbiome profile → phát hiện Vibrio/AMR → cảnh báo sớm.**
+
+Đây là ứng dụng có **giá trị kinh tế trực tiếp**, vì có thể chuyển từ mô hình:
+
+> xử lý bệnh sau khi tôm chết
+
+sang:
+
+> **giám sát microbiome → phát hiện nguy cơ → can thiệp sớm.**
+
+---
+
+# 9. An toàn thực phẩm và truy xuất nguồn gốc vi sinh
+
+NGS có thể được ứng dụng để kiểm tra:
+
+* Salmonella;
+* Listeria;
+* E. coli;
+* Campylobacter;
+* Staphylococcus;
+* nấm men/nấm mốc;
+* virus thực phẩm.
+
+Đặc biệt, WGS có thể giúp:
+
+**mẫu thực phẩm → định danh chủng → so sánh genome → truy tìm nguồn contamination.**
+
+Ứng dụng trong:
+
+* nhà máy chế biến;
+* thủy sản;
+* sữa;
+* thịt;
+* thực phẩm lên men;
+* nước uống;
+* chuỗi cung ứng thực phẩm.
+
+---
+
+# 10. Kiểm soát chất lượng probiotic và sản phẩm vi sinh
+
+Đây cũng là một ứng dụng rất thực tế.
+
+Đối với probiotic hoặc chế phẩm vi sinh, NGS/WGS có thể giúp:
+
+* xác định chính xác chủng;
+* kiểm tra độ tinh khiết;
+* phát hiện chủng ngoài ý muốn;
+* xác định gene kháng kháng sinh;
+* phát hiện gene độc lực;
+* xác định plasmid;
+* kiểm tra tính ổn định genome;
+* phân biệt các strain rất gần nhau.
+
+Ví dụ thay vì chỉ ghi:
+
+> *Lactobacillus sp.*
+
+có thể tiến tới:
+
+> xác định chính xác strain và đặc điểm genomic của strain.
+
+Điều này đặc biệt quan trọng trong **QC/QA của sản phẩm probiotic và chế phẩm sinh học**.
+
+---
+
+# 11. Phát hiện vi sinh vật chưa biết hoặc khó nuôi cấy
+
+Một trong những giá trị lớn của metagenomics là không phụ thuộc hoàn toàn vào nuôi cấy.
+
+Nhiều microorganism:
+
+* không nuôi được bằng phương pháp thông thường;
+* phát triển rất chậm;
+* cần điều kiện môi trường đặc biệt;
+* tồn tại với mật độ thấp.
+
+NGS cho phép phát hiện chúng thông qua DNA/RNA.
+
+### Ứng dụng
+
+* khám phá pathogen mới;
+* microbial dark matter;
+* nghiên cứu hệ sinh thái;
+* phát hiện microorganism mới;
+* phát hiện virus chưa biết;
+* nghiên cứu microbiome.
+
+---
+
+# 12. Ung thư và y học cá thể hóa
+
+Phần hiện tại của anh đúng hướng nhưng nên mở rộng từ **RNA isoform** sang **comprehensive cancer genomics**.
+
+NGS có thể phát hiện:
+
+* SNV;
+* indel;
+* CNV;
+* SV;
+* fusion gene;
+* gene expression;
+* alternative splicing;
+* methylation.
+
+### Ứng dụng
+
+Có thể hỗ trợ:
+
+* phân loại khối u;
+* xác định driver mutation;
+* lựa chọn thuốc;
+* theo dõi đáp ứng điều trị;
+* phát hiện kháng thuốc;
+* theo dõi tái phát.
+
+---
+
+# 13. Liquid biopsy và ctDNA
+
+Đây là một mục rất đáng bổ sung.
+
+NGS có thể phân tích **circulating tumor DNA (ctDNA)** trong máu.
+
+Thay vì phải lấy mẫu mô nhiều lần, có thể theo dõi DNA khối u thông qua mẫu máu.
+
+Ứng dụng:
+
+* phát hiện dấu hiệu phân tử của ung thư;
+* theo dõi điều trị;
+* phát hiện minimal residual disease (MRD);
+* phát hiện tái phát;
+* theo dõi sự xuất hiện của clone kháng thuốc.
+
+Đây là hướng rất quan trọng của **precision oncology**.
+
+---
+
+# 14. Giải trình tự biểu sinh
+
+Phần 4 của anh nên giữ lại nhưng nên bổ sung thêm **ý nghĩa ứng dụng**.
+
+Long-read sequencing có thể kết hợp:
+
+> sequence + methylation + haplotype
+
+trên cùng phân tử DNA.
+
+Điều này tạo ra khả năng xây dựng:
+
+**Epigenome + Genome + Haplotype**
+
+thay vì phân tích từng lớp dữ liệu riêng biệt.
+
+Ứng dụng:
+
+* ung thư;
+* bệnh di truyền;
+* phát triển phôi;
+* nghiên cứu não;
+* lão hóa;
+* bệnh tự miễn;
+* nghiên cứu gene regulation.
+
+---
+
+# 15. Transcriptomics và isoform
+
+RNA sequencing không chỉ cho biết:
+
+> Gene có được biểu hiện hay không?
+
+Long-read RNA sequencing có thể giúp xác định:
+
+> **RNA transcript thực sự có cấu trúc như thế nào?**
+
+Có thể phát hiện:
+
+* full-length transcript;
+* alternative splicing;
+* novel isoform;
+* exon skipping;
+* intron retention;
+* fusion transcript;
+* allele-specific expression.
+
+Đây là cầu nối rất quan trọng giữa:
+
+**Genome → Transcriptome → Protein → Phenotype.**
+
+---
+
+# 16. Nghiên cứu vaccine và phát triển thuốc
+
+NGS có thể hỗ trợ:
+
+### Vaccine
+
+* theo dõi biến đổi genome pathogen;
+* xác định antigen;
+* phân tích diversity của pathogen;
+* theo dõi escape mutation;
+* giám sát vaccine effectiveness.
+
+### Drug discovery
+
+* xác định target;
+* transcriptomics;
+* pathway analysis;
+* microbiome–drug interaction;
+* genomic biomarkers.
+
+---
+
+# 17. Sinh học tổng hợp và khám phá gene mới
+
+NGS là công cụ nền tảng cho synthetic biology.
+
+Có thể dùng để:
+
+* xác định gene chức năng;
+* tìm enzyme mới;
+* tìm pathway chuyển hóa mới;
+* khai thác gene từ microorganism;
+* tìm enzyme chịu nhiệt;
+* tìm enzyme phân giải cellulose;
+* tìm enzyme phân giải polymer;
+* khám phá chất chuyển hóa thứ cấp.
+
+Đặc biệt:
+
+> **Metagenomics → gene mining → enzyme discovery**
+
+là hướng rất có tiềm năng thương mại.
+
+Ví dụ có thể tìm enzyme mới cho:
+
+* thực phẩm;
+* dược phẩm;
+* thức ăn chăn nuôi;
+* thủy sản;
+* xử lý chất thải;
+* công nghiệp sinh học.
+
+---
+
+# 18. Bioremediation và giám sát môi trường
+
+NGS có thể được sử dụng để phân tích microbiome môi trường:
+
+* nước;
+* đất;
+* bùn;
+* nước thải;
+* ao nuôi;
+* sông;
+* khu công nghiệp.
+
+Có thể xác định:
+
+* microbial community;
+* pathogen;
+* AMR;
+* gene phân hủy chất ô nhiễm;
+* metabolic pathway.
+
+Từ đó hỗ trợ:
+
+**Microbiome monitoring → Environmental risk assessment → Bioremediation.**
+
+---
+
+# 19. Xây dựng hệ thống cảnh báo sinh học
+
+Nếu nhìn từ góc độ **ứng dụng công nghệ**, NGS có thể tiến tới một hệ thống:
+
+### Biological Early Warning System
+
+```text
+        SAMPLE
+          │
+          ▼
+   DNA / RNA EXTRACTION
+          │
+          ▼
+      NGS SEQUENCING
+          │
+          ▼
+   BIOINFORMATICS PIPELINE
+          │
+     ┌────┼───────────┐
+     ▼    ▼           ▼
+ Pathogen AMR     Microbiome
+     │    │           │
+     └────┼───────────┘
+          ▼
+     RISK ANALYSIS
+          │
+          ▼
+       ALERT
+          │
+          ▼
+  DECISION / INTERVENTION
+```
+
+Đây mới là nơi NGS chuyển từ **công cụ nghiên cứu** thành **hệ thống công nghệ phục vụ quản lý và ra quyết định**.
+
+---
+
+# 20. Một hướng rất đáng phát triển: NGS + AI
+
+Tôi đề nghị thêm một mục riêng về **AI/ML + NGS**.
+
+NGS tạo ra lượng dữ liệu cực lớn:
+
+* sequence;
+* variant;
+* taxonomy;
+* abundance;
+* gene;
+* methylation;
+* transcript;
+* phenotype.
+
+AI có thể được sử dụng để:
+
+* phân loại pathogen;
+* dự đoán AMR;
+* phát hiện anomaly;
+* dự đoán nguy cơ outbreak;
+* phân loại biến thể;
+* dự đoán pathogenicity;
+* phân tích microbiome;
+* dự đoán disease phenotype;
+* phát hiện pattern mà phương pháp thống kê truyền thống khó nhận ra.
+
+Có thể hình thành kiến trúc:
+
+> **NGS → Bioinformatics → AI → Knowledge Graph → Decision Support**
+
+Đây là hướng có giá trị rất lớn nếu anh muốn phát triển thành **nền tảng công nghệ**, thay vì chỉ là một quy trình xét nghiệm.
+
+---
+
+# 21. Nên bổ sung một bảng “NGS đem lại tiện ích gì?”
+
+Tôi khuyến nghị cuối chương nên có bảng tổng hợp như sau:
+
+| Lĩnh vực          | Dữ liệu NGS         | Tiện ích thực tế          | Đầu ra                |
+| ----------------- | ------------------- | ------------------------- | --------------------- |
+| Bệnh hiếm         | Genome              | Tìm nguyên nhân di truyền | Genetic diagnosis     |
+| Ung thư           | Tumor DNA/RNA       | Tìm mutation              | Precision treatment   |
+| Vi sinh           | Pathogen genome     | Định danh tác nhân        | Pathogen profile      |
+| AMR               | Resistance genes    | Phát hiện kháng thuốc     | AMR profile           |
+| Dịch tễ           | WGS                 | Truy vết outbreak         | Transmission map      |
+| Microbiome        | 16S/shotgun         | Phân tích hệ vi sinh      | Microbiome profile    |
+| Thủy sản          | Microbiome          | Cảnh báo bệnh             | Aquaculture risk      |
+| Thực phẩm         | WGS/metagenomics    | Truy nguồn contamination  | Food safety           |
+| Probiotic         | WGS                 | QC strain                 | Strain certificate    |
+| Môi trường        | Metagenomics        | Giám sát ô nhiễm          | Environmental profile |
+| Vaccine           | Pathogen sequencing | Theo dõi biến thể         | Variant surveillance  |
+| Biểu sinh         | Methylome           | Phân tích regulation      | Epigenomic profile    |
+| RNA               | Long-read RNA       | Phát hiện isoform         | Transcriptome         |
+| Synthetic biology | Metagenomics        | Tìm gene/enzyme           | Novel biomolecule     |
+| AI                | Multi-omics         | Dự đoán nguy cơ           | Decision support      |
+
+---
+
+## 22. Một điểm quan trọng: nên phân biệt “NGS” và “long-read sequencing”
+
+Trong tài liệu hiện tại của anh, hai khái niệm này đang hơi trộn lẫn.
+
+Nên phân tầng:
+
+```text
+                 NGS
+                  │
+       ┌──────────┴──────────┐
+       │                     │
+   SHORT READ             LONG READ
+       │                     │
+ Illumina              PacBio / ONT
+       │                     │
+ SNV / small indel      SV / repeat
+ expression             phasing
+ metagenomics           methylation
+ 16S                    full-length RNA
+```
+
+Và cần lưu ý:
+
+**Long-read sequencing là một nhánh của thế hệ sequencing hiện đại, nhưng không nên đồng nhất NGS = long-read.**
+
+---
+
+# 23. Tôi cũng đề nghị sửa một số cách diễn đạt khoa học
+
+Có một số câu trong bản hiện tại nên **thận trọng hơn khi đưa vào tài liệu chuyên môn**.
+
+Ví dụ:
+
+> “SVs ≥ 50 bp – những yếu tố vốn bị bỏ sót tới hơn 70% bởi phương pháp cũ.”
+
+Không nên viết như một con số tuyệt đối nếu không dẫn nguồn và không nêu rõ **loại SV, pipeline, vùng genome và nền tảng sequencing**. Khả năng phát hiện SV của short-read thay đổi rất lớn tùy loại biến thể.
+
+Tương tự:
+
+> “không thể phân loại đến 56% các loài vi khuẩn”
+
+nên tránh dùng như một quy luật chung. Kết quả phụ thuộc vào vùng 16S được giải trình tự, database, pipeline phân loại và độ sâu sequencing.
+
+Và:
+
+> “giảm đáng kể tỷ lệ âm tính giả và dương tính giả”
+
+cần chuyển thành cách viết có điều kiện, chẳng hạn:
+
+> “có tiềm năng cải thiện khả năng phát hiện và định kiểu các biến thể tại những vùng genome khó khảo sát bằng reference genome truyền thống.”
+
+Điều này sẽ làm tài liệu **chắc về mặt khoa học hơn**.
+
+---
+
+# 24. Nếu mục tiêu là xây dựng một tài liệu công nghệ vi sinh, tôi sẽ tổ chức lại toàn bộ chương
+
+Thay vì chỉ có 4 nhóm như hiện tại, tôi đề xuất **8 nhóm ứng dụng**:
+
+### I. Human Genomics
+
+* bệnh hiếm;
+* bệnh di truyền;
+* HLA;
+* pharmacogenomics.
+
+### II. Clinical Microbiology
+
+* pathogen detection;
+* mNGS;
+* AMR;
+* outbreak investigation.
+
+### III. Cancer Genomics
+
+* tumor sequencing;
+* ctDNA;
+* fusion;
+* transcriptomics;
+* methylation.
+
+### IV. Microbiome
+
+* 16S;
+* shotgun metagenomics;
+* functional microbiome;
+* microbiome–host interaction.
+
+### V. Epidemiology & Public Health
+
+* pathogen surveillance;
+* genomic epidemiology;
+* variant tracking;
+* early warning.
+
+### VI. Agriculture & Aquaculture
+
+* soil microbiome;
+* plant pathogen;
+* shrimp/fish microbiome;
+* disease prediction.
+
+### VII. Food & Environment
+
+* food safety;
+* contamination tracing;
+* environmental DNA;
+* wastewater surveillance.
+
+### VIII. Biotechnology & Synthetic Biology
+
+* enzyme discovery;
+* novel microbial genes;
+* metabolic pathways;
+* probiotic QC;
+* bioprocess optimization.
+
+Sau đó thêm một chương xuyên suốt:
+
+> **NGS + Bioinformatics + AI → Biological Intelligence**
+
+Đây là phần có thể biến tài liệu từ một bài **mô tả công nghệ sequencing** thành một tài liệu về **hệ sinh thái ứng dụng công nghệ sinh học dựa trên dữ liệu**.
+
+Nếu anh đang xây dựng tài liệu này cho **đề tài/nghiên cứu về công nghệ vi sinh**, tôi còn khuyến nghị bổ sung một lớp nữa: **“Ứng dụng NGS cụ thể cho Việt Nam/ĐBSCL”** (dịch bệnh thủy sản, tôm, cá tra, vi sinh nước–đất, an toàn thực phẩm, AMR và giám sát nước thải). Phần này sẽ làm tài liệu có tính thực tiễn và khả năng chuyển giao cao hơn rất nhiều.
